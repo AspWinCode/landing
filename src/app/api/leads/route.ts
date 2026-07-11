@@ -18,6 +18,8 @@ function validateLead(data: LeadPayload): string | null {
   return null;
 }
 
+const PORTAL_API_URL = process.env.PORTAL_API_URL ?? "https://tirskix.space";
+
 export async function POST(req: NextRequest) {
   let body: LeadPayload;
   try {
@@ -26,9 +28,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Неверный формат данных" }, { status: 400 });
   }
 
-  // Honeypot check — bot filled the hidden field
+  // Honeypot — silent success for bots
   if (body._hp) {
-    return NextResponse.json({ ok: true }); // silent success for bots
+    return NextResponse.json({ ok: true });
   }
 
   const error = validateLead(body);
@@ -36,21 +38,27 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error }, { status: 422 });
   }
 
-  const lead = {
-    name: body.name.trim(),
-    contact: body.contact.trim(),
-    track: body.track || null,
-    message: body.message?.trim() || null,
-    utm_source: body.utm_source || null,
-    utm_medium: body.utm_medium || null,
-    utm_campaign: body.utm_campaign || null,
-    created_at: new Date().toISOString(),
-  };
+  try {
+    const resp = await fetch(`${PORTAL_API_URL}/api/v1/public/leads/site-lead`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: body.name.trim(),
+        contact: body.contact.trim(),
+        track: body.track || null,
+        message: body.message?.trim() || null,
+      }),
+    });
 
-  // TODO: forward to FastAPI backend → LMS
-  // await fetch(`${process.env.API_URL}/leads`, { method: 'POST', body: JSON.stringify(lead), headers: { 'Content-Type': 'application/json' } });
-
-  console.log("[LEAD]", lead);
+    if (!resp.ok) {
+      const detail = await resp.text();
+      console.error("[LEAD] portal error", resp.status, detail);
+      return NextResponse.json({ error: "Ошибка сервера. Попробуйте позже." }, { status: 502 });
+    }
+  } catch (err) {
+    console.error("[LEAD] fetch failed", err);
+    return NextResponse.json({ error: "Не удалось отправить заявку. Попробуйте позже." }, { status: 502 });
+  }
 
   return NextResponse.json({ ok: true });
 }
