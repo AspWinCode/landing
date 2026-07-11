@@ -60,6 +60,10 @@ export default async function RootLayout({
   const brandHex = typeof branding.brand_hex === "string" && /^#[0-9a-fA-F]{6}$/.test(branding.brand_hex)
     ? branding.brand_hex : null;
   const themeCss = brandHex ? generateThemeCss(brandHex) : null;
+  const faviconUrl = typeof branding.favicon_url === "string" && branding.favicon_url.trim()
+    ? branding.favicon_url.trim() : null;
+  const customHeadScript = typeof branding.custom_head_script === "string" && branding.custom_head_script.trim()
+    ? branding.custom_head_script.trim() : null;
 
   return (
     <html
@@ -69,6 +73,16 @@ export default async function RootLayout({
     >
       <head>
         {themeCss && <style dangerouslySetInnerHTML={{ __html: themeCss }} />}
+        {faviconUrl && (
+          <>
+            <link rel="icon" href={faviconUrl} />
+            <link rel="shortcut icon" href={faviconUrl} />
+            <link rel="apple-touch-icon" href={faviconUrl} />
+          </>
+        )}
+        {customHeadScript && (
+          <script dangerouslySetInnerHTML={{ __html: customHeadScript }} />
+        )}
         {/* Google Analytics 4 */}
         {settings.ga_measurement_id && (
           <>
