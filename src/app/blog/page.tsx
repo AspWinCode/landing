@@ -4,23 +4,30 @@ import Image from "next/image";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Clock } from "@phosphor-icons/react/dist/ssr";
-import { getPortalPosts } from "@/lib/portal";
+import { getPortalPosts, getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Блог — TirSkix Academy" },
-  description:
-    "Статьи о программировании для детей: как выбрать язык, с чего начать, как подготовиться к ОГЭ и ЕГЭ, истории учеников и советы родителям.",
-  alternates: { canonical: "https://tirskix-academy.com/blog/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("blog") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Блог — TirSkix Academy",
+    description: "Статьи о программировании для детей: как выбрать язык, с чего начать, как подготовиться к ОГЭ и ЕГЭ, истории учеников и советы родителям.",
+    canonical: "https://tirskix-academy.com/blog/",
+  });
+}
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
 }
 
 export default async function BlogPage() {
-  const posts = await getPortalPosts();
+  const [posts, cms] = await Promise.all([getPortalPosts(), getCmsPage("blog")]);
+  const heading = typeof cms.heading === "string" && cms.heading ? cms.heading : "Блог";
+  const subheading = typeof cms.subheading === "string" && cms.subheading
+    ? cms.subheading
+    : "О программировании для детей, подготовке к экзаменам и историях учеников.";
 
   return (
     <>
@@ -35,10 +42,10 @@ export default async function BlogPage() {
               <span className="text-[var(--color-brand)] font-medium">Блог</span>
             </nav>
             <h1 className="text-4xl md:text-5xl font-extrabold text-[var(--color-text-primary)] leading-tight mb-5">
-              Блог
+              {heading}
             </h1>
             <p className="text-lg text-[var(--color-text-secondary)]">
-              О программировании для детей, подготовке к экзаменам и историях учеников.
+              {subheading}
             </p>
           </div>
         </section>
