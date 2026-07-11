@@ -60,7 +60,13 @@ export async function getPortalPost(slug: string): Promise<PortalPostDetail | nu
   return portalFetch<PortalPostDetail>(`/api/v1/public/blog/posts/${slug}`);
 }
 
+const EMPTY_SETTINGS: PortalSettings = {
+  site_title: null, site_description: null, contact_phone: null,
+  contact_email: null, vk_url: null, tg_url: null, inst_url: null,
+  ga_measurement_id: null, ym_counter_id: null, vk_pixel_id: null,
+};
+
 export async function getPortalSettings(): Promise<PortalSettings> {
   const data = await portalFetch<PortalSettings>("/api/v1/public/site-settings");
-  return data ?? {};
+  return data ?? EMPTY_SETTINGS;
 }
