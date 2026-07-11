@@ -5,15 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Часто задаваемые вопросы — TirSkix Academy" },
-  description:
-    "Ответы на частые вопросы об обучении в TirSkix Academy: возраст, формат, цены, треки, пробный урок и многое другое.",
-  alternates: { canonical: "https://tirskix-academy.com/faq/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("faq") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Часто задаваемые вопросы — TirSkix Academy",
+    description:
+      "Ответы на частые вопросы об обучении в TirSkix Academy: возраст, формат, цены, треки, пробный урок и многое другое.",
+    canonical: "https://tirskix-academy.com/faq/",
+  });
+}
 
 interface FaqItem { q: string; a: string }
 interface FaqSection { title: string; items: FaqItem[] }

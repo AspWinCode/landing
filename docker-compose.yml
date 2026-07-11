@@ -7,3 +7,4 @@ services:
     environment:
       NODE_ENV: production
       PORTAL_API_URL: https://tirskix.space
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET:-cms_revalidate_secret_2026}

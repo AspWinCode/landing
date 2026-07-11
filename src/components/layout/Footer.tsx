@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { TelegramLogo, YoutubeLogo, InstagramLogo } from "@phosphor-icons/react/dist/ssr";
-import { getPortalSettings } from "@/lib/portal";
+import { getPortalSettings, getCmsPage } from "@/lib/portal";
 
 function VkIcon({ size = 18 }: { size?: number }) {
   return (
@@ -10,38 +10,72 @@ function VkIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-const TRACKS = [
-  { label: "Игровая студия", href: "/game-studio" },
-  { label: "Кодэкс", href: "/kodeks" },
-  { label: "ТехноЛаб", href: "/technolab" },
+interface FooterLink { label: string; href: string }
+interface FooterColumn { title: string; links: FooterLink[] }
+
+const DEFAULT_COLUMNS: FooterColumn[] = [
+  {
+    title: "Треки",
+    links: [
+      { label: "Игровая студия", href: "/game-studio" },
+      { label: "Кодэкс", href: "/kodeks" },
+      { label: "ТехноЛаб", href: "/technolab" },
+    ],
+  },
+  {
+    title: "Продукты",
+    links: [
+      { label: "Направления разработки", href: "/napravleniya-razrabotki" },
+      { label: "Подготовка к ОГЭ", href: "/podgotovka-k-oge-po-informatike" },
+      { label: "Подготовка к ЕГЭ", href: "/podgotovka-k-ege-po-informatike" },
+      { label: "Frontend-разработка", href: "/frontend-razrabotka" },
+      { label: "Backend-разработка", href: "/backend-razrabotka" },
+      { label: "Индивидуальные занятия", href: "/individualnye-zanyatiya" },
+    ],
+  },
+  {
+    title: "Компания",
+    links: [
+      { label: "О нас", href: "/o-nas" },
+      { label: "Достижения учеников", href: "/dostizheniya-uchenikov" },
+      { label: "Блог", href: "/blog" },
+      { label: "Мероприятия", href: "/aktivnosti" },
+      { label: "Контакты", href: "/kontakty" },
+    ],
+  },
 ];
 
-const PRODUCTS = [
-  { label: "Направления разработки", href: "/napravleniya-razrabotki" },
-  { label: "Подготовка к ОГЭ", href: "/podgotovka-k-oge-po-informatike" },
-  { label: "Подготовка к ЕГЭ", href: "/podgotovka-k-ege-po-informatike" },
-  { label: "Frontend-разработка", href: "/frontend-razrabotka" },
-  { label: "Backend-разработка", href: "/backend-razrabotka" },
-  { label: "Индивидуальные занятия", href: "/individualnye-zanyatiya" },
-];
+const DEFAULT_TAGLINE = "Онлайн-школа программирования для детей 10–18 лет. Три мира — один путь в IT.";
+const DEFAULT_COPYRIGHT = "TirSkix Academy. Все права защищены.";
 
-const COMPANY = [
-  { label: "О нас", href: "/o-nas" },
-  { label: "Достижения учеников", href: "/dostizheniya-uchenikov" },
-  { label: "Блог", href: "/blog" },
-  { label: "Мероприятия", href: "/aktivnosti" },
-  { label: "Контакты", href: "/kontakty" },
-];
-
-const LEGAL = [
+const LEGAL: FooterLink[] = [
   { label: "Оферта", href: "/legal/oferta" },
   { label: "Политика конфиденциальности", href: "/legal/privacy" },
   { label: "Пользовательское соглашение", href: "/legal/terms" },
 ];
 
 export async function Footer() {
-  const settings = await getPortalSettings();
+  const [settings, cms] = await Promise.all([
+    getPortalSettings(),
+    getCmsPage("footer") as Promise<Record<string, unknown>>,
+  ]);
+
   const year = new Date().getFullYear();
+
+  const tagline =
+    typeof cms.tagline === "string" && cms.tagline.trim()
+      ? cms.tagline.trim()
+      : DEFAULT_TAGLINE;
+
+  const copyright =
+    typeof cms.copyright === "string" && cms.copyright.trim()
+      ? cms.copyright.trim()
+      : DEFAULT_COPYRIGHT;
+
+  const columns: FooterColumn[] =
+    Array.isArray(cms.columns) && cms.columns.length > 0
+      ? (cms.columns as FooterColumn[])
+      : DEFAULT_COLUMNS;
 
   const tgUrl = settings.tg_url || "https://t.me/tirskix_academy";
   const vkUrl = settings.vk_url || "https://vk.com/tirskix_academy";
@@ -63,7 +97,7 @@ export async function Footer() {
               </span>
             </Link>
             <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-2">
-              Онлайн-школа программирования для детей 10–18 лет. Три мира — один путь в IT.
+              {tagline}
             </p>
             {settings.contact_phone && (
               <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors mb-1">
@@ -76,90 +110,48 @@ export async function Footer() {
               </a>
             )}
             <div className="flex items-center gap-3">
-              <a
-                href={tgUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <a href={tgUrl} target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"
-                aria-label="Telegram"
-              >
+                aria-label="Telegram">
                 <TelegramLogo size={18} weight="fill" />
               </a>
-              <a
-                href={vkUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <a href={vkUrl} target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"
-                aria-label="ВКонтакте"
-              >
+                aria-label="ВКонтакте">
                 <VkIcon size={18} />
               </a>
               {instUrl && (
-                <a
-                  href={instUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <a href={instUrl} target="_blank" rel="noopener noreferrer"
                   className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"
-                  aria-label="Instagram"
-                >
+                  aria-label="Instagram">
                   <InstagramLogo size={18} weight="fill" />
                 </a>
               )}
             </div>
           </div>
 
-          {/* Tracks */}
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--color-text-primary)] mb-4 uppercase tracking-wide">
-              Треки
-            </h3>
-            <ul className="space-y-2">
-              {TRACKS.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Products */}
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--color-text-primary)] mb-4 uppercase tracking-wide">
-              Продукты
-            </h3>
-            <ul className="space-y-2">
-              {PRODUCTS.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--color-text-primary)] mb-4 uppercase tracking-wide">
-              Компания
-            </h3>
-            <ul className="space-y-2">
-              {COMPANY.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Nav columns from CMS */}
+          {columns.map((col) => (
+            <div key={col.title}>
+              <h3 className="text-sm font-semibold text-[var(--color-text-primary)] mb-4 uppercase tracking-wide">
+                {col.title}
+              </h3>
+              <ul className="space-y-2">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--color-text-muted)]">
-          <p>© {year} TirSkix Academy. Все права защищены.</p>
+          <p>© {year} {copyright}</p>
           <div className="flex gap-4">
             {LEGAL.map((l) => (
               <Link key={l.href} href={l.href} className="hover:text-[var(--color-brand)] transition-colors">

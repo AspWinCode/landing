@@ -3,15 +3,18 @@ import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Политика конфиденциальности — TirSkix Academy" },
-  description: "Политика конфиденциальности TirSkix Academy — обработка персональных данных согласно 152-ФЗ.",
-  alternates: { canonical: "https://tirskix-academy.com/legal/privacy/" },
-  robots: { index: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("legal-privacy") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Политика конфиденциальности — TirSkix Academy",
+    description: "Политика конфиденциальности TirSkix Academy — обработка персональных данных согласно 152-ФЗ.",
+    canonical: "https://tirskix-academy.com/legal/privacy/",
+  });
+}
 
 const DEFAULT_HEADING = "Политика конфиденциальности";
 const DEFAULT_DATE = "Актуальна с 1 января 2025 года";

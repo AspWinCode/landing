@@ -5,16 +5,20 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Подготовка к ОГЭ по информатике — TirSkix Academy" },
-  description:
-    "Онлайн-подготовка к ОГЭ по информатике для 9 класса. Разбор всех заданий, Python и алгоритмы, пробные варианты. Результат от 15/21.",
-  alternates: { canonical: "https://tirskix-academy.com/podgotovka-k-oge-po-informatike/" },
-  keywords: ["подготовка к ОГЭ по информатике", "ОГЭ информатика онлайн", "ОГЭ Python", "репетитор ОГЭ информатика"],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("podgotovka-k-oge-po-informatike") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Подготовка к ОГЭ по информатике — TirSkix Academy",
+    description:
+      "Онлайн-подготовка к ОГЭ по информатике для 9 класса. Разбор всех заданий, Python и алгоритмы, пробные варианты. Результат от 15/21.",
+    keywords: ["подготовка к ОГЭ по информатике", "ОГЭ информатика онлайн", "ОГЭ Python", "репетитор ОГЭ информатика"],
+    canonical: "https://tirskix-academy.com/podgotovka-k-oge-po-informatike/",
+  });
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

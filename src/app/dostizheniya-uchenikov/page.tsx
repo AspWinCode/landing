@@ -5,15 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, Trophy, Medal, Star, GraduationCap } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Достижения учеников — TirSkix Academy" },
-  description:
-    "Реальные результаты учеников TirSkix Academy: поступление в вузы без экзаменов, ОГЭ 19/21, ЕГЭ 98 баллов, победы на олимпиадах.",
-  alternates: { canonical: "https://tirskix-academy.com/dostizheniya-uchenikov/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("dostizheniya-uchenikov") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Достижения учеников — TirSkix Academy",
+    description:
+      "Реальные результаты учеников TirSkix Academy: поступление в вузы без экзаменов, ОГЭ 19/21, ЕГЭ 98 баллов, победы на олимпиадах.",
+    canonical: "https://tirskix-academy.com/dostizheniya-uchenikov/",
+  });
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

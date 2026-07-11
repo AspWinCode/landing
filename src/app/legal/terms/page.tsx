@@ -3,15 +3,18 @@ import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Пользовательское соглашение — TirSkix Academy" },
-  description: "Пользовательское соглашение TirSkix Academy — условия использования сайта.",
-  alternates: { canonical: "https://tirskix-academy.com/legal/terms/" },
-  robots: { index: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("legal-terms") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Пользовательское соглашение — TirSkix Academy",
+    description: "Пользовательское соглашение TirSkix Academy — условия использования сайта.",
+    canonical: "https://tirskix-academy.com/legal/terms/",
+  });
+}
 
 const DEFAULT_HEADING = "Пользовательское соглашение";
 const DEFAULT_DATE = "Актуально с 1 января 2025 года";

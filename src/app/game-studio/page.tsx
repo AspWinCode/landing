@@ -4,22 +4,26 @@ import { Footer } from "@/components/layout/Footer";
 import { TrackPage } from "@/components/tracks/TrackPage";
 import { TRACKS, type TrackData } from "@/lib/tracks";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-const track = TRACKS["game-studio"];
-
-export const metadata: Metadata = {
-  title: { absolute: track.seo.title },
-  description: track.seo.description,
-  keywords: track.seo.keywords,
-  alternates: { canonical: "https://tirskix-academy.com/game-studio" },
-  openGraph: {
-    title: track.seo.title,
-    description: track.seo.description,
-    url: "https://tirskix-academy.com/game-studio",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("game-studio") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Игровая студия — создание игр для детей 10–12 лет | TirSkix Academy",
+    description:
+      "Создание игр на Snap и GDevelop для детей 10–12 лет. Визуальное программирование без синтаксиса. Первый мир TirSkix Academy — старт без опыта. Пробный урок бесплатно.",
+    keywords: [
+      "создание игр для детей",
+      "программирование для детей 10 лет",
+      "визуальное программирование для школьников",
+      "GDevelop для детей",
+      "игровая студия онлайн",
+    ],
+    canonical: "https://tirskix-academy.com/game-studio",
+  });
+}
 
 export default async function GameStudioPage() {
   const cms = await getCmsPage('game-studio');

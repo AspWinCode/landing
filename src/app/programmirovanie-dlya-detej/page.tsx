@@ -5,27 +5,26 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Курсы программирования для детей онлайн — TirSkix Academy" },
-  description:
-    "Онлайн-курсы программирования для детей 10–18 лет. Три трека: Игровая студия (Snap/GDevelop), Кодэкс (Python), ТехноЛаб (алгоритмы). Реальные результаты: БВИ, ОГЭ 19/21. Пробный урок бесплатно.",
-  keywords: [
-    "курсы программирования для детей",
-    "онлайн школа программирования для детей",
-    "программирование для детей онлайн",
-    "обучение программированию для школьников",
-    "курсы программирования для школьников",
-  ],
-  alternates: { canonical: "https://tirskix-academy.com/programmirovanie-dlya-detej/" },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("programmirovanie-dlya-detej") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
     title: "Курсы программирования для детей онлайн — TirSkix Academy",
-    description: "Онлайн-курсы программирования для детей 10–18 лет. Три трека, реальные результаты. Пробный урок бесплатно.",
-    url: "https://tirskix-academy.com/programmirovanie-dlya-detej/",
-  },
-};
+    description:
+      "Онлайн-курсы программирования для детей 10–18 лет. Три трека: Игровая студия (Snap/GDevelop), Кодэкс (Python), ТехноЛаб (алгоритмы). Реальные результаты: БВИ, ОГЭ 19/21. Пробный урок бесплатно.",
+    keywords: [
+      "курсы программирования для детей",
+      "онлайн школа программирования для детей",
+      "программирование для детей онлайн",
+      "обучение программированию для школьников",
+      "курсы программирования для школьников",
+    ],
+    canonical: "https://tirskix-academy.com/programmirovanie-dlya-detej/",
+  });
+}
 
 // JSON-LD: EducationalOrganization + FAQPage
 const jsonLd = {

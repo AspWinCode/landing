@@ -5,13 +5,18 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, Envelope, MessengerLogo } from "@phosphor-icons/react/dist/ssr";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: { absolute: "Контакты — TirSkix Academy" },
-  description:
-    "Свяжитесь с TirSkix Academy: Telegram, e-mail или форма обратной связи. Ответим в течение часа.",
-  alternates: { canonical: "https://tirskix-academy.com/kontakty/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("kontakty") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Контакты — TirSkix Academy",
+    description:
+      "Свяжитесь с TirSkix Academy: Telegram, e-mail или форма обратной связи. Ответим в течение часа.",
+    canonical: "https://tirskix-academy.com/kontakty/",
+  });
+}
 
 const CHANNELS = [
   {

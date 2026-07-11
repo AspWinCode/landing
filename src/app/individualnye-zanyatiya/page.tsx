@@ -5,15 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, User, Clock, ChartLine, Wrench } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Индивидуальные занятия по программированию — TirSkix Academy" },
-  description:
-    "Индивидуальные уроки программирования для детей 10–18 лет онлайн. Python, подготовка к ОГЭ/ЕГЭ, алгоритмы. Под запрос и темп ребёнка.",
-  alternates: { canonical: "https://tirskix-academy.com/individualnye-zanyatiya/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("individualnye-zanyatiya") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Индивидуальные занятия по программированию — TirSkix Academy",
+    description:
+      "Индивидуальные уроки программирования для детей 10–18 лет онлайн. Python, подготовка к ОГЭ/ЕГЭ, алгоритмы. Под запрос и темп ребёнка.",
+    canonical: "https://tirskix-academy.com/individualnye-zanyatiya/",
+  });
+}
 
 const ADVANTAGES = [
   {

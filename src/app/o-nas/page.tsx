@@ -5,15 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "О нас — TirSkix Academy" },
-  description:
-    "TirSkix Academy — онлайн-школа программирования для детей 10–18 лет. Миссия, ценности, команда менторов-практиков. Работаем с 2020 года.",
-  alternates: { canonical: "https://tirskix-academy.com/o-nas/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("o-nas") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "О нас — TirSkix Academy",
+    description:
+      "TirSkix Academy — онлайн-школа программирования для детей 10–18 лет. Миссия, ценности, команда менторов-практиков. Работаем с 2020 года.",
+    canonical: "https://tirskix-academy.com/o-nas/",
+  });
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

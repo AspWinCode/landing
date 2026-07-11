@@ -11,15 +11,19 @@ import { LmsSection } from "@/components/sections/LmsSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
 import { getCmsPage } from "@/lib/portal";
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "TirSkix Academy — онлайн-школа программирования для детей",
-  description:
-    "От хобби — к вершинам IT. Три нарративных трека для детей 10–18 лет: Игровая студия, Кодэкс, ТехноЛаб. Пробный урок бесплатно.",
-  alternates: { canonical: "https://tirskix-academy.com/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("home") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "TirSkix Academy — онлайн-школа программирования для детей",
+    description:
+      "От хобби — к вершинам IT. Три нарративных трека для детей 10–18 лет: Игровая студия, Кодэкс, ТехноЛаб. Пробный урок бесплатно.",
+    canonical: "https://tirskix-academy.com/",
+  });
+}
 
 export default async function HomePage() {
   const cms = await getCmsPage("home");

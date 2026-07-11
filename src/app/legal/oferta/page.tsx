@@ -3,15 +3,18 @@ import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Публичная оферта — TirSkix Academy" },
-  description: "Публичная оферта TirSkix Academy — условия оказания образовательных услуг.",
-  alternates: { canonical: "https://tirskix-academy.com/legal/oferta/" },
-  robots: { index: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("legal-oferta") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Публичная оферта — TirSkix Academy",
+    description: "Публичная оферта TirSkix Academy — условия оказания образовательных услуг.",
+    canonical: "https://tirskix-academy.com/legal/oferta/",
+  });
+}
 
 const DEFAULT_HEADING = "Публичная оферта";
 const DEFAULT_DATE = "Договор на оказание образовательных услуг. Актуален с 1 января 2025 года.";

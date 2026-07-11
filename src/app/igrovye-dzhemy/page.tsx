@@ -5,15 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Игровые джемы для детей — TirSkix Academy" },
-  description:
-    "Игровые джемы TirSkix Academy — 48-часовые соревнования по разработке игр для детей 10–18 лет. Онлайн и офлайн по городам России.",
-  alternates: { canonical: "https://tirskix-academy.com/igrovye-dzhemy/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("igrovye-dzhemy") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Игровые джемы для детей — TirSkix Academy",
+    description:
+      "Игровые джемы TirSkix Academy — 48-часовые соревнования по разработке игр для детей 10–18 лет. Онлайн и офлайн по городам России.",
+    canonical: "https://tirskix-academy.com/igrovye-dzhemy/",
+  });
+}
 
 const HOW = [
   { num: "01", title: "Объявляем тему", desc: "В пятницу вечером объявляем тему джема. У всех одинаковые условия." },

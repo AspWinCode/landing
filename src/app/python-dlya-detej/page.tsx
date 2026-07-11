@@ -5,16 +5,20 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Python для детей онлайн — TirSkix Academy" },
-  description:
-    "Обучение Python для детей 10–18 лет онлайн. Учим через детективные истории и реальные проекты — не через скучные учебники. Первый урок бесплатно.",
-  alternates: { canonical: "https://tirskix-academy.com/python-dlya-detej/" },
-  keywords: ["Python для детей", "изучить Python ребёнку", "курс Python для школьников", "Python онлайн дети"],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("python-dlya-detej") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Python для детей онлайн — TirSkix Academy",
+    description:
+      "Обучение Python для детей 10–18 лет онлайн. Учим через детективные истории и реальные проекты — не через скучные учебники. Первый урок бесплатно.",
+    keywords: ["Python для детей", "изучить Python ребёнку", "курс Python для школьников", "Python онлайн дети"],
+    canonical: "https://tirskix-academy.com/python-dlya-detej/",
+  });
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

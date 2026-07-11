@@ -4,22 +4,26 @@ import { Footer } from "@/components/layout/Footer";
 import { TrackPage } from "@/components/tracks/TrackPage";
 import { TRACKS, type TrackData } from "@/lib/tracks";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-const track = TRACKS["technolab"];
-
-export const metadata: Metadata = {
-  title: { absolute: track.seo.title },
-  description: track.seo.description,
-  keywords: track.seo.keywords,
-  alternates: { canonical: "https://tirskix-academy.com/technolab" },
-  openGraph: {
-    title: track.seo.title,
-    description: track.seo.description,
-    url: "https://tirskix-academy.com/technolab",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("technolab") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "ТехноЛаб — Python и алгоритмы для подростков 14–18 лет | TirSkix Academy",
+    description:
+      "Python, алгоритмы, ООП, математика для подростков 14–18 лет. Подготовка к олимпиадам и поступлению в МФТИ, ИТМО, ВШЭ. TirSkix Academy. Пробный урок бесплатно.",
+    keywords: [
+      "Python алгоритмы для подростков",
+      "подготовка к олимпиаде по информатике",
+      "программирование для поступления в вуз",
+      "ООП Python школьники",
+      "курс алгоритмов онлайн",
+    ],
+    canonical: "https://tirskix-academy.com/technolab",
+  });
+}
 
 export default async function TechnoLabPage() {
   const cms = await getCmsPage('technolab');

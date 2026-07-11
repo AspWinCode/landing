@@ -5,16 +5,20 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Backend-разработка для подростков — TirSkix Academy" },
-  description:
-    "Курс backend-разработки для подростков от 8 класса. Python, FastAPI, базы данных, REST API. Без опыта — с нуля до реального проекта.",
-  alternates: { canonical: "https://tirskix-academy.com/backend-razrabotka/" },
-  keywords: ["backend для детей", "backend разработка подростки", "Python FastAPI курс", "серверная разработка школьники"],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("backend-razrabotka") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Backend-разработка для подростков — TirSkix Academy",
+    description:
+      "Курс backend-разработки для подростков от 8 класса. Python, FastAPI, базы данных, REST API. Без опыта — с нуля до реального проекта.",
+    keywords: ["backend для детей", "backend разработка подростки", "Python FastAPI курс", "серверная разработка школьники"],
+    canonical: "https://tirskix-academy.com/backend-razrabotka/",
+  });
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

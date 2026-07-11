@@ -5,16 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { TrialForm } from "@/components/forms/TrialForm";
 import { CheckCircle, Clock, ChatTeardropText, Medal } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Бесплатный пробный урок — TirSkix Academy" },
-  description:
-    "Запишитесь на бесплатный пробный урок по программированию для ребёнка 10–18 лет. Ответим в течение часа. Без обязательств.",
-  alternates: { canonical: "https://tirskix-academy.com/besplatnyj-probnyj-urok" },
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("besplatnyj-probnyj-urok") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Бесплатный пробный урок — TirSkix Academy",
+    description:
+      "Запишитесь на бесплатный пробный урок по программированию для ребёнка 10–18 лет. Ответим в течение часа. Без обязательств.",
+    canonical: "https://tirskix-academy.com/besplatnyj-probnyj-urok",
+  });
+}
 
 const BENEFITS = [
   { icon: CheckCircle, text: "Урок бесплатно — без условий и скрытых платежей" },

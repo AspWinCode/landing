@@ -5,15 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Направления разработки — TirSkix Academy" },
-  description:
-    "Все направления обучения программированию в TirSkix Academy: игры, Python, Data Science, алгоритмы, подготовка к ОГЭ и ЕГЭ, индивидуальные занятия.",
-  alternates: { canonical: "https://tirskix-academy.com/napravleniya-razrabotki/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("napravleniya-razrabotki") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Направления разработки — TirSkix Academy",
+    description:
+      "Все направления обучения программированию в TirSkix Academy: игры, Python, Data Science, алгоритмы, подготовка к ОГЭ и ЕГЭ, индивидуальные занятия.",
+    canonical: "https://tirskix-academy.com/napravleniya-razrabotki/",
+  });
+}
 
 const DIRECTIONS = [
   {

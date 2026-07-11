@@ -5,16 +5,20 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Разработка игр на Python для детей — TirSkix Academy" },
-  description:
-    "Курс разработки игр на Python для детей 10–18 лет онлайн. Учим Arcade, Pygame, создаём игры с нуля. Первый урок бесплатно.",
-  alternates: { canonical: "https://tirskix-academy.com/razrabotka-igr-na-python/" },
-  keywords: ["разработка игр Python", "Pygame дети", "Arcade Python", "создать игру Python ребёнок"],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("razrabotka-igr-na-python") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Разработка игр на Python для детей — TirSkix Academy",
+    description:
+      "Курс разработки игр на Python для детей 10–18 лет онлайн. Учим Arcade, Pygame, создаём игры с нуля. Первый урок бесплатно.",
+    keywords: ["разработка игр Python", "Pygame дети", "Arcade Python", "создать игру Python ребёнок"],
+    canonical: "https://tirskix-academy.com/razrabotka-igr-na-python/",
+  });
+}
 
 const jsonLd = {
   "@context": "https://schema.org",

@@ -5,15 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, GameController, Trophy, Users, Calendar } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Мероприятия и активности — TirSkix Academy" },
-  description:
-    "Игровые джемы, олимпиады, хакатоны и онлайн-соревнования для детей от TirSkix Academy. Участвуй, побеждай, создавай.",
-  alternates: { canonical: "https://tirskix-academy.com/aktivnosti/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("aktivnosti") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Мероприятия и активности — TirSkix Academy",
+    description:
+      "Игровые джемы, олимпиады, хакатоны и онлайн-соревнования для детей от TirSkix Academy. Участвуй, побеждай, создавай.",
+    canonical: "https://tirskix-academy.com/aktivnosti/",
+  });
+}
 
 const FORMATS = [
   {

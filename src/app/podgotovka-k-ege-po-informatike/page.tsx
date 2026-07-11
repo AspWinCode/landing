@@ -5,16 +5,20 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: { absolute: "Подготовка к ЕГЭ по информатике — TirSkix Academy" },
-  description:
-    "Онлайн-подготовка к ЕГЭ по информатике для 10–11 класса. Python, алгоритмы, теория вероятностей в ИТ. Цель — от 80 до 98 баллов.",
-  alternates: { canonical: "https://tirskix-academy.com/podgotovka-k-ege-po-informatike/" },
-  keywords: ["подготовка к ЕГЭ по информатике", "ЕГЭ информатика онлайн", "ЕГЭ Python 2025", "репетитор ЕГЭ информатика"],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cms = await getCmsPage("podgotovka-k-ege-po-informatike") as unknown as Record<string, unknown>;
+  return buildPageMetadata(cms, {
+    title: "Подготовка к ЕГЭ по информатике — TirSkix Academy",
+    description:
+      "Онлайн-подготовка к ЕГЭ по информатике для 10–11 класса. Python, алгоритмы, теория вероятностей в ИТ. Цель — от 80 до 98 баллов.",
+    keywords: ["подготовка к ЕГЭ по информатике", "ЕГЭ информатика онлайн", "ЕГЭ Python 2025", "репетитор ЕГЭ информатика"],
+    canonical: "https://tirskix-academy.com/podgotovka-k-ege-po-informatike/",
+  });
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
