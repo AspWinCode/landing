@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ─── Design Tokens: TirSkix Academy ─── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Violet ramp */
+  --color-violet-50: #F5EEFC;
+  --color-violet-100: #EAD9F9;
+  --color-violet-200: #D4B4F3;
+  --color-violet-300: #BA87EB;
+  --color-violet-400: #A05AE2;
+  --color-violet-500: #8F35D7;
+  --color-violet-600: #7F23CC;
+  --color-violet-700: #6A1BAB;
+  --color-violet-800: #511487;
+  --color-violet-900: #3D0F66;
+  --color-violet-950: #360F57;
+
+  /* Track accent colors */
+  --color-track-studio: #22C55E;       /* Game Studio — green */
+  --color-track-studio-light: #DCFCE7;
+  --color-track-kodeks: #F97316;       /* Kodeks — coral/orange */
+  --color-track-kodeks-light: #FFEDD5;
+  --color-track-technolab: #6366F1;    /* TechnoLab — indigo */
+  --color-track-technolab-light: #EEF2FF;
+
+  /* Semantic: light theme */
+  --color-bg: #FFFFFF;
+  --color-bg-subtle: #F8F5FE;
+  --color-bg-muted: #F0E9FC;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #F5EEFC;
+  --color-border: #E9D8FA;
+  --color-border-strong: #C4A0EE;
+
+  --color-text-primary: #1A0A2E;
+  --color-text-secondary: #4A2D7A;
+  --color-text-muted: #7B5EA7;
+  --color-text-inverse: #FFFFFF;
+
+  --color-brand: #7F23CC;
+  --color-brand-hover: #6A1BAB;
+  --color-brand-active: #511487;
+
+  /* Fonts */
+  --font-heading: var(--font-manrope), system-ui, sans-serif;
+  --font-body: var(--font-open-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace;
+
+  /* Spacing / radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px 0 rgb(127 35 204 / 0.08), 0 1px 2px -1px rgb(127 35 204 / 0.05);
+  --shadow-card-hover: 0 8px 24px -4px rgb(127 35 204 / 0.18), 0 4px 8px -2px rgb(127 35 204 / 0.10);
+  --shadow-cta: 0 4px 16px 0 rgb(127 35 204 / 0.35);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Dark theme overrides ─── */
+[data-theme="dark"] {
+  --color-bg: #0D0718;
+  --color-bg-subtle: #150C24;
+  --color-bg-muted: #1E1030;
+  --color-surface: #180D2A;
+  --color-surface-raised: #221239;
+  --color-border: #3A1F5C;
+  --color-border-strong: #5B3491;
+
+  --color-text-primary: #F0E9FC;
+  --color-text-secondary: #C4A0EE;
+  --color-text-muted: #8B6BB5;
+  --color-text-inverse: #1A0A2E;
+
+  --color-brand: #A05AE2;
+  --color-brand-hover: #BA87EB;
+  --color-brand-active: #D4B4F3;
+
+  /* Track accent lights — dark mode overrides */
+  --color-track-studio-light: #052E16;
+  --color-track-kodeks-light: #1C0700;
+  --color-track-technolab-light: #0F0F2E;
+}
+
+/* ─── Base ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+}
+
+/* ─── Utility: container ─── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 48px);
+}
+
+/* ─── Utility: focus ring ─── */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
