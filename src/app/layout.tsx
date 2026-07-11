@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Open_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AnnouncementBanner } from "@/components/layout/AnnouncementBanner";
 import { getPortalSettings, getCmsPage } from "@/lib/portal";
 import { generateThemeCss } from "@/lib/theme";
 import "./globals.css";
@@ -53,9 +54,10 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [settings, branding] = await Promise.all([
+  const [settings, branding, announcement] = await Promise.all([
     getPortalSettings(),
     getCmsPage("branding") as Promise<Record<string, unknown>>,
+    getCmsPage("announcement") as Promise<Record<string, unknown>>,
   ]);
   const brandHex = typeof branding.brand_hex === "string" && /^#[0-9a-fA-F]{6}$/.test(branding.brand_hex)
     ? branding.brand_hex : null;
@@ -64,6 +66,12 @@ export default async function RootLayout({
     ? branding.favicon_url.trim() : null;
   const customHeadScript = typeof branding.custom_head_script === "string" && branding.custom_head_script.trim()
     ? branding.custom_head_script.trim() : null;
+  const annEnabled = announcement.enabled === true;
+  const annText = typeof announcement.text === "string" && announcement.text.trim()
+    ? announcement.text.trim() : null;
+  const annHref = typeof announcement.href === "string" && announcement.href.trim()
+    ? announcement.href.trim() : null;
+  const annStyle = typeof announcement.style === "string" ? announcement.style : "brand";
 
   return (
     <html
@@ -114,6 +122,9 @@ export default async function RootLayout({
         )}
       </head>
       <body className="min-h-full flex flex-col">
+        {annEnabled && annText && (
+          <AnnouncementBanner text={annText} href={annHref} style={annStyle} />
+        )}
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
