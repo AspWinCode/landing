@@ -13,7 +13,25 @@ const CODE_LINES = [
   { indent: 1, content: "return suspects[0]", color: "text-[var(--color-track-kodeks)]" },
 ];
 
-export function HeroSection() {
+interface HeroProps {
+  badge?: string;
+  h1?: string;
+  h1Accent?: string;
+  subtitle?: string;
+  bullets?: string[];
+  ctaPrimary?: string;
+  ctaSecondary?: string;
+}
+
+export function HeroSection({
+  badge = "Набор открыт · Пробный урок бесплатно",
+  h1 = "От хобби —",
+  h1Accent = "к вершинам IT",
+  subtitle = "Три мира программирования для детей 10–18 лет. Не курсы — путешествие: от первой игры до олимпиад и поступления в лучшие вузы.",
+  bullets = ["Онлайн, в удобное время", "Менторы-практики из IT", "Результаты уже через 3 месяца"],
+  ctaPrimary = "Оставить заявку",
+  ctaSecondary = "Узнать о треках",
+}: HeroProps = {}) {
   return (
     <section className="relative overflow-hidden py-16 md:py-24 lg:py-32">
       {/* Background blobs */}
@@ -29,25 +47,20 @@ export function HeroSection() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-surface-raised)] border border-[var(--color-border)] text-sm font-medium text-[var(--color-brand)] mb-8">
               <span className="w-2 h-2 rounded-full bg-[var(--color-track-studio)] animate-pulse" />
-              Набор открыт · Пробный урок бесплатно
+              {badge}
             </div>
 
             <h1 className="text-4xl md:text-5xl xl:text-6xl font-extrabold text-[var(--color-text-primary)] leading-tight mb-6">
-              От хобби —<br />
-              <span className="text-[var(--color-brand)]">к вершинам IT</span>
+              {h1}<br />
+              <span className="text-[var(--color-brand)]">{h1Accent}</span>
             </h1>
 
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed mb-6 max-w-lg">
-              Три мира программирования для детей 10–18 лет. Не курсы — путешествие:
-              от первой игры до олимпиад и поступления в лучшие вузы.
+              {subtitle}
             </p>
 
             <ul className="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-10 text-sm text-[var(--color-text-muted)]">
-              {[
-                "Онлайн, в удобное время",
-                "Менторы-практики из IT",
-                "Результаты уже через 3 месяца",
-              ].map((item) => (
+              {bullets.map((item) => (
                 <li key={item} className="flex items-center gap-2">
                   <CheckCircle size={16} weight="fill" className="text-[var(--color-track-studio)] shrink-0" />
                   {item}
@@ -57,11 +70,11 @@ export function HeroSection() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/besplatnyj-probnyj-urok" className={buttonClass("primary", "lg", "group")}>
-                Оставить заявку
+                {ctaPrimary}
                 <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
               </Link>
               <Link href="/programmirovanie-dlya-detej" className={buttonClass("secondary", "lg")}>
-                Узнать о треках
+                {ctaSecondary}
               </Link>
             </div>
 

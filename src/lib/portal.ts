@@ -70,3 +70,10 @@ export async function getPortalSettings(): Promise<PortalSettings> {
   const data = await portalFetch<PortalSettings>("/api/v1/public/site-settings");
   return data ?? EMPTY_SETTINGS;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getCmsPage(slug: string): Promise<Record<string, any>> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data = await portalFetch<Record<string, any>>(`/api/v1/public/cms/${slug}`);
+  return data ?? {};
+}

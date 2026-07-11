@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Часто задаваемые вопросы — TirSkix Academy" },
@@ -12,7 +15,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://tirskix-academy.com/faq/" },
 };
 
-const SECTIONS = [
+interface FaqItem { q: string; a: string }
+interface FaqSection { title: string; items: FaqItem[] }
+
+const SECTIONS: FaqSection[] = [
   {
     title: "О школе и формате",
     items: [
@@ -108,19 +114,24 @@ const SECTIONS = [
   },
 ];
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: SECTIONS.flatMap((s) =>
-    s.items.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    }))
-  ),
-};
+export default async function FaqPage() {
+  const cms = await getCmsPage("faq");
+  const cmsSections = Array.isArray(cms.sections) && cms.sections.length > 0
+    ? (cms.sections as FaqSection[])
+    : SECTIONS;
 
-export default function FaqPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: cmsSections.flatMap((s) =>
+      (s.items || []).map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      }))
+    ),
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -147,13 +158,13 @@ export default function FaqPage() {
         <section className="pb-16 md:pb-24">
           <div className="container max-w-3xl">
             <div className="space-y-12">
-              {SECTIONS.map((section) => (
+              {cmsSections.map((section) => (
                 <div key={section.title}>
                   <h2 className="text-xl font-extrabold text-[var(--color-text-primary)] mb-4 pb-3 border-b border-[var(--color-border)]">
                     {section.title}
                   </h2>
                   <div className="space-y-3">
-                    {section.items.map((item) => (
+                    {(section.items || []).map((item) => (
                       <details
                         key={item.q}
                         className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden"
