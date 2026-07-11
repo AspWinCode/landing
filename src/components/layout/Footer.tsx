@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { TelegramLogo, YoutubeLogo } from "@phosphor-icons/react/dist/ssr";
+import { TelegramLogo, YoutubeLogo, InstagramLogo } from "@phosphor-icons/react/dist/ssr";
+import { getPortalSettings } from "@/lib/portal";
 
 function VkIcon({ size = 18 }: { size?: number }) {
   return (
@@ -38,8 +39,13 @@ const LEGAL = [
   { label: "Пользовательское соглашение", href: "/legal/terms" },
 ];
 
-export function Footer() {
+export async function Footer() {
+  const settings = await getPortalSettings();
   const year = new Date().getFullYear();
+
+  const tgUrl = settings.tg_url || "https://t.me/tirskix_academy";
+  const vkUrl = settings.vk_url || "https://vk.com/tirskix_academy";
+  const instUrl = settings.inst_url;
 
   return (
     <footer className="mt-auto border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
@@ -56,12 +62,22 @@ export function Footer() {
                 TirSkix Academy
               </span>
             </Link>
-            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-4">
+            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-2">
               Онлайн-школа программирования для детей 10–18 лет. Три мира — один путь в IT.
             </p>
+            {settings.contact_phone && (
+              <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors mb-1">
+                {settings.contact_phone}
+              </a>
+            )}
+            {settings.contact_email && (
+              <a href={`mailto:${settings.contact_email}`} className="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors mb-4">
+                {settings.contact_email}
+              </a>
+            )}
             <div className="flex items-center gap-3">
               <a
-                href="https://t.me/tirskix_academy"
+                href={tgUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"
@@ -70,7 +86,7 @@ export function Footer() {
                 <TelegramLogo size={18} weight="fill" />
               </a>
               <a
-                href="https://vk.com/tirskix_academy"
+                href={vkUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"
@@ -78,15 +94,17 @@ export function Footer() {
               >
                 <VkIcon size={18} />
               </a>
-              <a
-                href="https://youtube.com/@tirskix_academy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"
-                aria-label="YouTube"
-              >
-                <YoutubeLogo size={18} weight="fill" />
-              </a>
+              {instUrl && (
+                <a
+                  href={instUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"
+                  aria-label="Instagram"
+                >
+                  <InstagramLogo size={18} weight="fill" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -98,10 +116,7 @@ export function Footer() {
             <ul className="space-y-2">
               {TRACKS.map((l) => (
                 <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors"
-                  >
+                  <Link href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -117,10 +132,7 @@ export function Footer() {
             <ul className="space-y-2">
               {PRODUCTS.map((l) => (
                 <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors"
-                  >
+                  <Link href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -136,10 +148,7 @@ export function Footer() {
             <ul className="space-y-2">
               {COMPANY.map((l) => (
                 <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors"
-                  >
+                  <Link href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -153,11 +162,7 @@ export function Footer() {
           <p>© {year} TirSkix Academy. Все права защищены.</p>
           <div className="flex gap-4">
             {LEGAL.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="hover:text-[var(--color-brand)] transition-colors"
-              >
+              <Link key={l.href} href={l.href} className="hover:text-[var(--color-brand)] transition-colors">
                 {l.label}
               </Link>
             ))}

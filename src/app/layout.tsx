@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Open_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { getPortalSettings } from "@/lib/portal";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -24,6 +25,8 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://tirskix-academy.com"),
   title: {
@@ -46,15 +49,48 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const settings = await getPortalSettings();
+
   return (
     <html
       lang="ru"
       suppressHydrationWarning
       className={`${manrope.variable} ${openSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Google Analytics 4 */}
+        {settings.ga_measurement_id && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${settings.ga_measurement_id}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${settings.ga_measurement_id}');`,
+              }}
+            />
+          </>
+        )}
+
+        {/* Yandex.Metrica */}
+        {settings.ym_counter_id && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(${settings.ym_counter_id},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});`,
+            }}
+          />
+        )}
+
+        {/* VK Pixel */}
+        {settings.vk_pixel_id && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("${settings.vk_pixel_id}"),VK.Retargeting.Hit()},document.head.appendChild(t)}();`,
+            }}
+          />
+        )}
+      </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
