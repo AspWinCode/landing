@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
-import { POSTS } from "@/app/blog/page";
+import { getPortalPosts } from "@/lib/portal";
 
 const BASE = "https://tirskix-academy.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -30,9 +32,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
   ];
 
-  const blogPages: MetadataRoute.Sitemap = POSTS.map((post) => ({
+  const posts = await getPortalPosts();
+  const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${BASE}/blog/${post.slug}/`,
-    lastModified: new Date(post.date),
+    lastModified: post.published_at ? new Date(post.published_at) : now,
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
