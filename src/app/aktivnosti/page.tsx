@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, GameController, Trophy, Users, Calendar } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Мероприятия и активности — TirSkix Academy" },
@@ -71,7 +74,10 @@ const JAMS_PAST = [
   },
 ];
 
-export default function ActivitiesPage() {
+export default async function ActivitiesPage() {
+  const cms = await getCmsPage('aktivnosti');
+  const formats = Array.isArray(cms.formats) && cms.formats.length > 0 ? cms.formats as typeof FORMATS : FORMATS;
+  const jamsPast = Array.isArray(cms.jams_past) && cms.jams_past.length > 0 ? cms.jams_past as typeof JAMS_PAST : JAMS_PAST;
   return (
     <>
       <Header />
@@ -105,7 +111,7 @@ export default function ActivitiesPage() {
               Форматы активностей
             </h2>
             <div className="grid sm:grid-cols-2 gap-5">
-              {FORMATS.map(({ icon: Icon, title, desc, color, badge }) => (
+              {formats.map(({ icon: Icon, title, desc, color, badge }) => (
                 <div key={title} className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)] flex flex-col">
                   <div className="flex items-start justify-between gap-3 mb-4">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: `color-mix(in srgb, ${color} 12%, transparent)` }}>
@@ -143,7 +149,7 @@ export default function ActivitiesPage() {
 
             <h3 className="text-lg font-extrabold text-[var(--color-text-primary)] mb-5">Прошедшие джемы</h3>
             <div className="space-y-4">
-              {JAMS_PAST.map((jam) => (
+              {jamsPast.map((jam) => (
                 <div key={jam.title} className="bg-[var(--color-surface)] rounded-2xl p-5 border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                     <div>

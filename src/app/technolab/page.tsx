@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { TrackPage } from "@/components/tracks/TrackPage";
-import { TRACKS } from "@/lib/tracks";
+import { TRACKS, type TrackData } from "@/lib/tracks";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 const track = TRACKS["technolab"];
 
@@ -18,12 +21,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TechnoLabPage() {
+export default async function TechnoLabPage() {
+  const cms = await getCmsPage('technolab');
+  const pageTrack = (Object.keys(cms).length > 0 ? cms : TRACKS["technolab"]) as TrackData;
   return (
     <>
       <Header />
       <main>
-        <TrackPage track={track} />
+        <TrackPage track={pageTrack} />
       </main>
       <Footer />
     </>

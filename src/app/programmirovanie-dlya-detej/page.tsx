@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, CaretDown } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Курсы программирования для детей онлайн — TirSkix Academy" },
@@ -124,7 +127,10 @@ const FAQ = [
   },
 ];
 
-export default function ProgrammirovaniyaDlyaDetejPage() {
+export default async function ProgrammirovaniyaDlyaDetejPage() {
+  const cms = await getCmsPage('programmirovanie-dlya-detej');
+  const cmsTracks = Array.isArray(cms.tracks) && cms.tracks.length > 0 ? cms.tracks as typeof TRACKS : TRACKS;
+  const faq = Array.isArray(cms.faq) && cms.faq.length > 0 ? cms.faq as typeof FAQ : FAQ;
   return (
     <>
       <script
@@ -206,7 +212,7 @@ export default function ProgrammirovaniyaDlyaDetejPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 mb-10">
-              {TRACKS.map((t) => (
+              {cmsTracks.map((t) => (
                 <article
                   key={t.href}
                   className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 overflow-hidden flex flex-col"
@@ -319,7 +325,7 @@ export default function ProgrammirovaniyaDlyaDetejPage() {
               Часто задаваемые вопросы
             </h2>
             <div className="space-y-3">
-              {FAQ.map((item) => (
+              {faq.map((item) => (
                 <details key={item.q} className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden">
                   <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors text-sm">
                     {item.q}

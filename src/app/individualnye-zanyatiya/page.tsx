@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, User, Clock, ChartLine, Wrench } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Индивидуальные занятия по программированию — TirSkix Academy" },
@@ -62,7 +65,10 @@ const CASES = [
   },
 ];
 
-export default function IndividualPage() {
+export default async function IndividualPage() {
+  const cms = await getCmsPage('individualnye-zanyatiya');
+  const advantages = Array.isArray(cms.advantages) && cms.advantages.length > 0 ? cms.advantages as typeof ADVANTAGES : ADVANTAGES;
+  const cases = Array.isArray(cms.cases) && cms.cases.length > 0 ? cms.cases as typeof CASES : CASES;
   return (
     <>
       <Header />
@@ -100,7 +106,7 @@ export default function IndividualPage() {
               Почему индивидуально
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
-              {ADVANTAGES.map(({ icon: Icon, title, desc }) => (
+              {advantages.map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <div className="w-10 h-10 rounded-xl bg-[var(--color-violet-100)] flex items-center justify-center mb-4">
                     <Icon size={20} weight="fill" className="text-[var(--color-brand)]" />
@@ -123,7 +129,7 @@ export default function IndividualPage() {
               Не подходит ни один трек? Индивидуальные занятия — для любой цели.
             </p>
             <div className="grid sm:grid-cols-2 gap-5">
-              {CASES.map((c) => (
+              {cases.map((c) => (
                 <div key={c.title} className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <span className="inline-block text-xs font-bold px-2.5 py-1 rounded-full mb-3" style={{ background: `color-mix(in srgb, ${c.color} 12%, transparent)`, color: c.color }}>
                     {c.tag}

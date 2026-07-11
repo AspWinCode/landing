@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { TrialForm } from "@/components/forms/TrialForm";
 import { CheckCircle, Clock, ChatTeardropText, Medal } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Бесплатный пробный урок — TirSkix Academy" },
@@ -27,7 +30,30 @@ const STATS = [
   { value: "< 1 часа", label: "время ответа на заявку" },
 ];
 
-export default function TrialPage() {
+const FAQ = [
+  {
+    q: "Это действительно бесплатно?",
+    a: "Да, без условий. Первое занятие мы проводим бесплатно, чтобы вы и ребёнок смогли оценить формат, ментора и программу. Никаких скрытых платежей или обязательств продолжать.",
+  },
+  {
+    q: "Какой возраст подходит?",
+    a: "Принимаем детей от 10 до 18 лет. У нас три трека для разных возрастов и уровней: Игровая студия (10–12), Кодэкс (12–15), ТехноЛаб (14–18). Если не уверены — укажите в форме, подберём сами.",
+  },
+  {
+    q: "Нужен ли опыт программирования?",
+    a: "Нет. Игровая студия и Кодэкс рассчитаны на старт с нуля. ТехноЛаб требует базовый Python — уточним на вводном занятии.",
+  },
+  {
+    q: "Как проходит урок онлайн?",
+    a: "В Zoom или аналоге. Ментор видит экран ребёнка, объясняет, помогает в реальном времени. Нужен только компьютер или ноутбук — планшет/телефон не подойдут.",
+  },
+];
+
+export default async function TrialPage() {
+  const cms = await getCmsPage('besplatnyj-probnyj-urok');
+  const benefits = Array.isArray(cms.benefits) && cms.benefits.length > 0 ? cms.benefits as typeof BENEFITS : BENEFITS;
+  const stats = Array.isArray(cms.stats) && cms.stats.length > 0 ? cms.stats as typeof STATS : STATS;
+  const faq = Array.isArray(cms.faq) && cms.faq.length > 0 ? cms.faq as typeof FAQ : FAQ;
   return (
     <>
       <Header />
@@ -65,7 +91,7 @@ export default function TrialPage() {
                 </p>
 
                 <ul className="space-y-4 mb-10">
-                  {BENEFITS.map(({ icon: Icon, text }) => (
+                  {benefits.map(({ icon: Icon, text }) => (
                     <li key={text} className="flex items-start gap-3">
                       <Icon size={20} weight="fill" className="text-[var(--color-brand)] shrink-0 mt-0.5" />
                       <span className="text-[var(--color-text-secondary)] text-sm">{text}</span>
@@ -75,7 +101,7 @@ export default function TrialPage() {
 
                 {/* Stats strip */}
                 <div className="grid grid-cols-2 gap-4">
-                  {STATS.map((s) => (
+                  {stats.map((s) => (
                     <div key={s.label} className="bg-[var(--color-bg-subtle)] rounded-2xl p-4 border border-[var(--color-border)]">
                       <div className="text-2xl font-extrabold text-[var(--color-brand)] mb-0.5">{s.value}</div>
                       <div className="text-xs text-[var(--color-text-muted)] leading-snug">{s.label}</div>
@@ -148,24 +174,7 @@ export default function TrialPage() {
               Частые вопросы
             </h2>
             <div className="space-y-3">
-              {[
-                {
-                  q: "Это действительно бесплатно?",
-                  a: "Да, без условий. Первое занятие мы проводим бесплатно, чтобы вы и ребёнок смогли оценить формат, ментора и программу. Никаких скрытых платежей или обязательств продолжать.",
-                },
-                {
-                  q: "Какой возраст подходит?",
-                  a: "Принимаем детей от 10 до 18 лет. У нас три трека для разных возрастов и уровней: Игровая студия (10–12), Кодэкс (12–15), ТехноЛаб (14–18). Если не уверены — укажите в форме, подберём сами.",
-                },
-                {
-                  q: "Нужен ли опыт программирования?",
-                  a: "Нет. Игровая студия и Кодэкс рассчитаны на старт с нуля. ТехноЛаб требует базовый Python — уточним на вводном занятии.",
-                },
-                {
-                  q: "Как проходит урок онлайн?",
-                  a: "В Zoom или аналоге. Ментор видит экран ребёнка, объясняет, помогает в реальном времени. Нужен только компьютер или ноутбук — планшет/телефон не подойдут.",
-                },
-              ].map((item) => (
+              {faq.map((item) => (
                 <details key={item.q} className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden">
                   <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors text-sm">
                     {item.q}

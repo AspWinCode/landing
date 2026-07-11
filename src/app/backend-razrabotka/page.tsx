@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, CaretDown } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Backend-разработка для подростков — TirSkix Academy" },
@@ -67,7 +70,12 @@ const FAQ = [
   },
 ];
 
-export default function BackendPage() {
+export default async function BackendPage() {
+  const cms = await getCmsPage('backend-razrabotka');
+  const topics = Array.isArray(cms.topics) && cms.topics.length > 0 ? cms.topics as typeof TOPICS : TOPICS;
+  const skills = Array.isArray(cms.skills) && cms.skills.length > 0 ? cms.skills as typeof SKILLS : SKILLS;
+  const results = Array.isArray(cms.results) && cms.results.length > 0 ? cms.results as typeof RESULTS : RESULTS;
+  const faq = Array.isArray(cms.faq) && cms.faq.length > 0 ? cms.faq as typeof FAQ : FAQ;
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -121,7 +129,7 @@ export default function BackendPage() {
         <section className="py-12 bg-[var(--color-bg-subtle)] border-y border-[var(--color-border)]">
           <div className="container">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-              {RESULTS.map(({ v, l }) => (
+              {results.map(({ v, l }) => (
                 <div key={v} className="text-center">
                   <div className="text-2xl md:text-3xl font-extrabold mb-1" style={{ color: "var(--color-track-technolab)" }}>{v}</div>
                   <div className="text-xs text-[var(--color-text-muted)] leading-snug">{l}</div>
@@ -141,7 +149,7 @@ export default function BackendPage() {
               Контент будет обновлён — пока ориентировочный план. Финальный учебный план формируется под уровень ученика.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              {TOPICS.map((topic) => (
+              {topics.map((topic) => (
                 <div key={topic.num} className="flex gap-4 p-5 bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-sm font-black"
                     style={{ background: "color-mix(in srgb, var(--color-track-technolab) 12%, transparent)", color: "var(--color-track-technolab)" }}>
@@ -166,7 +174,7 @@ export default function BackendPage() {
                   Чему научится ученик
                 </h2>
                 <ul className="space-y-3">
-                  {SKILLS.map((skill) => (
+                  {skills.map((skill) => (
                     <li key={skill} className="flex items-start gap-3">
                       <CheckCircle size={20} weight="fill" className="shrink-0 mt-0.5" style={{ color: "var(--color-track-technolab)" }} />
                       <span className="text-[var(--color-text-secondary)]">{skill}</span>
@@ -177,7 +185,7 @@ export default function BackendPage() {
               <div className="rounded-3xl p-8 md:p-10" style={{ background: "color-mix(in srgb, var(--color-track-technolab) 8%, transparent)" }}>
                 <div className="text-5xl mb-4">⚙️</div>
                 <div className="text-2xl font-extrabold mb-2" style={{ color: "var(--color-track-technolab)" }}>Backend</div>
-                <div className="text-sm font-medium text-[var(--color-text-secondary)] mb-6">от 8 класса · {SKILLS.length} навыков</div>
+                <div className="text-sm font-medium text-[var(--color-text-secondary)] mb-6">от 8 класса · {skills.length} навыков</div>
                 <div className="flex flex-wrap gap-2">
                   {["Python", "FastAPI", "PostgreSQL", "REST API", "Git"].map((t) => (
                     <span key={t} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm"
@@ -196,7 +204,7 @@ export default function BackendPage() {
           <div className="container max-w-3xl">
             <h2 className="text-3xl font-extrabold text-[var(--color-text-primary)] mb-10 text-center">Частые вопросы</h2>
             <div className="space-y-3">
-              {FAQ.map((item) => (
+              {faq.map((item) => (
                 <details key={item.q} className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden">
                   <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors text-sm">
                     {item.q}

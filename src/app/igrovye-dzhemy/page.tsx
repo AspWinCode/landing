@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Игровые джемы для детей — TirSkix Academy" },
@@ -34,7 +37,11 @@ const TOOLS = [
   { name: "Snap!", tag: "Визуальный", color: "var(--color-brand)" },
 ];
 
-export default function GameJamPage() {
+export default async function GameJamPage() {
+  const cms = await getCmsPage('igrovye-dzhemy');
+  const how = Array.isArray(cms.how) && cms.how.length > 0 ? cms.how as typeof HOW : HOW;
+  const rules = Array.isArray(cms.rules) && cms.rules.length > 0 ? cms.rules as typeof RULES : RULES;
+  const tools = Array.isArray(cms.tools) && cms.tools.length > 0 ? cms.tools as typeof TOOLS : TOOLS;
   return (
     <>
       <Header />
@@ -102,7 +109,7 @@ export default function GameJamPage() {
               Как проходит джем
             </h2>
             <div className="grid sm:grid-cols-2 gap-5">
-              {HOW.map((h) => (
+              {how.map((h) => (
                 <div key={h.num} className="flex gap-4 bg-[var(--color-surface)] rounded-2xl p-5 border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white shrink-0" style={{ background: "var(--color-track-studio)" }}>
                     {h.num}
@@ -124,7 +131,7 @@ export default function GameJamPage() {
               Разрешённые инструменты
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              {TOOLS.map((t) => (
+              {tools.map((t) => (
                 <div key={t.name} className="bg-[var(--color-surface)] rounded-xl p-4 border border-[var(--color-border)] text-center">
                   <div className="font-bold text-[var(--color-text-primary)] mb-1">{t.name}</div>
                   <div className="text-xs px-2 py-0.5 rounded-full font-medium inline-block" style={{ background: `color-mix(in srgb, ${t.color} 12%, transparent)`, color: t.color }}>
@@ -146,7 +153,7 @@ export default function GameJamPage() {
               Правила участия
             </h2>
             <div className="space-y-3">
-              {RULES.map((rule) => (
+              {rules.map((rule) => (
                 <div key={rule} className="flex items-start gap-3">
                   <CheckCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: "var(--color-track-studio)" }} />
                   <span className="text-sm text-[var(--color-text-secondary)]">{rule}</span>

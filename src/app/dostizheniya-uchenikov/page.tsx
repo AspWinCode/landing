@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, Trophy, Medal, Star, GraduationCap } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Достижения учеников — TirSkix Academy" },
@@ -102,7 +105,10 @@ const TAG_COLORS: Record<string, string> = {
   "Олимпиада": "var(--color-track-technolab)",
 };
 
-export default function AchievementsPage() {
+export default async function AchievementsPage() {
+  const cms = await getCmsPage('dostizheniya-uchenikov');
+  const stats = Array.isArray(cms.stats) && cms.stats.length > 0 ? cms.stats as typeof STATS : STATS;
+  const stories = Array.isArray(cms.stories) && cms.stories.length > 0 ? cms.stories as typeof STORIES : STORIES;
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -134,7 +140,7 @@ export default function AchievementsPage() {
         <section className="py-12 bg-[var(--color-bg-subtle)] border-y border-[var(--color-border)]">
           <div className="container">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              {STATS.map(({ icon: Icon, value, label, color }) => (
+              {stats.map(({ icon: Icon, value, label, color }) => (
                 <div key={value} className="flex flex-col items-center text-center gap-3">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: `color-mix(in srgb, ${color} 12%, transparent)` }}>
                     <Icon size={24} weight="fill" style={{ color }} />
@@ -159,7 +165,7 @@ export default function AchievementsPage() {
               Каждая история — реальная. Имена изменены частично по просьбе семей.
             </p>
             <div className="space-y-6">
-              {STORIES.map((s) => (
+              {stories.map((s) => (
                 <article
                   key={s.name}
                   className="bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] shadow-[var(--shadow-card)] overflow-hidden"

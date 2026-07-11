@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Подготовка к ЕГЭ по информатике — TirSkix Academy" },
@@ -70,7 +73,11 @@ const FAQ = [
   },
 ];
 
-export default function EgePage() {
+export default async function EgePage() {
+  const cms = await getCmsPage('podgotovka-k-ege-po-informatike');
+  const blocks = Array.isArray(cms.blocks) && cms.blocks.length > 0 ? cms.blocks as typeof BLOCKS : BLOCKS;
+  const results = Array.isArray(cms.results) && cms.results.length > 0 ? cms.results as typeof RESULTS : RESULTS;
+  const faq = Array.isArray(cms.faq) && cms.faq.length > 0 ? cms.faq as typeof FAQ : FAQ;
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -114,7 +121,7 @@ export default function EgePage() {
         <section className="py-10 bg-[var(--color-bg-subtle)] border-y border-[var(--color-border)]">
           <div className="container">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-              {RESULTS.map((s) => (
+              {results.map((s) => (
                 <div key={s.v} className="text-center">
                   <div className="text-2xl md:text-3xl font-extrabold mb-1" style={{ color: "var(--color-track-technolab)" }}>{s.v}</div>
                   <div className="text-xs text-[var(--color-text-muted)]">{s.l}</div>
@@ -134,7 +141,7 @@ export default function EgePage() {
               Покрываем все 27 заданий. Особый акцент на 2 части — там самые весомые баллы.
             </p>
             <div className="grid md:grid-cols-3 gap-6">
-              {BLOCKS.map((b) => (
+              {blocks.map((b) => (
                 <div key={b.title} className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <div className="text-xs font-mono font-bold mb-1" style={{ color: b.color }}>{b.title}</div>
                   <h3 className="font-extrabold text-[var(--color-text-primary)] mb-4">{b.subtitle}</h3>
@@ -159,7 +166,7 @@ export default function EgePage() {
               Частые вопросы
             </h2>
             <div className="space-y-3">
-              {FAQ.map((item) => (
+              {faq.map((item) => (
                 <details key={item.q} className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden">
                   <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors text-sm">
                     {item.q}

@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Python для детей онлайн — TirSkix Academy" },
@@ -70,7 +73,11 @@ const FAQ = [
   { q: "Какую версию Python учим?", a: "Python 3 — актуальная версия, которая используется в реальных проектах, олимпиадах и на ОГЭ/ЕГЭ." },
 ];
 
-export default function PythonForKidsPage() {
+export default async function PythonForKidsPage() {
+  const cms = await getCmsPage('python-dlya-detej');
+  const why = Array.isArray(cms.why) && cms.why.length > 0 ? cms.why as typeof WHY : WHY;
+  const whatLearn = Array.isArray(cms.what_learn) && cms.what_learn.length > 0 ? cms.what_learn as typeof WHAT_LEARN : WHAT_LEARN;
+  const faq = Array.isArray(cms.faq) && cms.faq.length > 0 ? cms.faq as typeof FAQ : FAQ;
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -115,7 +122,7 @@ export default function PythonForKidsPage() {
           <div className="container">
             <h2 className="text-3xl font-extrabold text-[var(--color-text-primary)] mb-10 text-center">Почему у нас учатся Python</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
-              {WHY.map((w) => (
+              {why.map((w) => (
                 <div key={w.title} className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <div className="text-3xl mb-3">{w.emoji}</div>
                   <h3 className="font-extrabold text-[var(--color-text-primary)] mb-2">{w.title}</h3>
@@ -131,7 +138,7 @@ export default function PythonForKidsPage() {
           <div className="container max-w-3xl">
             <h2 className="text-3xl font-extrabold text-[var(--color-text-primary)] mb-8 text-center">Что изучит ребёнок</h2>
             <div className="grid sm:grid-cols-2 gap-3">
-              {WHAT_LEARN.map((item) => (
+              {whatLearn.map((item) => (
                 <div key={item} className="flex items-start gap-3 bg-[var(--color-surface)] rounded-xl p-4 border border-[var(--color-border)]">
                   <CheckCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: "var(--color-track-kodeks)" }} />
                   <span className="text-sm text-[var(--color-text-secondary)]">{item}</span>
@@ -172,7 +179,7 @@ export default function PythonForKidsPage() {
           <div className="container max-w-2xl">
             <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)] mb-8 text-center">Вопросы о Python</h2>
             <div className="space-y-3">
-              {FAQ.map((item) => (
+              {faq.map((item) => (
                 <details key={item.q} className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden">
                   <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors text-sm">
                     {item.q}

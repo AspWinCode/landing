@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Направления разработки — TirSkix Academy" },
@@ -103,7 +106,9 @@ const DIRECTIONS = [
   },
 ];
 
-export default function DirectionsPage() {
+export default async function DirectionsPage() {
+  const cms = await getCmsPage('napravleniya-razrabotki');
+  const directions = Array.isArray(cms.directions) && cms.directions.length > 0 ? cms.directions as typeof DIRECTIONS : DIRECTIONS;
   return (
     <>
       <Header />
@@ -131,7 +136,7 @@ export default function DirectionsPage() {
         <section className="pb-16 md:pb-24">
           <div className="container max-w-5xl">
             <div className="grid md:grid-cols-2 gap-6">
-              {DIRECTIONS.map((d) => (
+              {directions.map((d) => (
                 <article
                   key={d.title}
                   className="bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow overflow-hidden flex flex-col"

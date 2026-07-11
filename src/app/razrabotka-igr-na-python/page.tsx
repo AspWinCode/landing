@@ -4,6 +4,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { getCmsPage } from "@/lib/portal";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Разработка игр на Python для детей — TirSkix Academy" },
@@ -65,7 +68,10 @@ const FAQ = [
   { q: "Arcade или Pygame?", a: "Основная библиотека — Arcade. Она современная, удобная для обучения и хорошо поддерживается. Pygame опциально — по желанию ученика." },
 ];
 
-export default function GameDevPythonPage() {
+export default async function GameDevPythonPage() {
+  const cms = await getCmsPage('razrabotka-igr-na-python');
+  const stages = Array.isArray(cms.stages) && cms.stages.length > 0 ? cms.stages as typeof STAGES : STAGES;
+  const faq = Array.isArray(cms.faq) && cms.faq.length > 0 ? cms.faq as typeof FAQ : FAQ;
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -113,7 +119,7 @@ export default function GameDevPythonPage() {
               Четыре этапа — от первого персонажа до собственной опубликованной игры.
             </p>
             <div className="grid sm:grid-cols-2 gap-5">
-              {STAGES.map((s) => (
+              {stages.map((s) => (
                 <div key={s.num} className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)]">
                   <div className="text-xs font-mono font-bold mb-2" style={{ color: "var(--color-track-studio)" }}>Этап {s.num}</div>
                   <h3 className="font-extrabold text-[var(--color-text-primary)] mb-2">{s.title}</h3>
@@ -183,7 +189,7 @@ export default function GameDevPythonPage() {
           <div className="container max-w-2xl">
             <h2 className="text-2xl font-extrabold text-[var(--color-text-primary)] mb-8 text-center">Вопросы о разработке игр</h2>
             <div className="space-y-3">
-              {FAQ.map((item) => (
+              {faq.map((item) => (
                 <details key={item.q} className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] overflow-hidden">
                   <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors text-sm">
                     {item.q}
