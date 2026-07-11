@@ -25,34 +25,83 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+function arr<T>(v: unknown): T[] | undefined {
+  return Array.isArray(v) && v.length > 0 ? (v as T[]) : undefined;
+}
+
+function obj(v: unknown): Record<string, unknown> {
+  return v && typeof v === "object" && !Array.isArray(v) ? (v as Record<string, unknown>) : {};
+}
+
+function str(v: unknown): string | undefined {
+  return typeof v === "string" && v.trim() ? v : undefined;
+}
+
 export default async function HomePage() {
   const cms = await getCmsPage("home");
 
-  const hero = cms.hero && typeof cms.hero === "object" ? cms.hero as Record<string, unknown> : null;
-  const stats = Array.isArray(cms.stats) && cms.stats.length > 0 ? cms.stats as { value: string; label: string; highlight?: boolean }[] : undefined;
-  const reviews = Array.isArray(cms.reviews) && cms.reviews.length > 0 ? cms.reviews as { name: string; role: string; text: string; initials: string }[] : undefined;
+  const hero = obj(cms.hero);
+  const adv = obj(cms.advantages);
+  const tracks = obj(cms.tracks);
+  const path = obj(cms.path);
+  const promos = obj(cms.promos);
+  const lms = obj(cms.lms);
+  const ctaFinal = obj(cms.cta_final);
+
+  const stats = arr<{ value: string; label: string; highlight?: boolean }>(cms.stats);
+  const reviews = arr<{ name: string; role: string; text: string; initials: string }>(cms.reviews);
 
   return (
     <>
       <Header />
       <main>
         <HeroSection
-          badge={typeof hero?.badge === "string" ? hero.badge : undefined}
-          h1={typeof hero?.h1 === "string" ? hero.h1 : undefined}
-          h1Accent={typeof hero?.h1_accent === "string" ? hero.h1_accent : undefined}
-          subtitle={typeof hero?.subtitle === "string" ? hero.subtitle : undefined}
-          bullets={Array.isArray(hero?.bullets) ? hero.bullets as string[] : undefined}
-          ctaPrimary={typeof hero?.cta_primary === "string" ? hero.cta_primary : undefined}
-          ctaSecondary={typeof hero?.cta_secondary === "string" ? hero.cta_secondary : undefined}
+          badge={str(hero.badge)}
+          h1={str(hero.h1)}
+          h1Accent={str(hero.h1_accent)}
+          subtitle={str(hero.subtitle)}
+          bullets={arr<string>(hero.bullets)}
+          ctaPrimary={str(hero.cta_primary)}
+          ctaSecondary={str(hero.cta_secondary)}
         />
-        <AdvantagesSection />
-        <TracksSection />
-        <PathSection />
+        <AdvantagesSection
+          heading={str(adv.heading)}
+          subheading={str(adv.subheading)}
+          items={arr(adv.items)}
+        />
+        <TracksSection
+          heading={str(tracks.heading)}
+          subheading={str(tracks.subheading)}
+          tracks={arr(tracks.items)}
+        />
+        <PathSection
+          heading={str(path.heading)}
+          subheading={str(path.subheading)}
+          steps={arr(path.steps)}
+        />
         <ResultsSection stats={stats} reviews={reviews} />
         <TrustSection />
-        <PromosSection />
-        <LmsSection />
-        <FinalCtaSection />
+        <PromosSection
+          heading={str(promos.heading)}
+          subheading={str(promos.subheading)}
+          items={arr(promos.items)}
+        />
+        <LmsSection
+          heading={str(lms.heading)}
+          description={str(lms.description)}
+          features={arr<string>(lms.features)}
+          cta_text={str(lms.cta_text)}
+          cta_href={str(lms.cta_href)}
+        />
+        <FinalCtaSection
+          heading={str(ctaFinal.heading)}
+          subtext={str(ctaFinal.subtext)}
+          btn_primary={str(ctaFinal.btn_primary)}
+          btn_primary_href={str(ctaFinal.btn_primary_href)}
+          btn_secondary={str(ctaFinal.btn_secondary)}
+          btn_secondary_href={str(ctaFinal.btn_secondary_href)}
+          note={str(ctaFinal.note)}
+        />
       </main>
       <Footer />
     </>

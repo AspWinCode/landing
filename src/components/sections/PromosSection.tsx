@@ -2,10 +2,12 @@ import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { Tag, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
-const PROMOS = [
+const DEFAULT_HEADING = "Специальные предложения";
+const DEFAULT_SUBHEADING = "Актуальные акции для новых и существующих учеников TirSkix Academy.";
+
+const DEFAULT_PROMOS = [
   {
     badge: "Новым ученикам",
-    badgeColor: "var(--color-track-studio)",
     title: "Первый урок — бесплатно",
     desc: "Приходите на пробное занятие без оплаты и обязательств. Ментор познакомится с ребёнком и подберёт подходящий трек.",
     cta: "Записаться",
@@ -14,7 +16,6 @@ const PROMOS = [
   },
   {
     badge: "Пакетная оплата",
-    badgeColor: "var(--color-brand)",
     title: "Скидка при оплате на 3 месяца",
     desc: "Оплатите сразу три месяца обучения — получите скидку. Подходит для всех треков и форматов.",
     cta: "Узнать условия",
@@ -23,7 +24,6 @@ const PROMOS = [
   },
   {
     badge: "Для друзей",
-    badgeColor: "var(--color-track-kodeks)",
     title: "Приведи друга — получи бонус",
     desc: "Если ваш ребёнок приведёт друга в TirSkix Academy — оба получат приятный бонус к следующему месяцу обучения.",
     cta: "Подробнее",
@@ -32,7 +32,31 @@ const PROMOS = [
   },
 ];
 
-export function PromosSection() {
+interface PromoItem {
+  badge?: string;
+  title?: string;
+  desc?: string;
+  cta?: string;
+  href?: string;
+  highlight?: boolean;
+}
+
+interface PromosSectionProps {
+  heading?: string;
+  subheading?: string;
+  items?: PromoItem[];
+}
+
+export function PromosSection({ heading, subheading, items }: PromosSectionProps) {
+  const displayPromos = (items && items.length > 0 ? items : DEFAULT_PROMOS).map((item, i) => ({
+    badge: item.badge || DEFAULT_PROMOS[i]?.badge || "",
+    title: item.title || DEFAULT_PROMOS[i]?.title || "",
+    desc: item.desc || DEFAULT_PROMOS[i]?.desc || "",
+    cta: item.cta || DEFAULT_PROMOS[i]?.cta || "Подробнее",
+    href: item.href || DEFAULT_PROMOS[i]?.href || "/kontakty",
+    highlight: item.highlight ?? DEFAULT_PROMOS[i]?.highlight ?? false,
+  }));
+
   return (
     <section className="py-16 md:py-24 bg-[var(--color-bg-subtle)] border-y border-[var(--color-border)]">
       <div className="container">
@@ -45,16 +69,16 @@ export function PromosSection() {
           </span>
         </div>
         <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-3">
-          Специальные предложения
+          {heading || DEFAULT_HEADING}
         </h2>
         <p className="text-[var(--color-text-secondary)] mb-10 max-w-xl">
-          Актуальные акции для новых и существующих учеников TirSkix Academy.
+          {subheading || DEFAULT_SUBHEADING}
         </p>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {PROMOS.map((promo) => (
+          {displayPromos.map((promo, i) => (
             <div
-              key={promo.title}
+              key={i}
               className={`relative rounded-2xl border flex flex-col overflow-hidden transition-shadow hover:shadow-[var(--shadow-card-hover)] ${
                 promo.highlight
                   ? "bg-[var(--color-brand)] border-[var(--color-brand)] shadow-[var(--shadow-cta)]"
@@ -67,30 +91,17 @@ export function PromosSection() {
                   style={
                     promo.highlight
                       ? { background: "rgba(255,255,255,0.2)", color: "#fff" }
-                      : {
-                          background: `color-mix(in srgb, ${promo.badgeColor} 12%, transparent)`,
-                          color: promo.badgeColor,
-                        }
+                      : { background: "color-mix(in srgb, var(--color-brand) 12%, transparent)", color: "var(--color-brand)" }
                   }
                 >
                   {promo.badge}
                 </span>
 
-                <h3
-                  className={`text-xl font-extrabold mb-3 leading-snug ${
-                    promo.highlight
-                      ? "text-white"
-                      : "text-[var(--color-text-primary)]"
-                  }`}
-                >
+                <h3 className={`text-xl font-extrabold mb-3 leading-snug ${promo.highlight ? "text-white" : "text-[var(--color-text-primary)]"}`}>
                   {promo.title}
                 </h3>
 
-                <p
-                  className={`text-sm leading-relaxed mb-6 flex-1 ${
-                    promo.highlight ? "text-white/80" : "text-[var(--color-text-secondary)]"
-                  }`}
-                >
+                <p className={`text-sm leading-relaxed mb-6 flex-1 ${promo.highlight ? "text-white/80" : "text-[var(--color-text-secondary)]"}`}>
                   {promo.desc}
                 </p>
 
@@ -105,11 +116,7 @@ export function PromosSection() {
                   )}
                 >
                   {promo.cta}
-                  <ArrowRight
-                    size={15}
-                    weight="bold"
-                    className="transition-transform group-hover:translate-x-1"
-                  />
+                  <ArrowRight size={15} weight="bold" className="transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>

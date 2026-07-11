@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
-const TRACKS = [
+const DEFAULT_HEADING = "Выбери свой мир";
+const DEFAULT_SUBHEADING = "Три трека — один путь. Ученики начинают в Игровой студии и растут до ТехноЛаба.";
+
+const TRACK_STYLES = [
   {
     slug: "game-studio",
     href: "/game-studio",
@@ -9,13 +12,7 @@ const TRACKS = [
     bgClass: "bg-[var(--color-track-studio-light)]",
     barClass: "bg-[var(--color-track-studio)]",
     hoverClass: "hover:bg-[var(--color-track-studio-light)]",
-    age: "10–12 лет",
     emoji: "🎮",
-    title: "Игровая студия",
-    narrative: "Открой свою игровую студию",
-    description:
-      "Первый мир — для тех, кто только начинает. Создаём настоящие игры в Snap и GDevelop. Ни строчки синтаксиса — только логика и творчество.",
-    tags: ["Snap", "GDevelop", "Визуальное программирование"],
   },
   {
     slug: "kodeks",
@@ -24,13 +21,7 @@ const TRACKS = [
     bgClass: "bg-[var(--color-track-kodeks-light)]",
     barClass: "bg-[var(--color-track-kodeks)]",
     hoverClass: "hover:bg-[var(--color-track-kodeks-light)]",
-    age: "12–15 лет",
     emoji: "🔍",
-    title: "Кодэкс",
-    narrative: "Стань цифровым следователем",
-    description:
-      "Python через детективные дела. Каждое занятие — новое дело: собираем улики, пишем код, раскрываем тайну. Включает модуль Data Science: numpy, pandas.",
-    tags: ["Python", "Data Science", "numpy/pandas"],
   },
   {
     slug: "technolab",
@@ -39,31 +30,78 @@ const TRACKS = [
     bgClass: "bg-[var(--color-track-technolab-light)]",
     barClass: "bg-[var(--color-track-technolab)]",
     hoverClass: "hover:bg-[var(--color-track-technolab-light)]",
-    age: "14–18 лет",
     emoji: "⚙️",
+  },
+];
+
+const DEFAULT_TRACKS = [
+  {
+    title: "Игровая студия",
+    narrative: "Открой свою игровую студию",
+    description: "Первый мир — для тех, кто только начинает. Создаём настоящие игры в Snap и GDevelop. Ни строчки синтаксиса — только логика и творчество.",
+    age: "10–12 лет",
+    tags: ["Snap", "GDevelop", "Визуальное программирование"],
+  },
+  {
+    title: "Кодэкс",
+    narrative: "Стань цифровым следователем",
+    description: "Python через детективные дела. Каждое занятие — новое дело: собираем улики, пишем код, раскрываем тайну. Включает модуль Data Science: numpy, pandas.",
+    age: "12–15 лет",
+    tags: ["Python", "Data Science", "numpy/pandas"],
+  },
+  {
     title: "ТехноЛаб",
     narrative: "Инженерные вызовы для тех, кто хочет большего",
-    description:
-      "Python, алгоритмы, ООП, математика, Arcade. Уровень олимпиад и поступления в лучшие вузы. Для тех, кто уже умеет мыслить как программист.",
+    description: "Python, алгоритмы, ООП, математика, Arcade. Уровень олимпиад и поступления в лучшие вузы. Для тех, кто уже умеет мыслить как программист.",
+    age: "14–18 лет",
     tags: ["Python", "Алгоритмы", "ООП", "Arcade"],
   },
 ];
 
-export function TracksSection() {
+interface TrackItem {
+  title?: string;
+  narrative?: string;
+  description?: string;
+  age?: string;
+  tags?: string[];
+  href?: string;
+}
+
+interface TracksSectionProps {
+  heading?: string;
+  subheading?: string;
+  tracks?: TrackItem[];
+}
+
+export function TracksSection({ heading, subheading, tracks }: TracksSectionProps) {
+  const displayTracks = TRACK_STYLES.map((style, i) => {
+    const cms = tracks?.[i];
+    const def = DEFAULT_TRACKS[i];
+    return {
+      ...style,
+      href: cms?.href || style.href,
+      title: cms?.title || def.title,
+      narrative: cms?.narrative || def.narrative,
+      description: cms?.description || def.description,
+      age: cms?.age || def.age,
+      tags: (cms?.tags && cms.tags.length > 0) ? cms.tags : def.tags,
+    };
+  });
+
   return (
     <section className="py-16 md:py-24">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-4">
-            Выбери свой мир
+            {heading || DEFAULT_HEADING}
           </h2>
           <p className="text-lg text-[var(--color-text-secondary)] max-w-xl mx-auto">
-            Три трека — один путь. Ученики начинают в Игровой студии и растут до ТехноЛаба.
+            {subheading || DEFAULT_SUBHEADING}
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {TRACKS.map((track) => (
+          {displayTracks.map((track) => (
             <article
               key={track.slug}
               className="group bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 overflow-hidden flex flex-col"
