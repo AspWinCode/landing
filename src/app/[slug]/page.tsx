@@ -20,8 +20,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : typeof cms._label === "string"
       ? cms._label
       : slug;
+  const desc = typeof cms.subheading === "string" && cms.subheading
+    ? cms.subheading
+    : `${title} — TirSkix Academy`;
   return buildPageMetadata(cms, {
     title: `${title} — TirSkix Academy`,
+    description: desc,
     canonical: `https://tirskix-academy.com/${slug}/`,
   });
 }
