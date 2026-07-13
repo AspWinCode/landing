@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
+import { LayerZone } from "@/components/edit/LayerZone";
 
 const DEFAULT_HEADING = "Выбери свой мир";
 const DEFAULT_SUBHEADING = "Три трека — один путь. Ученики начинают в Игровой студии и растут до ТехноЛаба.";
@@ -90,6 +91,7 @@ export function TracksSection({ heading, subheading, tracks }: TracksSectionProp
   });
 
   return (
+    <LayerZone sectionId="tracks">
     <section className="py-16 md:py-24">
       <div className="container">
         <div className="text-center mb-12">
@@ -152,5 +154,6 @@ export function TracksSection({ heading, subheading, tracks }: TracksSectionProp
         </div>
       </div>
     </section>
+    </LayerZone>
   );
 }

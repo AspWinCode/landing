@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ChartBar, Medal, BookBookmark, ChatTeardropText } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
+import { LayerZone } from "@/components/edit/LayerZone";
 
 const FEATURE_ICONS = [ChartBar, Medal, BookBookmark, ChatTeardropText];
 
@@ -28,6 +29,7 @@ export function LmsSection({ heading, description, features, cta_text, cta_href 
     .map((label, i) => ({ label, Icon: FEATURE_ICONS[i % FEATURE_ICONS.length] }));
 
   return (
+    <LayerZone sectionId="lms">
     <section className="py-16 md:py-24 bg-[var(--color-bg-subtle)]">
       <div className="container">
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -113,5 +115,6 @@ export function LmsSection({ heading, description, features, cta_text, cta_href 
         </div>
       </div>
     </section>
+    </LayerZone>
   );
 }

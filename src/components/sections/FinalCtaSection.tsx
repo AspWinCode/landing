@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
+import { LayerZone } from "@/components/edit/LayerZone";
 
 interface FinalCtaSectionProps {
   heading?: string;
@@ -23,6 +24,7 @@ export function FinalCtaSection({
   note,
 }: FinalCtaSectionProps) {
   return (
+    <LayerZone sectionId="cta_final">
     <section className="py-16 md:py-24">
       <div className="container">
         <div className="relative rounded-3xl overflow-hidden bg-[var(--color-brand)] px-8 py-14 md:px-16 md:py-20 text-center">
@@ -62,5 +64,6 @@ export function FinalCtaSection({
         </div>
       </div>
     </section>
+    </LayerZone>
   );
 }

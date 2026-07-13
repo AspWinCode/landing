@@ -1,5 +1,16 @@
 export const PORTAL_ORIGIN = "https://portal.tirskix-academy.com";
 
+export interface LayerDef {
+  id: string;
+  section: string;
+  src: string;
+  x: number;       // 0..1 relative to zone width
+  y: number;       // 0..1 relative to zone height
+  w: number;       // 0..1 relative to zone width
+  opacity: number; // 0..1
+  zIndex: number;
+}
+
 export function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
   return path.split(".").reduce<unknown>((cur, key) => {
     if (cur && typeof cur === "object" && !Array.isArray(cur)) {

@@ -1,4 +1,5 @@
 import { EditableSlot } from "@/components/edit/EditableSlot";
+import { LayerZone } from "@/components/edit/LayerZone";
 
 const DEFAULT_HEADING = "Путь ученика";
 const DEFAULT_SUBHEADING = "От первой строчки кода до поступления в лучшие IT-вузы страны — три последовательных мира.";
@@ -36,6 +37,7 @@ export function PathSection({ heading, subheading, steps }: PathSectionProps) {
   });
 
   return (
+    <LayerZone sectionId="path">
     <section className="py-16 md:py-24 bg-[var(--color-bg-subtle)]">
       <div className="container">
         <div className="text-center mb-12">
@@ -101,5 +103,6 @@ export function PathSection({ heading, subheading, steps }: PathSectionProps) {
         </div>
       </div>
     </section>
+    </LayerZone>
   );
 }

@@ -1,5 +1,6 @@
 import { BookOpen, ChartLineUp, Headset, Users } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
+import { LayerZone } from "@/components/edit/LayerZone";
 
 const ICONS = [BookOpen, ChartLineUp, Users, Headset];
 
@@ -25,6 +26,7 @@ export function AdvantagesSection({ heading, subheading, items }: AdvantagesSect
     .map((item, i) => ({ ...item, Icon: ICONS[i % ICONS.length] }));
 
   return (
+    <LayerZone sectionId="advantages">
     <section className="py-16 md:py-24 bg-[var(--color-bg-subtle)]">
       <div className="container">
         <div className="text-center mb-12">
@@ -52,5 +54,6 @@ export function AdvantagesSection({ heading, subheading, items }: AdvantagesSect
         </div>
       </div>
     </section>
+    </LayerZone>
   );
 }

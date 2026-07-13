@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
+import { LayerZone } from "@/components/edit/LayerZone";
 
 const CODE_LINES = [
   { indent: 0, content: "def solve_mystery(clues):", color: "text-[var(--color-track-kodeks)]" },
@@ -34,6 +35,7 @@ export function HeroSection({
   ctaSecondary = "Узнать о треках",
 }: HeroProps = {}) {
   return (
+    <LayerZone sectionId="hero">
     <section className="relative overflow-hidden py-16 md:py-24 lg:py-32">
       {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -147,5 +149,6 @@ export function HeroSection({
         </div>
       </div>
     </section>
+    </LayerZone>
   );
 }
