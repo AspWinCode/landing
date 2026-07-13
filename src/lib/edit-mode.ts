@@ -1,5 +1,15 @@
 export const PORTAL_ORIGIN = "https://portal.tirskix-academy.com";
 
+export type EntrancePreset =
+  | "none"
+  | "fade-up"
+  | "fade-in"
+  | "zoom-in"
+  | "slide-left"
+  | "slide-right";
+
+export type HoverEffect = "none" | "scale" | "lift" | "glow";
+
 export interface LayerDef {
   id: string;
   section: string;
@@ -9,6 +19,12 @@ export interface LayerDef {
   w: number;       // 0..1 relative to zone width
   opacity: number; // 0..1
   zIndex: number;
+  hoverEffect?: HoverEffect;
+}
+
+export interface AnimationPreset {
+  sectionId: string;
+  entrance: EntrancePreset;
 }
 
 export function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
