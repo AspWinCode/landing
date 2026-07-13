@@ -12,6 +12,7 @@ import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
 import { getCmsPage } from "@/lib/portal";
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo";
+import { CmsBootstrap } from "@/components/edit/CmsBootstrap";
 
 export const revalidate = 3600;
 
@@ -55,6 +56,7 @@ export default async function HomePage() {
     <>
       <Header />
       <main>
+        <CmsBootstrap content={cms as Record<string, unknown>} />
         <HeroSection
           badge={str(hero.badge)}
           h1={str(hero.h1)}
