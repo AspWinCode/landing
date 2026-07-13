@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState, useEffect, type CSSProperties, type ReactNode } from "react";
-import { PORTAL_ORIGIN, type LayerDef, type AnimationPreset, type HoverEffect } from "@/lib/edit-mode";
+import { PORTAL_ORIGIN, type AnimationPreset, type HoverEffect, type LayerDef } from "@/lib/edit-mode";
 import { useEditMode } from "./EditModeContext";
 
 // ── Drag state ────────────────────────────────────────────────────────────────
@@ -49,10 +49,10 @@ interface Props {
 }
 
 export function LayerZone({ sectionId, children, className }: Props) {
-  const { editMode, layers, upsertLayer, content } = useEditMode();
+  const { editMode, layers, upsertLayer, effectiveContent } = useEditMode();
 
   // ── Scroll entrance animation ─────────────────────────────────────────────
-  const animations = (content._animations as AnimationPreset[] | undefined) ?? [];
+  const animations = (effectiveContent._animations as AnimationPreset[] | undefined) ?? [];
   const entrance = animations.find(a => a.sectionId === sectionId)?.entrance ?? "none";
 
   const zoneRef = useRef<HTMLDivElement>(null);

@@ -27,6 +27,35 @@ export interface AnimationPreset {
   entrance: EntrancePreset;
 }
 
+export type Breakpoint = "mobile" | "tablet" | "desktop";
+
+export function getBreakpoint(): Breakpoint {
+  if (typeof window === "undefined") return "desktop";
+  return window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop";
+}
+
+export function deepMerge(
+  base: Record<string, unknown>,
+  overrides: Record<string, unknown>
+): Record<string, unknown> {
+  const result = { ...base };
+  for (const [k, v] of Object.entries(overrides)) {
+    if (
+      v !== null &&
+      typeof v === "object" &&
+      !Array.isArray(v) &&
+      result[k] !== null &&
+      typeof result[k] === "object" &&
+      !Array.isArray(result[k])
+    ) {
+      result[k] = deepMerge(result[k] as Record<string, unknown>, v as Record<string, unknown>);
+    } else {
+      result[k] = v;
+    }
+  }
+  return result;
+}
+
 export function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
   return path.split(".").reduce<unknown>((cur, key) => {
     if (cur && typeof cur === "object" && !Array.isArray(cur)) {
