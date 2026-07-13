@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Manrope, Open_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AnnouncementBanner } from "@/components/layout/AnnouncementBanner";
+import { EditModeProvider } from "@/components/edit/EditModeContext";
+import { EditBridge } from "@/components/edit/EditBridge";
 import { getPortalSettings, getCmsPage } from "@/lib/portal";
 import { generateThemeCss } from "@/lib/theme";
 import "./globals.css";
@@ -122,10 +124,13 @@ export default async function RootLayout({
         )}
       </head>
       <body className="min-h-full flex flex-col">
-        {annEnabled && annText && (
-          <AnnouncementBanner text={annText} href={annHref} style={annStyle} />
-        )}
-        <ThemeProvider>{children}</ThemeProvider>
+        <EditModeProvider>
+          <EditBridge />
+          {annEnabled && annText && (
+            <AnnouncementBanner text={annText} href={annHref} style={annStyle} />
+          )}
+          <ThemeProvider>{children}</ThemeProvider>
+        </EditModeProvider>
       </body>
     </html>
   );

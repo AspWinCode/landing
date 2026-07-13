@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { EditableSlot } from "@/components/edit/EditableSlot";
 
 const CODE_LINES = [
   { indent: 0, content: "def solve_mystery(clues):", color: "text-[var(--color-track-kodeks)]" },
@@ -47,16 +48,18 @@ export function HeroSection({
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-surface-raised)] border border-[var(--color-border)] text-sm font-medium text-[var(--color-brand)] mb-8">
               <span className="w-2 h-2 rounded-full bg-[var(--color-track-studio)] animate-pulse" />
-              {badge}
+              <EditableSlot slotId="hero.badge" defaultValue={badge} />
             </div>
 
             <h1 className="text-4xl md:text-5xl xl:text-6xl font-extrabold text-[var(--color-text-primary)] leading-tight mb-6">
-              {h1}<br />
-              <span className="text-[var(--color-brand)]">{h1Accent}</span>
+              <EditableSlot slotId="hero.h1" defaultValue={h1} /><br />
+              <span className="text-[var(--color-brand)]">
+                <EditableSlot slotId="hero.h1Accent" defaultValue={h1Accent} />
+              </span>
             </h1>
 
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed mb-6 max-w-lg">
-              {subtitle}
+              <EditableSlot slotId="hero.subtitle" defaultValue={subtitle} />
             </p>
 
             <ul className="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-10 text-sm text-[var(--color-text-muted)]">
@@ -70,11 +73,11 @@ export function HeroSection({
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/besplatnyj-probnyj-urok" className={buttonClass("primary", "lg", "group")}>
-                {ctaPrimary}
+                <EditableSlot slotId="hero.ctaPrimary" defaultValue={ctaPrimary} />
                 <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
               </Link>
               <Link href="/programmirovanie-dlya-detej" className={buttonClass("secondary", "lg")}>
-                {ctaSecondary}
+                <EditableSlot slotId="hero.ctaSecondary" defaultValue={ctaSecondary} />
               </Link>
             </div>
 

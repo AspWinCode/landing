@@ -1,3 +1,5 @@
+import { EditableSlot } from "@/components/edit/EditableSlot";
+
 const DEFAULT_HEADING = "Путь ученика";
 const DEFAULT_SUBHEADING = "От первой строчки кода до поступления в лучшие IT-вузы страны — три последовательных мира.";
 
@@ -38,10 +40,10 @@ export function PathSection({ heading, subheading, steps }: PathSectionProps) {
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-4">
-            {heading || DEFAULT_HEADING}
+            <EditableSlot slotId="path.heading" defaultValue={heading || DEFAULT_HEADING} />
           </h2>
           <p className="text-lg text-[var(--color-text-secondary)] max-w-xl mx-auto">
-            {subheading || DEFAULT_SUBHEADING}
+            <EditableSlot slotId="path.subheading" defaultValue={subheading || DEFAULT_SUBHEADING} />
           </p>
         </div>
 

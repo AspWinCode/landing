@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ChartBar, Medal, BookBookmark, ChatTeardropText } from "@phosphor-icons/react/dist/ssr";
+import { EditableSlot } from "@/components/edit/EditableSlot";
 
 const FEATURE_ICONS = [ChartBar, Medal, BookBookmark, ChatTeardropText];
 
@@ -36,10 +37,10 @@ export function LmsSection({ heading, description, features, cta_text, cta_href 
               Личный кабинет · LMS
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-4">
-              {heading || DEFAULT_HEADING}
+              <EditableSlot slotId="lms.heading" defaultValue={heading || DEFAULT_HEADING} />
             </h2>
             <p className="text-base text-[var(--color-text-secondary)] leading-relaxed mb-6">
-              {description || DEFAULT_DESCRIPTION}
+              <EditableSlot slotId="lms.description" defaultValue={description || DEFAULT_DESCRIPTION} />
             </p>
 
             <ul className="space-y-3 mb-8">

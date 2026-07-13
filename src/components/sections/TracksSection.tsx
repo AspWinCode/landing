@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { EditableSlot } from "@/components/edit/EditableSlot";
 
 const DEFAULT_HEADING = "Выбери свой мир";
 const DEFAULT_SUBHEADING = "Три трека — один путь. Ученики начинают в Игровой студии и растут до ТехноЛаба.";
@@ -93,10 +94,10 @@ export function TracksSection({ heading, subheading, tracks }: TracksSectionProp
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-4">
-            {heading || DEFAULT_HEADING}
+            <EditableSlot slotId="tracks.heading" defaultValue={heading || DEFAULT_HEADING} />
           </h2>
           <p className="text-lg text-[var(--color-text-secondary)] max-w-xl mx-auto">
-            {subheading || DEFAULT_SUBHEADING}
+            <EditableSlot slotId="tracks.subheading" defaultValue={subheading || DEFAULT_SUBHEADING} />
           </p>
         </div>
 

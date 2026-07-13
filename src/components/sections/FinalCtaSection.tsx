@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { EditableSlot } from "@/components/edit/EditableSlot";
 
 interface FinalCtaSectionProps {
   heading?: string;
@@ -30,10 +31,10 @@ export function FinalCtaSection({
 
           <div className="relative">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4 max-w-2xl mx-auto">
-              {heading || "Начни путь в IT сегодня"}
+              <EditableSlot slotId="cta_final.heading" defaultValue={heading || "Начни путь в IT сегодня"} />
             </h2>
             <p className="text-lg text-white/80 mb-8 max-w-lg mx-auto">
-              {subtext || "Первый урок — бесплатно. Без обязательств. Просто посмотри, как это работает."}
+              <EditableSlot slotId="cta_final.subtext" defaultValue={subtext || "Первый урок — бесплатно. Без обязательств. Просто посмотри, как это работает."} />
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

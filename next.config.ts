@@ -1,7 +1,22 @@
 import type { NextConfig } from "next";
 
+const PORTAL_ORIGIN = "https://portal.tirskix-academy.com";
+
 const nextConfig: NextConfig = {
   output: "standalone",
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: `frame-ancestors ${PORTAL_ORIGIN}`,
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
