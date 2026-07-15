@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const PORTAL_ORIGIN = "https://portal.tirskix-academy.com";
+const PORTAL_ORIGIN = "https://tirskix.space";
 
 const nextConfig: NextConfig = {
   output: "standalone",
