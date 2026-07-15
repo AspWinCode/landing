@@ -65,6 +65,7 @@ export default async function HomePage() {
           bullets={arr<string>(hero.bullets)}
           ctaPrimary={str(hero.cta_primary)}
           ctaSecondary={str(hero.cta_secondary)}
+          rightImageUrl={str(hero.right_image_url)}
         />
         <AdvantagesSection
           heading={str(adv.heading)}
