@@ -1,4 +1,4 @@
-export const PORTAL_ORIGIN = "https://portal.tirskix-academy.com";
+export const PORTAL_ORIGIN = "https://tirskix.space";
 
 export type EntrancePreset =
   | "none"
