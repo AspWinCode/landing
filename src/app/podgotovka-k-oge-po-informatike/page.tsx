@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Онлайн-подготовка к ОГЭ по информатике для 9 класса. Разбор всех заданий, Python и алгоритмы, пробные варианты. Результат от 15/21.",
     keywords: ["подготовка к ОГЭ по информатике", "ОГЭ информатика онлайн", "ОГЭ Python", "репетитор ОГЭ информатика"],
-    canonical: "https://tirskix-academy.com/podgotovka-k-oge-po-informatike/",
+    canonical: "https://tirskix-academy.com/podgotovka-k-oge-po-informatike",
   });
 }
 
@@ -24,11 +24,21 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Course",
   name: "Подготовка к ОГЭ по информатике",
+  url: "https://tirskix-academy.com/podgotovka-k-oge-po-informatike/",
   description: "Онлайн-курс подготовки к ОГЭ по информатике для учеников 8–9 класса",
-  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy" },
+  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
   educationalLevel: "9 класс",
   teaches: "Алгоритмы, Python, системы счисления, базы данных, теория информации",
+  courseMode: "online",
+  inLanguage: "ru",
+  audience: { "@type": "EducationalAudience", educationalRole: "student" },
+  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Подготовка к ОГЭ по информатике", url: "https://tirskix-academy.com/podgotovka-k-oge-po-informatike/" },
+]);
 
 const TOPICS = [
   { num: "01–03", title: "Теория информации", desc: "Кодирование, системы счисления, перевод чисел" },
@@ -73,6 +83,7 @@ export default async function OgePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

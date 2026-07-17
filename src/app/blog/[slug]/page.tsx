@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: { absolute: `${post.seo_title || post.title} — TirSkix Academy` },
     description: post.seo_description || post.excerpt || undefined,
-    alternates: { canonical: post.canonical || `https://tirskix-academy.com/blog/${slug}/` },
+    alternates: { canonical: post.canonical || `https://tirskix-academy.com/blog/${slug}` },
     openGraph: post.og_image ? {
       images: [{ url: post.og_image }],
       title: post.og_title || post.title,

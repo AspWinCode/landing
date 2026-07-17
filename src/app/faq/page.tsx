@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Часто задаваемые вопросы — TirSkix Academy",
     description:
       "Ответы на частые вопросы об обучении в TirSkix Academy: возраст, формат, цены, треки, пробный урок и многое другое.",
-    canonical: "https://tirskix-academy.com/faq/",
+    canonical: "https://tirskix-academy.com/faq",
   });
 }
 

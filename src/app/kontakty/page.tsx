@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Контакты — TirSkix Academy",
     description:
       "Свяжитесь с TirSkix Academy: Telegram, e-mail или форма обратной связи. Ответим в течение часа.",
-    canonical: "https://tirskix-academy.com/kontakty/",
+    canonical: "https://tirskix-academy.com/kontakty",
   });
 }
 

@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: `${title} — TirSkix Academy`,
     description: desc,
-    canonical: `https://tirskix-academy.com/${slug}/`,
+    canonical: `https://tirskix-academy.com/${slug}`,
   });
 }
 

@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Мероприятия и активности — TirSkix Academy",
     description:
       "Игровые джемы, олимпиады, хакатоны и онлайн-соревнования для детей от TirSkix Academy. Участвуй, побеждай, создавай.",
-    canonical: "https://tirskix-academy.com/aktivnosti/",
+    canonical: "https://tirskix-academy.com/aktivnosti",
   });
 }
 

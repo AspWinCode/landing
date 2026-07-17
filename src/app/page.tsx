@@ -38,6 +38,51 @@ function str(v: unknown): string | undefined {
   return typeof v === "string" && v.trim() ? v : undefined;
 }
 
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://tirskix-academy.com/#organization",
+      name: "TirSkix Academy",
+      url: "https://tirskix-academy.com/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://tirskix-academy.com/logo.png",
+        width: 512,
+        height: 512,
+      },
+      description:
+        "Онлайн-школа программирования для детей 10–18 лет. Три нарративных трека: Игровая студия, Кодэкс, ТехноЛаб. Лицензия Министерства образования. Налоговый вычет, оплата маткапиталом.",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "RU",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        availableLanguage: "Russian",
+      },
+      sameAs: [],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://tirskix-academy.com/#website",
+      url: "https://tirskix-academy.com/",
+      name: "TirSkix Academy",
+      publisher: { "@id": "https://tirskix-academy.com/#organization" },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://tirskix-academy.com/blog/?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
+
 export default async function HomePage() {
   const cms = await getCmsPage("home");
 
@@ -54,6 +99,10 @@ export default async function HomePage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+      />
       <Header />
       <main>
         <CmsBootstrap content={cms as Record<string, unknown>} />

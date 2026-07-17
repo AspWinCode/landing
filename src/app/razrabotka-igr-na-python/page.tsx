@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Курс разработки игр на Python для детей 10–18 лет онлайн. Учим Arcade, Pygame, создаём игры с нуля. Первый урок бесплатно.",
     keywords: ["разработка игр Python", "Pygame дети", "Arcade Python", "создать игру Python ребёнок"],
-    canonical: "https://tirskix-academy.com/razrabotka-igr-na-python/",
+    canonical: "https://tirskix-academy.com/razrabotka-igr-na-python",
   });
 }
 
@@ -24,11 +24,21 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Course",
   name: "Разработка игр на Python для детей",
+  url: "https://tirskix-academy.com/razrabotka-igr-na-python/",
   description: "Онлайн-курс создания игр на Python для детей 10–18 лет",
-  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy" },
+  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
   educationalLevel: "10–18 лет",
   teaches: "Python, Arcade, Pygame, игровой дизайн, алгоритмы",
+  courseMode: "online",
+  inLanguage: "ru",
+  audience: { "@type": "EducationalAudience", educationalRole: "student" },
+  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Разработка игр на Python", url: "https://tirskix-academy.com/razrabotka-igr-na-python/" },
+]);
 
 const STAGES = [
   {
@@ -79,6 +89,7 @@ export default async function GameDevPythonPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

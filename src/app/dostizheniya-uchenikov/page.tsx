@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Достижения учеников — TirSkix Academy",
     description:
       "Реальные результаты учеников TirSkix Academy: поступление в вузы без экзаменов, ОГЭ 19/21, ЕГЭ 98 баллов, победы на олимпиадах.",
-    canonical: "https://tirskix-academy.com/dostizheniya-uchenikov/",
+    canonical: "https://tirskix-academy.com/dostizheniya-uchenikov",
   });
 }
 

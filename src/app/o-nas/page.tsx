@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "О нас — TirSkix Academy",
     description:
       "TirSkix Academy — онлайн-школа программирования для детей 10–18 лет. Миссия, ценности, команда менторов-практиков. Работаем с 2020 года.",
-    canonical: "https://tirskix-academy.com/o-nas/",
+    canonical: "https://tirskix-academy.com/o-nas",
   });
 }
 

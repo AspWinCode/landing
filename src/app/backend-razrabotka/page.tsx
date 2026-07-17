@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Курс backend-разработки для подростков от 8 класса. Python, FastAPI, базы данных, REST API. Без опыта — с нуля до реального проекта.",
     keywords: ["backend для детей", "backend разработка подростки", "Python FastAPI курс", "серверная разработка школьники"],
-    canonical: "https://tirskix-academy.com/backend-razrabotka/",
+    canonical: "https://tirskix-academy.com/backend-razrabotka",
   });
 }
 
@@ -24,11 +24,22 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Course",
   name: "Backend-разработка",
+  url: "https://tirskix-academy.com/backend-razrabotka/",
   description: "Онлайн-курс backend-разработки для подростков от 8 класса",
-  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy" },
+  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
   educationalLevel: "от 8 класса",
   teaches: "Python, FastAPI, PostgreSQL, REST API, Git",
+  courseMode: "online",
+  inLanguage: "ru",
+  audience: { "@type": "EducationalAudience", educationalRole: "student" },
+  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Направления разработки", url: "https://tirskix-academy.com/napravleniya-razrabotki/" },
+  { name: "Backend-разработка", url: "https://tirskix-academy.com/backend-razrabotka/" },
+]);
 
 const TOPICS = [
   { num: "01", title: "Python и ООП", desc: "Углублённый Python: классы, исключения, модули, работа с файлами" },
@@ -83,6 +94,7 @@ export default async function BackendPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

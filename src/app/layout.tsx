@@ -45,10 +45,16 @@ export const metadata: Metadata = {
     "Python для подростков",
     "обучение программированию для школьников",
   ],
+  alternates: { canonical: "https://tirskix-academy.com/" },
   openGraph: {
     type: "website",
     locale: "ru_RU",
     siteName: "TirSkix Academy",
+    url: "https://tirskix-academy.com/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@tirskix_academy",
   },
   robots: { index: true, follow: true },
 };

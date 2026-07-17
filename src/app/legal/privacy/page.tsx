@@ -9,11 +9,14 @@ export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("legal-privacy") as unknown as Record<string, unknown>;
-  return buildPageMetadata(cms, {
-    title: "Политика конфиденциальности — TirSkix Academy",
-    description: "Политика конфиденциальности TirSkix Academy — обработка персональных данных согласно 152-ФЗ.",
-    canonical: "https://tirskix-academy.com/legal/privacy/",
-  });
+  return {
+    ...buildPageMetadata(cms, {
+      title: "Политика конфиденциальности — TirSkix Academy",
+      description: "Политика конфиденциальности TirSkix Academy — обработка персональных данных согласно 152-ФЗ.",
+      canonical: "https://tirskix-academy.com/legal/privacy",
+    }),
+    robots: { index: false, follow: false },
+  };
 }
 
 const DEFAULT_HEADING = "Политика конфиденциальности";

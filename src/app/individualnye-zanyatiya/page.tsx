@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Индивидуальные занятия по программированию — TirSkix Academy",
     description:
       "Индивидуальные уроки программирования для детей 10–18 лет онлайн. Python, подготовка к ОГЭ/ЕГЭ, алгоритмы. Под запрос и темп ребёнка.",
-    canonical: "https://tirskix-academy.com/individualnye-zanyatiya/",
+    canonical: "https://tirskix-academy.com/individualnye-zanyatiya",
   });
 }
 

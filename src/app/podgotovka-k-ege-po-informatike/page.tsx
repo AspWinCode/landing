@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Онлайн-подготовка к ЕГЭ по информатике для 10–11 класса. Python, алгоритмы, теория вероятностей в ИТ. Цель — от 80 до 98 баллов.",
     keywords: ["подготовка к ЕГЭ по информатике", "ЕГЭ информатика онлайн", "ЕГЭ Python 2025", "репетитор ЕГЭ информатика"],
-    canonical: "https://tirskix-academy.com/podgotovka-k-ege-po-informatike/",
+    canonical: "https://tirskix-academy.com/podgotovka-k-ege-po-informatike",
   });
 }
 
@@ -24,11 +24,21 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Course",
   name: "Подготовка к ЕГЭ по информатике",
+  url: "https://tirskix-academy.com/podgotovka-k-ege-po-informatike/",
   description: "Онлайн-курс подготовки к ЕГЭ по информатике для учеников 10–11 класса",
-  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy" },
+  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
   educationalLevel: "10–11 класс",
   teaches: "Python, алгоритмы, теория информации, сети, базы данных, дискретная математика",
+  courseMode: "online",
+  inLanguage: "ru",
+  audience: { "@type": "EducationalAudience", educationalRole: "student" },
+  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Подготовка к ЕГЭ по информатике", url: "https://tirskix-academy.com/podgotovka-k-ege-po-informatike/" },
+]);
 
 const BLOCKS = [
   {
@@ -85,6 +95,7 @@ export default async function EgePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

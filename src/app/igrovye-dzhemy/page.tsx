@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Игровые джемы для детей — TirSkix Academy",
     description:
       "Игровые джемы TirSkix Academy — 48-часовые соревнования по разработке игр для детей 10–18 лет. Онлайн и офлайн по городам России.",
-    canonical: "https://tirskix-academy.com/igrovye-dzhemy/",
+    canonical: "https://tirskix-academy.com/igrovye-dzhemy",
   });
 }
 

@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Обучение Python для детей 10–18 лет онлайн. Учим через детективные истории и реальные проекты — не через скучные учебники. Первый урок бесплатно.",
     keywords: ["Python для детей", "изучить Python ребёнку", "курс Python для школьников", "Python онлайн дети"],
-    canonical: "https://tirskix-academy.com/python-dlya-detej/",
+    canonical: "https://tirskix-academy.com/python-dlya-detej",
   });
 }
 
@@ -24,11 +24,21 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Course",
   name: "Python для детей",
+  url: "https://tirskix-academy.com/python-dlya-detej/",
   description: "Обучение Python для детей 10–18 лет через детективные истории и реальные проекты",
-  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy" },
+  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
   educationalLevel: "10–18 лет",
   teaches: "Python, основы программирования, Data Science, алгоритмы",
+  courseMode: "online",
+  inLanguage: "ru",
+  audience: { "@type": "EducationalAudience", educationalRole: "student" },
+  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Python для детей", url: "https://tirskix-academy.com/python-dlya-detej/" },
+]);
 
 const WHY = [
   { emoji: "🔍", title: "Через истории", desc: "Дети не учат синтаксис — они расследуют детективные дела на Python. Мотивация держится сама." },
@@ -85,6 +95,7 @@ export default async function PythonForKidsPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

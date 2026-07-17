@@ -9,11 +9,14 @@ export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("legal-oferta") as unknown as Record<string, unknown>;
-  return buildPageMetadata(cms, {
-    title: "Публичная оферта — TirSkix Academy",
-    description: "Публичная оферта TirSkix Academy — условия оказания образовательных услуг.",
-    canonical: "https://tirskix-academy.com/legal/oferta/",
-  });
+  return {
+    ...buildPageMetadata(cms, {
+      title: "Публичная оферта — TirSkix Academy",
+      description: "Публичная оферта TirSkix Academy — условия оказания образовательных услуг.",
+      canonical: "https://tirskix-academy.com/legal/oferta",
+    }),
+    robots: { index: false, follow: false },
+  };
 }
 
 const DEFAULT_HEADING = "Публичная оферта";

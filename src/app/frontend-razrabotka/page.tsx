@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Курс frontend-разработки для подростков от 8 класса. HTML, CSS, JavaScript, React. Без опыта — с нуля до реального сайта.",
     keywords: ["frontend для детей", "frontend разработка подростки", "HTML CSS JavaScript курс", "React для школьников"],
-    canonical: "https://tirskix-academy.com/frontend-razrabotka/",
+    canonical: "https://tirskix-academy.com/frontend-razrabotka",
   });
 }
 
@@ -24,11 +24,22 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Course",
   name: "Frontend-разработка",
+  url: "https://tirskix-academy.com/frontend-razrabotka/",
   description: "Онлайн-курс frontend-разработки для подростков от 8 класса",
-  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy" },
+  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
   educationalLevel: "от 8 класса",
   teaches: "HTML, CSS, JavaScript, React, Git",
+  courseMode: "online",
+  inLanguage: "ru",
+  audience: { "@type": "EducationalAudience", educationalRole: "student" },
+  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Направления разработки", url: "https://tirskix-academy.com/napravleniya-razrabotki/" },
+  { name: "Frontend-разработка", url: "https://tirskix-academy.com/frontend-razrabotka/" },
+]);
 
 const TOPICS = [
   { num: "01", title: "HTML и структура", desc: "Разметка страниц, семантика, доступность, формы" },
@@ -83,6 +94,7 @@ export default async function FrontendPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

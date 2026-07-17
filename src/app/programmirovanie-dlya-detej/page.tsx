@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "обучение программированию для школьников",
       "курсы программирования для школьников",
     ],
-    canonical: "https://tirskix-academy.com/programmirovanie-dlya-detej/",
+    canonical: "https://tirskix-academy.com/programmirovanie-dlya-detej",
   });
 }
 

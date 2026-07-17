@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "Блог — TirSkix Academy",
     description: "Статьи о программировании для детей: как выбрать язык, с чего начать, как подготовиться к ОГЭ и ЕГЭ, истории учеников и советы родителям.",
-    canonical: "https://tirskix-academy.com/blog/",
+    canonical: "https://tirskix-academy.com/blog",
   });
 }
 

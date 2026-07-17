@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Направления разработки — TirSkix Academy",
     description:
       "Все направления обучения программированию в TirSkix Academy: игры, Python, Data Science, алгоритмы, подготовка к ОГЭ и ЕГЭ, индивидуальные занятия.",
-    canonical: "https://tirskix-academy.com/napravleniya-razrabotki/",
+    canonical: "https://tirskix-academy.com/napravleniya-razrabotki",
   });
 }
 
