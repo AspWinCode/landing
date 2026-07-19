@@ -57,25 +57,13 @@ export function TrustSection() {
                 Наш сертификат
               </p>
               <div className="relative w-full aspect-[3/2] rounded-xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
-                {/* Замените путь на реальный файл сертификата: /images/license.jpg */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[var(--color-text-muted)]">
-                  <ShieldCheck size={40} weight="light" className="text-[var(--color-border-strong)]" />
-                  <span className="text-xs text-center px-4">
-                    Загрузите файл сертификата в{" "}
-                    <code className="font-mono bg-[var(--color-bg-muted)] px-1 rounded">
-                      public/images/license.jpg
-                    </code>
-                  </span>
-                </div>
-                {/* Раскомментируйте после добавления файла:
                 <Image
-                  src="/images/license.jpg"
+                  src="/images/license.png"
                   alt="Образовательная лицензия TirSkix Academy"
                   fill
                   className="object-contain"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                */}
               </div>
             </div>
           </div>
