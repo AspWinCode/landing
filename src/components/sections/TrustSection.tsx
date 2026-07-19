@@ -56,12 +56,13 @@ export function TrustSection() {
               <p className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide mb-3">
                 Наш сертификат
               </p>
-              <div className="relative w-full aspect-[3/2] rounded-xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+              <div className="rounded-xl overflow-hidden border border-[var(--color-border)]">
                 <Image
                   src="/images/license.png"
                   alt="Образовательная лицензия TirSkix Academy"
-                  fill
-                  className="object-contain"
+                  width={1492}
+                  height={1054}
+                  className="w-full h-auto"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
