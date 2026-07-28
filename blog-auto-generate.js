@@ -244,7 +244,6 @@ async function generateArticle(topic) {
     body: JSON.stringify({
       model: 'mistral-small-latest',
       messages: [{ role: 'user', content: prompt }],
-      response_format: { type: 'json_object' },
       temperature: 0.7,
       max_tokens: 4000,
     }),
@@ -254,14 +253,24 @@ async function generateArticle(topic) {
 
   const data = await res.json();
   const raw = data.choices[0].message.content;
+  console.log('📨 Mistral raw (first 300 chars):', raw.slice(0, 300));
 
   let article;
   try {
     article = JSON.parse(raw);
   } catch {
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('Cannot parse Mistral response as JSON');
-    article = JSON.parse(match[0]);
+    // убираем markdown-обёртку ```json ... ```
+    const stripped = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+    try {
+      article = JSON.parse(stripped);
+    } catch {
+      const match = stripped.match(/\{[\s\S]*\}/);
+      if (!match) {
+        console.error('❌ Полный ответ Mistral:', raw);
+        throw new Error('Cannot parse Mistral response as JSON');
+      }
+      article = JSON.parse(match[0]);
+    }
   }
 
   article.slug = sanitizeSlug(article.slug || article.title);
