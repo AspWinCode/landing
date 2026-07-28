@@ -56,7 +56,7 @@ export default async function BlogPage() {
             {posts.length === 0 ? (
               <p className="text-center text-[var(--color-text-muted)] py-12">Статьи скоро появятся.</p>
             ) : (
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-6 items-start">
                 {posts.map((post) => (
                   <article
                     key={post.slug}
