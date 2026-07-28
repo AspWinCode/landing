@@ -1,0 +1,26 @@
+name: Daily SEO Blog Article
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Каждый день в 08:00 UTC (11:00 МСК)
+  workflow_dispatch:      # Ручной запуск из GitHub UI
+
+jobs:
+  publish-article:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate and publish article
+        env:
+          PORTAL_URL: ${{ secrets.PORTAL_URL }}
+          PORTAL_EMAIL: ${{ secrets.PORTAL_EMAIL }}
+          PORTAL_PASSWORD: ${{ secrets.PORTAL_PASSWORD }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+        run: node blog-auto-generate.js
