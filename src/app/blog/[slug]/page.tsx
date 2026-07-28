@@ -62,9 +62,9 @@ export default async function BlogPostPage({ params }: Props) {
       <main>
         <article itemScope itemType="https://schema.org/BlogPosting">
           {/* Hero */}
-          <header className="py-16 md:py-20 border-b border-[var(--color-border)]">
+          <header className="pt-10 pb-6">
             <div className="container max-w-2xl">
-              <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8" aria-label="Хлебные крошки">
+              <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-6" aria-label="Хлебные крошки">
                 <Link href="/" className="hover:text-[var(--color-brand)] transition-colors">Главная</Link>
                 <span>/</span>
                 <Link href="/blog" className="hover:text-[var(--color-brand)] transition-colors">Блог</Link>
@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: Props) {
                 <span className="text-[var(--color-brand)] font-medium truncate max-w-[200px]">{post.title}</span>
               </nav>
 
-              <div className="flex items-center gap-3 mb-5">
+              <div className="flex items-center gap-3 mb-4">
                 {post.category && (
                   <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[color-mix(in_srgb,var(--color-brand)_12%,transparent)] text-[var(--color-brand)]">
                     {post.category.name}
@@ -85,11 +85,11 @@ export default async function BlogPostPage({ params }: Props) {
                 )}
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] leading-tight mb-4" itemProp="headline">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] leading-tight mb-3" itemProp="headline">
                 {post.title}
               </h1>
               {post.excerpt && (
-                <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed" itemProp="description">
+                <p className="text-base text-[var(--color-text-secondary)] leading-relaxed" itemProp="description">
                   {post.excerpt}
                 </p>
               )}
@@ -98,15 +98,15 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* Cover image */}
           {post.cover_image && (
-            <div className="container max-w-2xl mt-8">
-              <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden">
-                <Image src={post.cover_image} alt={post.title} fill className="object-cover" sizes="672px" />
+            <div className="container max-w-3xl mb-2">
+              <div className="relative h-56 md:h-[420px] w-full rounded-2xl overflow-hidden">
+                <Image src={post.cover_image} alt={post.title} fill className="object-cover" sizes="896px" priority />
               </div>
             </div>
           )}
 
           {/* Content */}
-          <div className="py-12 md:py-16">
+          <div className="py-8 md:py-12">
             <div className="container max-w-2xl">
               {post.content ? (
                 <div
