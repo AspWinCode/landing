@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
         hostname: "tirskix.space",
         pathname: "/api/v1/media/files/**",
       },
+      {
+        protocol: "https",
+        hostname: "image.pollinations.ai",
+      },
     ],
   },
 };
