@@ -8,9 +8,9 @@ const PORTAL_PASSWORD = process.env.PORTAL_PASSWORD;
 
 function getImageUrl(title, id) {
   const prompt = encodeURIComponent(
-    `children programming education ${title} bright colorful classroom photorealistic`
+    `professional photography, ${title}, children learning programming, modern bright classroom, natural lighting, sharp focus, photorealistic`
   );
-  return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux&seed=${id * 17}&nologo=true`;
+  return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux-realism&seed=${id * 17}&enhance=true&nologo=true`;
 }
 
 async function login() {

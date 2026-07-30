@@ -279,9 +279,9 @@ async function generateArticle(topic) {
 
 function getImageUrl(imagePrompt, seed) {
   const prompt = encodeURIComponent(
-    `children programming education classroom ${imagePrompt} bright colorful`
+    `professional photography, ${imagePrompt}, children learning programming, modern bright classroom, natural lighting, sharp focus, photorealistic`
   );
-  return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux&seed=${seed}&nologo=true`;
+  return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux-realism&seed=${seed}&enhance=true&nologo=true`;
 }
 
 async function createAndPublish(token, article, categoryId, imageUrl) {
