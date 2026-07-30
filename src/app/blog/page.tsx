@@ -65,14 +65,17 @@ export default async function BlogPage() {
                     itemType="https://schema.org/BlogPosting"
                   >
                     {post.cover_image && (
-                      <Image
-                        src={post.cover_image}
-                        alt={post.title}
-                        width={1200}
-                        height={630}
-                        className="w-full h-auto"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                      />
+                      <div className="w-full aspect-[1200/630] overflow-hidden rounded-t-2xl">
+                        <Image
+                          src={post.cover_image}
+                          alt={post.title}
+                          width={1200}
+                          height={630}
+                          className="w-full h-full object-cover"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          unoptimized
+                        />
+                      </div>
                     )}
                     <div className="p-6 flex flex-col flex-1">
                       {post.category && (

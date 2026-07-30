@@ -99,15 +99,18 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Cover image */}
           {post.cover_image && (
             <div className="container max-w-3xl mb-2">
-              <Image
-                src={post.cover_image}
-                alt={post.title}
-                width={1200}
-                height={630}
-                className="w-full h-auto rounded-2xl"
-                sizes="(max-width: 768px) 100vw, 896px"
-                priority
-              />
+              <div className="w-full aspect-[1200/630] overflow-hidden rounded-2xl">
+                <Image
+                  src={post.cover_image}
+                  alt={post.title}
+                  width={1200}
+                  height={630}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 768px) 100vw, 896px"
+                  priority
+                  unoptimized
+                />
+              </div>
             </div>
           )}
 
