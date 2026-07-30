@@ -8,9 +8,12 @@ const PORTAL_PASSWORD = process.env.PORTAL_PASSWORD;
 
 function getImageUrl(title, id) {
   const prompt = encodeURIComponent(
-    `professional photography, ${title}, children learning programming, modern bright classroom, natural lighting, sharp focus, photorealistic`
+    `flat design vector illustration, ${title}, kids coding on laptops, bright colorful modern style, clean minimal, no text, professional educational poster`
   );
-  return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux-realism&seed=${id * 17}&enhance=true&nologo=true`;
+  const negative = encodeURIComponent(
+    `photo, realistic, hands, fingers, face, people, deformed, ugly, blurry, watermark`
+  );
+  return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux&seed=${id * 17}&negative=${negative}&nologo=true`;
 }
 
 async function login() {
