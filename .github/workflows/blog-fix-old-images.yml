@@ -1,0 +1,20 @@
+name: Fix Old-Style Images
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fix-images:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Replace old photorealistic images with flat design
+        env:
+          PORTAL_URL: ${{ secrets.PORTAL_URL }}
+          PORTAL_EMAIL: ${{ secrets.PORTAL_EMAIL }}
+          PORTAL_PASSWORD: ${{ secrets.PORTAL_PASSWORD }}
+        run: node blog-fix-old-images.js
