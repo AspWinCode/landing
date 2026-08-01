@@ -305,9 +305,11 @@ async function generateArticle(topic) {
 }
 
 function getImageUrl(imagePrompt, seed) {
-  const short = imagePrompt.slice(0, 60);
-  const prompt = encodeURIComponent(`flat design illustration, ${short}, kids coding, colorful, clean`);
-  const negative = encodeURIComponent(`realistic, photo, hands, deformed, blurry`);
+  // Strip non-ASCII (Cyrillic encodes to 6 chars each and blows past the 500-char portal limit)
+  const ascii = String(imagePrompt || '').replace(/[^\x20-\x7E]/g, '').trim().slice(0, 40);
+  const text = ascii || 'children coding programming classroom';
+  const prompt = encodeURIComponent(`flat design, ${text}, kids coding, colorful`);
+  const negative = encodeURIComponent(`realistic, photo, hands`);
   return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux&seed=${seed}&negative=${negative}&nologo=true`;
 }
 
