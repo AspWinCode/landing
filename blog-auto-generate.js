@@ -185,19 +185,39 @@ function sanitizeSlug(slug) {
     .replace(/^-|-$/g, '');
 }
 
-async function login() {
-  const form = new URLSearchParams();
-  form.append('username', PORTAL_EMAIL);
-  form.append('password', PORTAL_PASSWORD);
+async function withRetry(fn, label, attempts = 3) {
+  for (let i = 1; i <= attempts; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      const last = i === attempts;
+      console.error(`❌ ${label} — попытка ${i}/${attempts}: ${err.message}`);
+      if (last) throw err;
+      const delay = i * 5000;
+      console.log(`⏳ Повтор через ${delay / 1000}s...`);
+      await new Promise((r) => setTimeout(r, delay));
+    }
+  }
+}
 
-  const res = await fetch(`${PORTAL_URL}/api/v1/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: form.toString(),
-  });
-  if (!res.ok) throw new Error(`Login failed: ${res.status} ${await res.text()}`);
-  const data = await res.json();
-  return data.access_token;
+async function login() {
+  return withRetry(async () => {
+    const form = new URLSearchParams();
+    form.append('username', PORTAL_EMAIL);
+    form.append('password', PORTAL_PASSWORD);
+
+    const res = await fetch(`${PORTAL_URL}/api/v1/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: form.toString(),
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`Login failed: ${res.status} ${body}`);
+    }
+    const data = await res.json();
+    return data.access_token;
+  }, 'login');
 }
 
 async function getCategories(token) {
@@ -235,21 +255,28 @@ async function generateArticle(topic) {
   "content": "<h2>...</h2><p>...</p>..."
 }`;
 
-  const res = await fetch('https://api.mistral.ai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${MISTRAL_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'mistral-small-latest',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-      max_tokens: 4000,
-    }),
-  });
+  const mistralCall = async () => {
+    const r = await fetch('https://api.mistral.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${MISTRAL_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'mistral-small-latest',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: 4000,
+      }),
+    });
+    if (!r.ok) {
+      const body = await r.text();
+      throw new Error(`Mistral API error: ${r.status} ${body}`);
+    }
+    return r;
+  };
 
-  if (!res.ok) throw new Error(`Mistral API error: ${res.status} ${await res.text()}`);
+  const res = await withRetry(mistralCall, 'Mistral API', 3);
 
   const data = await res.json();
   const raw = data.choices[0].message.content;
@@ -382,5 +409,6 @@ async function main() {
 
 main().catch((err) => {
   console.error('❌ Ошибка:', err.message);
+  if (err.stack) console.error(err.stack);
   process.exit(1);
 });
