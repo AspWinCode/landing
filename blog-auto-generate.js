@@ -305,12 +305,9 @@ async function generateArticle(topic) {
 }
 
 function getImageUrl(imagePrompt, seed) {
-  const prompt = encodeURIComponent(
-    `flat design vector illustration, ${imagePrompt}, kids coding on laptops, bright colorful modern style, clean minimal, no text, professional educational poster`
-  );
-  const negative = encodeURIComponent(
-    `photo, realistic, hands, fingers, face, people, deformed, ugly, blurry, watermark`
-  );
+  const short = imagePrompt.slice(0, 60);
+  const prompt = encodeURIComponent(`flat design illustration, ${short}, kids coding, colorful, clean`);
+  const negative = encodeURIComponent(`realistic, photo, hands, deformed, blurry`);
   return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux&seed=${seed}&negative=${negative}&nologo=true`;
 }
 
