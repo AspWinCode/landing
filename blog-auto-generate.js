@@ -314,31 +314,42 @@ function getImageUrl(imagePrompt, seed) {
 }
 
 async function createAndPublish(token, article, categoryId, imageUrl) {
-  const createRes = await fetch(`${PORTAL_URL}/api/v1/blog/posts`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      title: article.title,
-      slug: article.slug,
-      content: article.content,
-      excerpt: article.excerpt || '',
-      seo_title: article.seo_title || article.title,
-      seo_description: article.seo_description || '',
-      cover_image: imageUrl,
-      category_id: categoryId,
-      status: 'draft',
-    }),
+  const body = JSON.stringify({
+    title: article.title,
+    slug: article.slug,
+    content: article.content,
+    excerpt: article.excerpt || '',
+    seo_title: article.seo_title || article.title,
+    seo_description: article.seo_description || '',
+    cover_image: imageUrl,
+    category_id: categoryId,
+    status: 'draft',
   });
 
-  if (createRes.status === 409) {
-    console.log('⚠️  Статья с таким slug уже существует, пропускаем');
-    return null;
-  }
-  if (!createRes.ok) {
-    throw new Error(`Create post failed: ${createRes.status} ${await createRes.text()}`);
+  let createRes;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    createRes = await fetch(`${PORTAL_URL}/api/v1/blog/posts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body,
+    });
+    if (createRes.status === 409) {
+      console.log('⚠️  Статья с таким slug уже существует, пропускаем');
+      return null;
+    }
+    if (createRes.status >= 500) {
+      const text = await createRes.text();
+      console.error(`❌ Create post — попытка ${attempt}/3: ${createRes.status} ${text}`);
+      if (attempt < 3) {
+        await new Promise((r) => setTimeout(r, attempt * 5000));
+        continue;
+      }
+      throw new Error(`Create post failed: ${createRes.status} ${text}`);
+    }
+    if (!createRes.ok) {
+      throw new Error(`Create post failed: ${createRes.status} ${await createRes.text()}`);
+    }
+    break;
   }
 
   const post = await createRes.json();
@@ -346,10 +357,7 @@ async function createAndPublish(token, article, categoryId, imageUrl) {
 
   const publishRes = await fetch(`${PORTAL_URL}/api/v1/blog/posts/${post.id}`, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ status: 'published' }),
   });
 
