@@ -251,7 +251,6 @@ async function generateArticle(topic) {
   "seo_description": "мета-описание (120–160 символов, побуждает кликнуть)",
   "excerpt": "краткое описание для карточки (2–3 предложения, до 200 символов)",
   "slug": "url-slug-latinskimi-bukvami-i-defisami",
-  "image_prompt": "English prompt for AI image: children programming theme, photorealistic, bright",
   "content": "<h2>...</h2><p>...</p>..."
 }`;
 
@@ -304,16 +303,7 @@ async function generateArticle(topic) {
   return article;
 }
 
-function getImageUrl(imagePrompt, seed) {
-  // Strip non-ASCII (Cyrillic encodes to 6 chars each and blows past the 500-char portal limit)
-  const ascii = String(imagePrompt || '').replace(/[^\x20-\x7E]/g, '').trim().slice(0, 40);
-  const text = ascii || 'children coding programming classroom';
-  const prompt = encodeURIComponent(`flat design, ${text}, kids coding, colorful`);
-  const negative = encodeURIComponent(`realistic, photo, hands`);
-  return `https://image.pollinations.ai/prompt/${prompt}?width=1200&height=630&model=flux&seed=${seed}&negative=${negative}&nologo=true`;
-}
-
-async function createAndPublish(token, article, categoryId, imageUrl) {
+async function createAndPublish(token, article, categoryId) {
   let slug = article.slug;
   let createRes;
   let slugRetried = false;
@@ -326,7 +316,6 @@ async function createAndPublish(token, article, categoryId, imageUrl) {
       excerpt: article.excerpt || '',
       seo_title: article.seo_title || article.title,
       seo_description: article.seo_description || '',
-      cover_image: imageUrl,
       category_id: categoryId,
       status: 'draft',
     });
@@ -418,11 +407,8 @@ async function main() {
   console.log(`📝 Заголовок: ${article.title}`);
   console.log(`🔗 Slug: ${article.slug}`);
 
-  const imageUrl = getImageUrl(article.image_prompt || topic.title, day + year * 365);
-  console.log(`🖼️  Картинка: ${imageUrl}`);
-
   console.log('🚀 Публикуем...');
-  const published = await createAndPublish(token, article, category.id, imageUrl);
+  const published = await createAndPublish(token, article, category.id);
 
   console.log(`🎉 Опубликовано! tirskix-academy.com/blog/${published.slug}`);
 }
