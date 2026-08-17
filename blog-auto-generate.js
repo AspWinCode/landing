@@ -314,28 +314,37 @@ function getImageUrl(imagePrompt, seed) {
 }
 
 async function createAndPublish(token, article, categoryId, imageUrl) {
-  const body = JSON.stringify({
-    title: article.title,
-    slug: article.slug,
-    content: article.content,
-    excerpt: article.excerpt || '',
-    seo_title: article.seo_title || article.title,
-    seo_description: article.seo_description || '',
-    cover_image: imageUrl,
-    category_id: categoryId,
-    status: 'draft',
-  });
-
+  let slug = article.slug;
   let createRes;
+  let slugRetried = false;
+
   for (let attempt = 1; attempt <= 3; attempt++) {
+    const body = JSON.stringify({
+      title: article.title,
+      slug,
+      content: article.content,
+      excerpt: article.excerpt || '',
+      seo_title: article.seo_title || article.title,
+      seo_description: article.seo_description || '',
+      cover_image: imageUrl,
+      category_id: categoryId,
+      status: 'draft',
+    });
+
     createRes = await fetch(`${PORTAL_URL}/api/v1/blog/posts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body,
     });
+
     if (createRes.status === 409) {
-      console.log('⚠️  Статья с таким slug уже существует, пропускаем');
-      return null;
+      if (slugRetried) {
+        throw new Error(`Slug '${slug}' уже занят даже после добавления суффикса — публикация отменена`);
+      }
+      slugRetried = true;
+      slug = `${article.slug}-${Date.now().toString(36)}`;
+      console.log(`⚠️  Slug '${article.slug}' уже занят, пробуем '${slug}'`);
+      continue;
     }
     if (createRes.status >= 500) {
       const text = await createRes.text();
@@ -351,6 +360,7 @@ async function createAndPublish(token, article, categoryId, imageUrl) {
     }
     break;
   }
+  article.slug = slug;
 
   const post = await createRes.json();
   console.log(`✅ Черновик создан: id=${post.id} slug=${post.slug}`);
@@ -409,9 +419,7 @@ async function main() {
   console.log('🚀 Публикуем...');
   const published = await createAndPublish(token, article, category.id, imageUrl);
 
-  if (published) {
-    console.log(`🎉 Опубликовано! tirskix-academy.com/blog/${published.slug}`);
-  }
+  console.log(`🎉 Опубликовано! tirskix-academy.com/blog/${published.slug}`);
 }
 
 main().catch((err) => {
