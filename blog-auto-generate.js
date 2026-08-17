@@ -388,8 +388,13 @@ async function main() {
   const day = getDayOfYear(now);
   const year = now.getFullYear();
   const cycle = Math.floor(day / TOPICS.length);
-  const topicIndex = day % TOPICS.length;
+
+  const override = process.env.TOPIC_INDEX !== undefined && process.env.TOPIC_INDEX !== ''
+    ? parseInt(process.env.TOPIC_INDEX, 10)
+    : null;
+  const topicIndex = override !== null ? override : day % TOPICS.length;
   const topic = TOPICS[topicIndex];
+  if (!topic) throw new Error(`Нет темы с индексом ${topicIndex} (всего ${TOPICS.length})`);
 
   console.log(`📅 День ${day} (${now.toLocaleDateString('ru-RU')}), тема #${topicIndex + 1}: "${topic.title}"`);
 

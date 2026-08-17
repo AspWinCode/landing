@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 8 * * *'  # Каждый день в 08:00 UTC (11:00 МСК)
   workflow_dispatch:      # Ручной запуск из GitHub UI
+    inputs:
+      topic_index:
+        description: 'Индекс темы для backfill (0-149), пусто = тема по дате'
+        required: false
+        type: string
 
 jobs:
   publish-article:
@@ -23,4 +28,5 @@ jobs:
           PORTAL_EMAIL: ${{ secrets.PORTAL_EMAIL }}
           PORTAL_PASSWORD: ${{ secrets.PORTAL_PASSWORD }}
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          TOPIC_INDEX: ${{ github.event.inputs.topic_index }}
         run: node blog-auto-generate.js
