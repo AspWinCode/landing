@@ -28,5 +28,6 @@ jobs:
           PORTAL_EMAIL: ${{ secrets.PORTAL_EMAIL }}
           PORTAL_PASSWORD: ${{ secrets.PORTAL_PASSWORD }}
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
           TOPIC_INDEX: ${{ github.event.inputs.topic_index }}
         run: node blog-auto-generate.js

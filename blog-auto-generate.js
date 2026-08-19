@@ -7,6 +7,8 @@ const PORTAL_URL = process.env.PORTAL_URL || 'https://tirskix.space';
 const PORTAL_EMAIL = process.env.PORTAL_EMAIL;
 const PORTAL_PASSWORD = process.env.PORTAL_PASSWORD;
 const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tirskix-academy.com';
+const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET;
 
 // 150 тем — ~5 месяцев ежедневных публикаций без повторов
 const TOPICS = [
@@ -411,6 +413,20 @@ async function main() {
   const published = await createAndPublish(token, article, category.id);
 
   console.log(`🎉 Опубликовано! tirskix-academy.com/blog/${published.slug}`);
+
+  if (REVALIDATE_SECRET) {
+    try {
+      const rRes = await fetch(`${FRONTEND_URL}/api/revalidate?secret=${REVALIDATE_SECRET}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: '*' }),
+      });
+      const rData = await rRes.json();
+      console.log('🔄 Кеш сброшен:', JSON.stringify(rData));
+    } catch (e) {
+      console.warn('⚠️  Revalidate не удался (некритично):', e.message);
+    }
+  }
 }
 
 main().catch((err) => {
