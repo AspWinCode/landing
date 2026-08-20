@@ -57,6 +57,13 @@ export const metadata: Metadata = {
     site: "@tirskix_academy",
   },
   robots: { index: true, follow: true },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "TirSkix Academy",
+  },
+  formatDetection: { telephone: false },
 };
 
 export default async function RootLayout({
