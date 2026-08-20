@@ -132,6 +132,38 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </article>
 
+        {/* CTA */}
+        {(() => {
+          const cat = post.category?.slug;
+          const isExam = cat === "podgotovka-k-ekzamenam";
+          return (
+            <section className="py-12 border-t border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-brand)_5%,transparent)]">
+              <div className="container max-w-2xl text-center">
+                <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-brand)] mb-3">TirSkix Academy</p>
+                <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)] mb-3">
+                  {isExam ? "Готовишься к ОГЭ или ЕГЭ?" : "Хочешь научиться программировать?"}
+                </h2>
+                <p className="text-[var(--color-text-secondary)] mb-6 max-w-md mx-auto">
+                  {isExam
+                    ? "Трек «Кодэкс» — подготовка к экзаменам по информатике с реальными задачами и разбором ошибок."
+                    : "Три трека для детей 10–18 лет: Игровая студия, Кодэкс и ТехноЛаб. Первый урок бесплатно."}
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <Link href={isExam ? "/kodeks" : "/besplatnyj-probnyj-urok"} className={buttonClass("primary", "md", "group inline-flex")}>
+                    {isExam ? "Узнать про Кодэкс" : "Записаться на пробный урок"}
+                    <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  {isExam && (
+                    <Link href="/besplatnyj-probnyj-urok" className={buttonClass("secondary", "md", "inline-flex")}>
+                      Пробный урок бесплатно
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+
         {/* Nav */}
         <section className="py-10 border-t border-[var(--color-border)]">
           <div className="container max-w-2xl flex items-center justify-between gap-4">
