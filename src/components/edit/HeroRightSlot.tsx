@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEditMode } from "./EditModeContext";
 
 interface Props {
@@ -14,10 +15,14 @@ export function HeroRightSlot({ fallback, serverUrl }: Props) {
   if (!url) return <>{fallback}</>;
 
   return (
-    <img
+    <Image
       src={url}
       alt=""
-      className="w-full rounded-2xl object-contain shadow-[0_20px_60px_-10px_rgba(127,35,204,0.3)]"
+      width={600}
+      height={450}
+      priority
+      unoptimized
+      className="w-full h-auto rounded-2xl object-contain shadow-[0_20px_60px_-10px_rgba(127,35,204,0.3)]"
     />
   );
 }

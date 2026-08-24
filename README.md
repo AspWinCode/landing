@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TirSkix Academy — лендинг
 
-## Getting Started
+Маркетинговый сайт онлайн-школы программирования для детей 10–18 лет.  
+Стек: **Next.js 16** / **React 19** / **Tailwind CSS v4** / **TypeScript**
 
-First, run the development server:
+## Быстрый старт
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Для полного функционала (CMS, блог, аналитика) нужен запущенный инстанс [tirskix.space](https://tirskix.space).  
+Без него сайт работает с дефолтным контентом из `src/lib/tracks.ts`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Переменные окружения
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Переменная | По умолчанию | Назначение |
+|---|---|---|
+| `PORTAL_API_URL` | `https://tirskix.space` | API портала (CMS, блог, настройки) |
 
-## Learn More
+Создайте `.env.local` в корне `frontend/` при необходимости переопределить.
 
-To learn more about Next.js, take a look at the following resources:
+## Структура `src/`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                  # Next.js App Router — страницы и API-роуты
+  layout.tsx          # Корневой layout (шрифты, аналитика, CMS bootstrap)
+  page.tsx            # Главная страница
+  [slug]/             # Универсальный fallback для CMS-страниц
+  sitemap.ts          # /sitemap.xml (статика + динамические посты блога)
+  robots.ts           # /robots.txt
+components/
+  edit/               # CMS-режим редактирования (EditBridge, LayerZone, ...)
+  forms/              # Форма заявки (TrialForm) и контактная форма
+  layout/             # Header, Footer, AnnouncementBanner
+  sections/           # Секции главной страницы (Hero, Tracks, Results, ...)
+  ui/                 # Button и прочие атомарные компоненты
+lib/
+  portal.ts           # Клиент API портала (CMS, блог, настройки)
+  seo.ts              # Утилиты метаданных и JSON-LD (buildPageMetadata, buildBreadcrumbJsonLd)
+  tracks.ts           # Дефолтный контент треков (Игровая студия / Кодэкс / ТехноЛаб)
+  theme.ts            # Генерация CSS-переменных из бренд-цвета
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Сборка и Docker
 
-## Deploy on Vercel
+```bash
+npm run build          # Standalone-сборка в .next/standalone/
+node .next/standalone/server.js   # Запуск в проде
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Или через Docker (Dockerfile в корне репо).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## CI/CD
+
+- **Lighthouse CI** — `.github/workflows/lighthouse.yml`: аудит производительности и SEO против продакшн-URL при каждом PR и пуше в master.
+- Бюджеты производительности — `budget.json` в корне репо.
