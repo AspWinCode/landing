@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, GameController, Trophy, Users, Calendar } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -78,12 +78,18 @@ const JAMS_PAST = [
   },
 ];
 
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Мероприятия", url: "https://tirskix-academy.com/aktivnosti" },
+]);
+
 export default async function ActivitiesPage() {
   const cms = await getCmsPage('aktivnosti');
   const formats = Array.isArray(cms.formats) && cms.formats.length > 0 ? cms.formats as typeof FORMATS : FORMATS;
   const jamsPast = Array.isArray(cms.jams_past) && cms.jams_past.length > 0 ? cms.jams_past as typeof JAMS_PAST : JAMS_PAST;
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Clock } from "@phosphor-icons/react/dist/ssr";
 import { getPortalPosts, getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -29,8 +29,31 @@ export default async function BlogPage() {
     ? cms.subheading
     : "О программировании для детей, подготовке к экзаменам и историях учеников.";
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Блог TirSkix Academy",
+    url: "https://tirskix-academy.com/blog",
+    publisher: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: `https://tirskix-academy.com/blog/${post.slug}`,
+      ...(post.excerpt ? { description: post.excerpt } : {}),
+      ...(post.published_at ? { datePublished: post.published_at } : {}),
+      ...(post.cover_image ? { image: post.cover_image } : {}),
+    })),
+  };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Главная", url: "https://tirskix-academy.com/" },
+    { name: "Блог", url: "https://tirskix-academy.com/blog" },
+  ]);
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

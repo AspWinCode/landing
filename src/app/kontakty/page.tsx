@@ -6,7 +6,7 @@ import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, Envelope, MessengerLogo } from "@phosphor-icons/react/dist/ssr";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("kontakty") as unknown as Record<string, unknown>;
@@ -37,9 +37,45 @@ const CHANNELS = [
   },
 ];
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "@id": "https://tirskix-academy.com/#organization",
+  name: "TirSkix Academy",
+  url: "https://tirskix-academy.com/",
+  sameAs: ["https://t.me/tirskix_academy"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    email: "hello@tirskix-academy.com",
+    availableLanguage: "Russian",
+    hoursAvailable: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "10:00",
+        closes: "21:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday", "Sunday"],
+        opens: "11:00",
+        closes: "19:00",
+      },
+    ],
+  },
+};
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Контакты", url: "https://tirskix-academy.com/kontakty" },
+]);
+
 export default function ContactPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, User, Clock, ChartLine, Wrench } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -69,12 +69,32 @@ const CASES = [
   },
 ];
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Индивидуальные занятия по программированию",
+  url: "https://tirskix-academy.com/individualnye-zanyatiya",
+  description: "Индивидуальные онлайн-уроки программирования для детей 10–18 лет: Python, подготовка к ОГЭ/ЕГЭ, алгоритмы, помощь с проектами",
+  provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
+  teaches: "Python, подготовка к экзаменам, алгоритмы, олимпиадное программирование",
+  courseMode: "online",
+  inLanguage: "ru",
+  audience: { "@type": "EducationalAudience", educationalRole: "student" },
+};
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: "Главная", url: "https://tirskix-academy.com/" },
+  { name: "Индивидуальные занятия", url: "https://tirskix-academy.com/individualnye-zanyatiya" },
+]);
+
 export default async function IndividualPage() {
   const cms = await getCmsPage('individualnye-zanyatiya');
   const advantages = Array.isArray(cms.advantages) && cms.advantages.length > 0 ? cms.advantages as typeof ADVANTAGES : ADVANTAGES;
   const cases = Array.isArray(cms.cases) && cms.cases.length > 0 ? cms.cases as typeof CASES : CASES;
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* Hero */}

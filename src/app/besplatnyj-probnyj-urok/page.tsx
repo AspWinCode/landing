@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { TrialForm } from "@/components/forms/TrialForm";
 import { CheckCircle, Clock, ChatTeardropText, Medal } from "@phosphor-icons/react/dist/ssr";
 import { getCmsPage } from "@/lib/portal";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -57,8 +57,26 @@ export default async function TrialPage() {
   const benefits = Array.isArray(cms.benefits) && cms.benefits.length > 0 ? cms.benefits as typeof BENEFITS : BENEFITS;
   const stats = Array.isArray(cms.stats) && cms.stats.length > 0 ? cms.stats as typeof STATS : STATS;
   const faq = Array.isArray(cms.faq) && cms.faq.length > 0 ? cms.faq as typeof FAQ : FAQ;
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Главная", url: "https://tirskix-academy.com/" },
+    { name: "Пробный урок", url: "https://tirskix-academy.com/besplatnyj-probnyj-urok" },
+  ]);
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main>
         {/* ── Hero + Form ── */}
