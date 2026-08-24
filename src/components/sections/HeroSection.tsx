@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
 import { LayerZone } from "@/components/edit/LayerZone";
 import { HeroRightSlot } from "@/components/edit/HeroRightSlot";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 const CODE_LINES = [
   { indent: 0, content: "def solve_mystery(clues):", color: "text-[var(--color-track-kodeks)]" },
@@ -77,13 +77,23 @@ export function HeroSection({
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/besplatnyj-probnyj-urok" className={buttonClass("primary", "lg", "group")}>
+              <TrackedLink
+                href="/besplatnyj-probnyj-urok"
+                className={buttonClass("primary", "lg", "group")}
+                eventName="cta_click"
+                eventParams={{ location: "hero_primary" }}
+              >
                 <EditableSlot slotId="hero.ctaPrimary" defaultValue={ctaPrimary} />
                 <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link href="/programmirovanie-dlya-detej" className={buttonClass("secondary", "lg")}>
+              </TrackedLink>
+              <TrackedLink
+                href="/programmirovanie-dlya-detej"
+                className={buttonClass("secondary", "lg")}
+                eventName="cta_click"
+                eventParams={{ location: "hero_secondary" }}
+              >
                 <EditableSlot slotId="hero.ctaSecondary" defaultValue={ctaSecondary} />
-              </Link>
+              </TrackedLink>
             </div>
 
             <p className="mt-4 text-xs text-[var(--color-text-muted)]">

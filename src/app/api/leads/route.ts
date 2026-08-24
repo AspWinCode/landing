@@ -47,6 +47,9 @@ export async function POST(req: NextRequest) {
         contact: body.contact.trim(),
         track: body.track || null,
         message: body.message?.trim() || null,
+        utm_source: body.utm_source || null,
+        utm_medium: body.utm_medium || null,
+        utm_campaign: body.utm_campaign || null,
       }),
     });
 

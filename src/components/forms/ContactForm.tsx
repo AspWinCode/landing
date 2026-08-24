@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, Warning } from "@phosphor-icons/react";
 import { cn } from "@/lib/cn";
+import { trackEvent } from "@/lib/analytics";
+import { getStoredUtm } from "@/lib/utm";
 
 const inputClass = (hasError: boolean) =>
   cn(
@@ -18,8 +20,13 @@ export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [serverError, setServerError] = useState("");
   const [hp, setHp] = useState("");
+  const startedRef = useRef(false);
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackEvent("form_start", { form: "contact" });
+    }
     setFields((f) => ({ ...f, [k]: e.target.value }));
     if (errors[k]) setErrors((err) => ({ ...err, [k]: "" }));
   };
@@ -36,14 +43,21 @@ export function ContactForm() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...fields, _hp: hp, track: "contact-form" }),
+        body: JSON.stringify({ ...fields, _hp: hp, track: "contact-form", ...getStoredUtm() }),
       });
       const data = await res.json();
-      if (!res.ok) { setServerError(data.error || "Ошибка"); setStatus("error"); return; }
+      if (!res.ok) {
+        setServerError(data.error || "Ошибка");
+        setStatus("error");
+        trackEvent("lead_submit_error", { form: "contact" });
+        return;
+      }
       setStatus("success");
+      trackEvent("lead_submit", { form: "contact" });
     } catch {
       setServerError("Не удалось отправить. Напишите нам в Telegram.");
       setStatus("error");
+      trackEvent("lead_submit_error", { form: "contact" });
     }
   };
 

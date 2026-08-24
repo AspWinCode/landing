@@ -4,6 +4,8 @@ import { useState, useRef } from "react";
 import { ArrowRight, CheckCircle, Warning } from "@phosphor-icons/react";
 import { buttonClass } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { trackEvent } from "@/lib/analytics";
+import { getStoredUtm } from "@/lib/utm";
 
 const TRACKS = [
   { value: "", label: "Не знаю — помогите выбрать" },
@@ -55,8 +57,13 @@ export function TrialForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [serverError, setServerError] = useState("");
   const hpRef = useRef<HTMLInputElement>(null);
+  const startedRef = useRef(false);
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackEvent("form_start", { form: "trial" });
+    }
     setFields((f) => ({ ...f, [k]: e.target.value }));
     if (errors[k]) setErrors((err) => ({ ...err, [k]: "" }));
   };
@@ -84,14 +91,22 @@ export function TrialForm() {
         body: JSON.stringify({
           ...fields,
           _hp: hpRef.current?.value ?? "",
+          ...getStoredUtm(),
         }),
       });
       const data = await res.json();
-      if (!res.ok) { setServerError(data.error || "Ошибка сервера"); setStatus("error"); return; }
+      if (!res.ok) {
+        setServerError(data.error || "Ошибка сервера");
+        setStatus("error");
+        trackEvent("lead_submit_error", { form: "trial" });
+        return;
+      }
       setStatus("success");
+      trackEvent("lead_submit", { form: "trial", track: fields.track || "unspecified" });
     } catch {
       setServerError("Не удалось отправить заявку. Попробуйте позже или напишите нам напрямую.");
       setStatus("error");
+      trackEvent("lead_submit_error", { form: "trial" });
     }
   };
 

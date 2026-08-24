@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { buttonClass } from "@/components/ui/Button";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
 import { LayerZone } from "@/components/edit/LayerZone";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 interface FinalCtaSectionProps {
   heading?: string;
@@ -40,19 +40,23 @@ export function FinalCtaSection({
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
+              <TrackedLink
                 href={btn_primary_href || "/besplatnyj-probnyj-urok"}
                 className={buttonClass("primary", "lg", "bg-white! text-[var(--color-brand)]! hover:bg-[var(--color-violet-50)]! shadow-lg font-bold")}
+                eventName="cta_click"
+                eventParams={{ location: "final_cta_primary" }}
               >
                 {btn_primary || "Записаться на пробный урок"}
                 <ArrowRight size={20} weight="bold" />
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href={btn_secondary_href || "/kontakty"}
                 className={buttonClass("outline", "lg", "border-white! text-white! hover:bg-white/10! bg-transparent!")}
+                eventName="cta_click"
+                eventParams={{ location: "final_cta_secondary" }}
               >
                 {btn_secondary || "Задать вопрос"}
-              </Link>
+              </TrackedLink>
             </div>
 
             {(note !== undefined ? note : "Ответим в течение часа. Без спама.") && (

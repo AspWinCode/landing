@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { buttonClass } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { List, X, Moon, Sun } from "@phosphor-icons/react";
 
 export interface NavLink {
@@ -31,9 +32,7 @@ export function HeaderClient({ navLinks, ctaLabel, ctaHref }: HeaderClientProps)
           className="flex items-center gap-2.5 shrink-0"
           aria-label="TirSkix Academy — главная"
         >
-          <div className="w-8 h-8 rounded-lg bg-[var(--color-brand)] flex items-center justify-center shrink-0">
-            <span className="text-white font-black text-sm leading-none select-none">T</span>
-          </div>
+          <img src="/icon.svg" alt="" width={32} height={32} className="w-8 h-8 shrink-0" />
           <span className="hidden sm:flex flex-col leading-tight">
             <span className="font-heading font-extrabold text-base text-[var(--color-text-primary)]">TirSkix</span>
             <span className="text-[var(--color-brand)] text-xs font-semibold -mt-0.5">Academy</span>
@@ -68,12 +67,14 @@ export function HeaderClient({ navLinks, ctaLabel, ctaHref }: HeaderClientProps)
               : <Sun size={18} weight="fill" />}
           </button>
 
-          <Link
+          <TrackedLink
             href={ctaHref}
-            className={cn(buttonClass("primary", "sm"), "hidden sm:inline-flex")}
+            className={cn(buttonClass("primary", "sm"), "inline-flex")}
+            eventName="cta_click"
+            eventParams={{ location: "header" }}
           >
             {ctaLabel}
-          </Link>
+          </TrackedLink>
 
           <button
             onClick={() => setMenuOpen((v) => !v)}
@@ -106,13 +107,15 @@ export function HeaderClient({ navLinks, ctaLabel, ctaHref }: HeaderClientProps)
             </Link>
           ))}
           <div className="pt-3 border-t border-[var(--color-border)]">
-            <Link
+            <TrackedLink
               href={ctaHref}
               className={buttonClass("primary", "md", "w-full")}
+              eventName="cta_click"
+              eventParams={{ location: "header_mobile_menu" }}
               onClick={() => setMenuOpen(false)}
             >
               {ctaLabel}
-            </Link>
+            </TrackedLink>
           </div>
         </nav>
       </div>

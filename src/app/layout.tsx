@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Manrope, Open_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AnnouncementBanner } from "@/components/layout/AnnouncementBanner";
 import { EditModeProvider } from "@/components/edit/EditModeContext";
 import { EditBridge } from "@/components/edit/EditBridge";
+import { UtmCapture } from "@/components/analytics/UtmCapture";
+import { MaxFloatingButton } from "@/components/layout/MaxFloatingButton";
+import { TrialModalProvider } from "@/components/trial/TrialModalContext";
+import { TrialModal } from "@/components/trial/TrialModal";
+import { TrialClickInterceptor } from "@/components/trial/TrialClickInterceptor";
 import { getPortalSettings, getCmsPage } from "@/lib/portal";
 import { generateThemeCss } from "@/lib/theme";
 import "./globals.css";
@@ -109,40 +115,45 @@ export default async function RootLayout({
         {/* Google Analytics 4 */}
         {settings.ga_measurement_id && (
           <>
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${settings.ga_measurement_id}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${settings.ga_measurement_id}');`,
-              }}
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${settings.ga_measurement_id}`}
+              strategy="afterInteractive"
             />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${settings.ga_measurement_id}');`}
+            </Script>
           </>
         )}
 
         {/* Yandex.Metrica */}
         {settings.ym_counter_id && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(${settings.ym_counter_id},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});`,
-            }}
-          />
+          <Script id="ym-init" strategy="afterInteractive">
+            {`window.__YM_ID__=${JSON.stringify(settings.ym_counter_id)};(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(${settings.ym_counter_id},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});`}
+          </Script>
         )}
 
         {/* VK Pixel */}
         {settings.vk_pixel_id && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("${settings.vk_pixel_id}"),VK.Retargeting.Hit()},document.head.appendChild(t)}();`,
-            }}
-          />
+          <Script id="vk-pixel" strategy="lazyOnload">
+            {`!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("${settings.vk_pixel_id}"),VK.Retargeting.Hit()},document.head.appendChild(t)}();`}
+          </Script>
         )}
       </head>
       <body className="min-h-full flex flex-col">
         <EditModeProvider>
           <EditBridge />
+          <UtmCapture />
           {annEnabled && annText && (
             <AnnouncementBanner text={annText} href={annHref} style={annStyle} />
           )}
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <TrialModalProvider>
+              {children}
+              <TrialModal />
+              <TrialClickInterceptor />
+            </TrialModalProvider>
+          </ThemeProvider>
+          <MaxFloatingButton />
         </EditModeProvider>
       </body>
     </html>
