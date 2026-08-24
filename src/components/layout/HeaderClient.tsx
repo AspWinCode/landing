@@ -29,17 +29,10 @@ export function HeaderClient({ navLinks, ctaLabel, ctaHref }: HeaderClientProps)
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 shrink-0"
+          className="flex items-center shrink-0"
           aria-label="TirSkix Academy — главная"
         >
-          <img src="/icon.svg" alt="" width={32} height={32} className="w-8 h-8 shrink-0" />
-          <span className="hidden sm:flex flex-col leading-tight">
-            <span className="font-heading font-extrabold text-base text-[var(--color-text-primary)]">TirSkix</span>
-            <span className="text-[var(--color-brand)] text-xs font-semibold -mt-0.5">Academy</span>
-          </span>
-          <span className="sm:hidden font-heading font-extrabold text-base text-[var(--color-text-primary)]">
-            TirSkix
-          </span>
+          <img src="/logo.svg" alt="TirSkix Academy" width={405} height={84} className="site-logo h-[22px] sm:h-8 w-auto" />
         </Link>
 
         {/* Desktop nav */}
