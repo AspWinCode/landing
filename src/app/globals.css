@@ -84,6 +84,11 @@
   --color-track-technolab-light: #0F0F2E;
 }
 
+/* Logo wordmark uses fixed navy fill — invert to white so it stays legible on dark surfaces */
+[data-theme="dark"] .site-logo {
+  filter: brightness(0) invert(1);
+}
+
 /* ─── Base ─── */
 *, *::before, *::after {
   box-sizing: border-box;

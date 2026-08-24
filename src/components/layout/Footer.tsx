@@ -88,13 +88,8 @@ export async function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[var(--color-brand)] flex items-center justify-center">
-                <span className="text-white font-black text-sm">T</span>
-              </div>
-              <span className="font-heading font-bold text-base text-[var(--color-text-primary)]">
-                TirSkix Academy
-              </span>
+            <Link href="/" className="flex items-center mb-4" aria-label="TirSkix Academy — главная">
+              <img src="/logo.svg" alt="TirSkix Academy" width={405} height={84} className="site-logo h-8 w-auto" />
             </Link>
             <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-2">
               {tagline}

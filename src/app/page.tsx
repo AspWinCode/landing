@@ -48,9 +48,9 @@ const homeJsonLd = {
       url: "https://tirskix-academy.com/",
       logo: {
         "@type": "ImageObject",
-        url: "https://tirskix-academy.com/logo.png",
-        width: 512,
-        height: 512,
+        url: "https://tirskix-academy.com/logo.svg",
+        width: 405,
+        height: 84,
       },
       description:
         "Онлайн-школа программирования для детей 10–18 лет. Три нарративных трека: Игровая студия, Кодэкс, ТехноЛаб. Лицензия Министерства образования. Налоговый вычет, оплата маткапиталом.",
