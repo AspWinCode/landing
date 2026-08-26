@@ -41,6 +41,7 @@ const DEFAULT_COLUMNS: FooterColumn[] = [
       { label: "Блог", href: "/blog" },
       { label: "Мероприятия", href: "/aktivnosti" },
       { label: "Контакты", href: "/kontakty" },
+      { label: "Иркутск", href: "/shkola-programmirovaniya-irkutsk" },
     ],
   },
 ];

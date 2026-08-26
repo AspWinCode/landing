@@ -25,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/dostizheniya-uchenikov`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/kontakty`, lastModified: now, changeFrequency: "yearly", priority: 0.6 },
+    { url: `${BASE}/shkola-programmirovaniya-irkutsk`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/aktivnosti`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE}/igrovye-dzhemy`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE}/python-dlya-detej`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
