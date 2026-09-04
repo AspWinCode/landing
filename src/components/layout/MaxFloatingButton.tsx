@@ -3,7 +3,7 @@
 import { ChatCircleDots } from "@phosphor-icons/react";
 import { trackEvent } from "@/lib/analytics";
 
-const MAX_URL = "https://max.ru/214190953";
+const MAX_URL = "https://max.ru/u/f9LHodD0cOJyxZOpkoXraegpIii1X5IX2PsgKuob6_sPBgfjCJS4hWonbs0";
 
 export function MaxFloatingButton() {
   return (
