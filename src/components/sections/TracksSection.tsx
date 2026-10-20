@@ -4,7 +4,7 @@ import { EditableSlot } from "@/components/edit/EditableSlot";
 import { LayerZone } from "@/components/edit/LayerZone";
 
 const DEFAULT_HEADING = "Три ступени — один путь роста";
-const DEFAULT_SUBHEADING = "Ученики начинают в Игровой студии и растут до ТехноЛаба: каждая ступень сложнее предыдущей и готовит к следующему шагу.";
+const DEFAULT_SUBHEADING = "Ученики начинают в Игровой студии и растут до Эксперта: каждая ступень сложнее предыдущей и готовит к следующему шагу.";
 
 const TRACK_STYLES = [
   {
@@ -17,17 +17,17 @@ const TRACK_STYLES = [
     emoji: "🎮",
   },
   {
-    slug: "kodeks",
-    href: "/kodeks",
+    slug: "programmist",
+    href: "/programmist",
     colorClass: "text-[var(--color-track-kodeks)]",
     bgClass: "bg-[var(--color-track-kodeks-light)]",
     barClass: "bg-[var(--color-track-kodeks)]",
     hoverClass: "hover:bg-[var(--color-track-kodeks-light)]",
-    emoji: "🔍",
+    emoji: "🐍",
   },
   {
-    slug: "technolab",
-    href: "/technolab",
+    slug: "ekspert",
+    href: "/ekspert",
     colorClass: "text-[var(--color-track-technolab)]",
     bgClass: "bg-[var(--color-track-technolab-light)]",
     barClass: "bg-[var(--color-track-technolab)]",
@@ -45,16 +45,16 @@ const DEFAULT_TRACKS = [
     tags: ["Snap", "GDevelop", "Визуальное программирование"],
   },
   {
-    title: "Кодэкс",
-    narrative: "Стань цифровым следователем",
-    description: "Python через детективные дела. Каждое занятие — новое дело: собираем улики, пишем код, раскрываем тайну. Включает модуль Data Science: numpy, pandas.",
+    title: "Программист",
+    narrative: "Уверенный Python для реальных задач",
+    description: "Базовая текстовая программа на Python. Данные, функции, собственные проекты. Включает модуль Data Science: numpy, pandas.",
     age: "12–15 лет",
     tags: ["Python", "Data Science", "numpy/pandas"],
   },
   {
-    title: "ТехноЛаб",
-    narrative: "Инженерные вызовы для тех, кто хочет большего",
-    description: "Python, алгоритмы, ООП, математика, Arcade. Уровень олимпиад и поступления в лучшие вузы. Для тех, кто уже умеет мыслить как программист.",
+    title: "Эксперт",
+    narrative: "От учебного Python к инженерной культуре",
+    description: "Git, алгоритмы, ООП, математика, Arcade. Уровень олимпиад и поступления в лучшие вузы. Для тех, кто уже уверенно пишет на Python.",
     age: "14–18 лет",
     tags: ["Python", "Алгоритмы", "ООП", "Arcade"],
   },

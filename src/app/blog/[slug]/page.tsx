@@ -145,12 +145,12 @@ export default async function BlogPostPage({ params }: Props) {
                 </h2>
                 <p className="text-[var(--color-text-secondary)] mb-6 max-w-md mx-auto">
                   {isExam
-                    ? "Трек «Кодэкс» — подготовка к экзаменам по информатике с реальными задачами и разбором ошибок."
-                    : "Три трека для детей 10–18 лет: Игровая студия, Кодэкс и ТехноЛаб. Первый урок бесплатно."}
+                    ? "Ступень «Программист» — подготовка к экзаменам по информатике с реальными задачами и разбором ошибок."
+                    : "Три ступени для детей 10–18 лет: Игровая студия, Программист и Эксперт. Первый урок бесплатно."}
                 </p>
                 <div className="flex flex-wrap gap-3 justify-center">
-                  <Link href={isExam ? "/kodeks" : "/besplatnyj-probnyj-urok"} className={buttonClass("primary", "md", "group inline-flex")}>
-                    {isExam ? "Узнать про Кодэкс" : "Записаться на пробный урок"}
+                  <Link href={isExam ? "/programmist" : "/besplatnyj-probnyj-urok"} className={buttonClass("primary", "md", "group inline-flex")}>
+                    {isExam ? "Узнать про Программиста" : "Записаться на пробный урок"}
                     <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-1" />
                   </Link>
                   {isExam && (

@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "Курсы программирования для детей онлайн — TirSkix Academy",
     description:
-      "Онлайн-курсы программирования для детей 10–18 лет. Три трека: Игровая студия (Snap/GDevelop), Кодэкс (Python), ТехноЛаб (алгоритмы). Реальные результаты: БВИ, ОГЭ 19/21. Пробный урок бесплатно.",
+      "Онлайн-курсы программирования для детей 10–18 лет. Три ступени: Игровая студия (Snap/GDevelop), Программист (Python), Эксперт (алгоритмы). Реальные результаты: БВИ, ОГЭ 19/21. Пробный урок бесплатно.",
     keywords: [
       "курсы программирования для детей",
       "онлайн школа программирования для детей",
@@ -40,8 +40,8 @@ const jsonLd = {
         name: "Курсы программирования",
         itemListElement: [
           { "@type": "Course", name: "Игровая студия", description: "Создание игр на Snap и GDevelop для детей 10–12 лет", url: "https://tirskix-academy.com/game-studio" },
-          { "@type": "Course", name: "Кодэкс", description: "Python через детективные дела для детей 12–15 лет", url: "https://tirskix-academy.com/kodeks" },
-          { "@type": "Course", name: "ТехноЛаб", description: "Python, алгоритмы, ООП для подростков 14–18 лет", url: "https://tirskix-academy.com/technolab" },
+          { "@type": "Course", name: "Программист", description: "Базовая программа на Python для детей 12–15 лет", url: "https://tirskix-academy.com/programmist" },
+          { "@type": "Course", name: "Эксперт", description: "Python, алгоритмы, ООП для подростков 14–18 лет", url: "https://tirskix-academy.com/ekspert" },
         ],
       },
     },
@@ -71,24 +71,24 @@ const TRACKS = [
     bar: "bg-[var(--color-track-studio)]",
   },
   {
-    href: "/kodeks",
-    emoji: "🔍",
-    title: "Кодэкс",
+    href: "/programmist",
+    emoji: "🐍",
+    title: "Программист",
     age: "12–15 лет",
-    tagline: "Стань цифровым следователем",
-    desc: "Python через детективные расследования + Data Science модуль. Настоящий код, интересные задачи.",
+    tagline: "Уверенный Python для реальных задач",
+    desc: "Базовая программа на Python + Data Science модуль. Настоящий код, интересные задачи.",
     tools: ["Python", "numpy", "pandas"],
     color: "var(--color-track-kodeks)",
     colorLight: "var(--color-track-kodeks-light)",
     bar: "bg-[var(--color-track-kodeks)]",
   },
   {
-    href: "/technolab",
+    href: "/ekspert",
     emoji: "⚙️",
-    title: "ТехноЛаб",
+    title: "Эксперт",
     age: "14–18 лет",
-    tagline: "Инженерные вызовы для тех, кто хочет большего",
-    desc: "Python, алгоритмы, ООП, математика, Arcade. Уровень олимпиад и поступления в топ-вузы.",
+    tagline: "От учебного Python к инженерной культуре",
+    desc: "Git, алгоритмы, ООП, математика, Arcade. Уровень олимпиад и поступления в топ-вузы.",
     tools: ["Python", "Алгоритмы", "Arcade"],
     color: "var(--color-track-technolab)",
     colorLight: "var(--color-track-technolab-light)",
@@ -122,7 +122,7 @@ const FAQ = [
   },
   {
     q: "Что получает ребёнок после курса?",
-    a: "Реальные навыки: ученики Игровой студии выпускают игры, Кодэкса — пишут программы и работают с данными, ТехноЛаба — решают олимпиадные задачи и поступают в топ-вузы. Плюс сертификат об окончании и проекты в портфолио.",
+    a: "Реальные навыки: ученики Игровой студии выпускают игры, Программиста — пишут программы и работают с данными, Эксперта — решают олимпиадные задачи и поступают в топ-вузы. Плюс сертификат об окончании и проекты в портфолио.",
   },
 ];
 
@@ -182,7 +182,7 @@ export default async function ProgrammirovaniyaDlyaDetejPage() {
               <ul className="space-y-3">
                 {[
                   "Онлайн-школа TirSkix Academy обучает программированию детей от 10 до 18 лет.",
-                  "Три трека по возрасту: Игровая студия (10–12, Snap/GDevelop), Кодэкс (12–15, Python+Data Science), ТехноЛаб (14–18, алгоритмы/ООП).",
+                  "Три ступени по возрасту: Игровая студия (10–12, Snap/GDevelop), Программист (12–15, Python+Data Science), Эксперт (14–18, алгоритмы/ООП).",
                   "Формат: онлайн, 2 раза в неделю, живой ментор-практик, личный кабинет с прогрессом.",
                   "Результаты учеников: 2 БВИ в вузы, ОГЭ 19/21 с нуля, полуфинал ICPC, ЕГЭ 98 баллов.",
                   "Первый урок — бесплатно, без обязательств.",

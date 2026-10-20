@@ -3,8 +3,8 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 const CORE_STEPS = [
   { title: "Игровая студия", age: "10–12 лет", color: "var(--color-track-studio)", colorLight: "var(--color-track-studio-light)" },
-  { title: "Кодэкс", age: "12–15 лет", color: "var(--color-track-kodeks)", colorLight: "var(--color-track-kodeks-light)" },
-  { title: "ТехноЛаб", age: "14–18 лет", color: "var(--color-track-technolab)", colorLight: "var(--color-track-technolab-light)" },
+  { title: "Программист", age: "12–15 лет", color: "var(--color-track-kodeks)", colorLight: "var(--color-track-kodeks-light)" },
+  { title: "Эксперт", age: "14–18 лет", color: "var(--color-track-technolab)", colorLight: "var(--color-track-technolab-light)" },
 ];
 
 const BRANCHES = [

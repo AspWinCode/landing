@@ -23,7 +23,7 @@ export default function NotFound() {
               404
             </span>
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-5xl drop-shadow-sm">🔍</span>
+              <span className="text-5xl drop-shadow-sm">🧭</span>
             </div>
           </div>
 
@@ -31,8 +31,8 @@ export default function NotFound() {
             Страница не найдена
           </h1>
           <p className="text-[var(--color-text-secondary)] mb-8 leading-relaxed">
-            Похоже, эта улика ведёт в никуда. Может, страница переехала
-            или ссылка была неправильной.
+            Похоже, эта ссылка ведёт в никуда. Может, страница переехала
+            или адрес был неправильным.
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center mb-10">

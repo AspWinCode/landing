@@ -3,8 +3,8 @@ import { HeaderClient, type NavLink } from "./HeaderClient";
 
 const DEFAULT_NAV_LINKS: NavLink[] = [
   { label: "Игровая студия", href: "/game-studio" },
-  { label: "Кодэкс", href: "/kodeks" },
-  { label: "ТехноЛаб", href: "/technolab" },
+  { label: "Программист", href: "/programmist" },
+  { label: "Эксперт", href: "/ekspert" },
   { label: "Направления", href: "/napravleniya-razrabotki" },
   { label: "Мероприятия", href: "/aktivnosti" },
   { label: "Блог", href: "/blog" },

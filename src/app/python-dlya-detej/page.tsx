@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "Python для детей онлайн — TirSkix Academy",
     description:
-      "Обучение Python для детей 10–18 лет онлайн. Учим через детективные истории и реальные проекты — не через скучные учебники. Первый урок бесплатно.",
+      "Обучение Python для детей 10–18 лет онлайн. Учим через реальные проекты и задачи — не через скучные учебники. Первый урок бесплатно.",
     keywords: ["Python для детей", "изучить Python ребёнку", "курс Python для школьников", "Python онлайн дети"],
     canonical: "https://tirskix-academy.com/python-dlya-detej",
   });
@@ -25,7 +25,7 @@ const jsonLd = {
   "@type": "Course",
   name: "Python для детей",
   url: "https://tirskix-academy.com/python-dlya-detej/",
-  description: "Обучение Python для детей 10–18 лет через детективные истории и реальные проекты",
+  description: "Обучение Python для детей 10–18 лет через реальные проекты и задачи",
   provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
   educationalLevel: "10–18 лет",
   teaches: "Python, основы программирования, Data Science, алгоритмы",
@@ -41,7 +41,7 @@ const breadcrumbJsonLd = buildBreadcrumbJsonLd([
 ]);
 
 const WHY = [
-  { emoji: "🔍", title: "Через истории", desc: "Дети не учат синтаксис — они расследуют детективные дела на Python. Мотивация держится сама." },
+  { emoji: "🐍", title: "Через проекты", desc: "Дети не учат синтаксис абстрактно — они сразу пишут работающие программы на Python. Мотивация держится сама." },
   { emoji: "💻", title: "Реальный код", desc: "С первого урока пишем настоящий код — не блоки, не скретч, а Python-программы." },
   { emoji: "📈", title: "Практический результат", desc: "После курса — уверенный Python, понимание алгоритмов и готовность к ОГЭ/ЕГЭ." },
   { emoji: "👨‍💻", title: "Живые менторы", desc: "Каждый ментор — практикующий разработчик. Не методист, а человек из IT." },
@@ -58,17 +58,17 @@ const WHAT_LEARN = [
 
 const TRACKS_PYTHON = [
   {
-    title: "Кодэкс",
+    title: "Программист",
     age: "12–15 лет",
-    desc: "Python через детективный нарратив. Для тех, кто хочет начать с нуля и дойти до Data Science.",
-    href: "/kodeks",
+    desc: "Базовая программа на Python. Для тех, кто хочет начать с нуля и дойти до Data Science.",
+    href: "/programmist",
     color: "var(--color-track-kodeks)",
   },
   {
-    title: "ТехноЛаб",
+    title: "Эксперт",
     age: "14–18 лет",
-    desc: "Python на уровне олимпиад и ЕГЭ. ООП, алгоритмы, математика.",
-    href: "/technolab",
+    desc: "Python на уровне олимпиад и ЕГЭ. Git, ООП, алгоритмы, математика.",
+    href: "/ekspert",
     color: "var(--color-track-technolab)",
   },
   {
@@ -82,7 +82,7 @@ const TRACKS_PYTHON = [
 
 const FAQ = [
   { q: "С какого возраста можно учить Python?", a: "С 12 лет. До 12 рекомендуем начать с визуального программирования — трек Игровая студия на Snap! и GDevelop. К 12 годам дети готовы к текстовому синтаксису Python." },
-  { q: "Нужен ли опыт программирования?", a: "Нет. Кодэкс начинается с абсолютного нуля. ТехноЛаб предполагает базу — если её нет, начнём с Кодэкса." },
+  { q: "Нужен ли опыт программирования?", a: "Нет. Программист начинается с абсолютного нуля. Эксперт предполагает базу — если её нет, начнём с Программиста." },
   { q: "Сколько времени занимает освоение Python?", a: "Базовый уровень (переменные, циклы, функции) — 3–4 месяца при 2 занятиях в неделю. Уровень ОГЭ — 6 месяцев. Уверенный уровень с Data Science — 1–1,5 года." },
   { q: "Какую версию Python учим?", a: "Python 3 — актуальная версия, которая используется в реальных проектах, олимпиадах и на ОГЭ/ЕГЭ." },
 ];
@@ -117,16 +117,16 @@ export default async function PythonForKidsPage() {
               <span style={{ color: "var(--color-track-kodeks)" }}>онлайн, с живым ментором</span>
             </h1>
             <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed mb-8">
-              Учим Python не по учебнику, а через реальные задачи и истории.
-              Дети пишут детективные программы, анализируют данные и решают олимпиадные задачи.
+              Учим Python не по учебнику, а через реальные задачи и проекты.
+              Дети пишут программы, анализируют данные и решают олимпиадные задачи.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/besplatnyj-probnyj-urok" className={buttonClass("primary", "lg", "group inline-flex")}>
                 Первый урок бесплатно
                 <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link href="/kodeks" className={buttonClass("outline", "lg")}>
-                Трек Кодэкс
+              <Link href="/programmist" className={buttonClass("outline", "lg")}>
+                Ступень Программист
               </Link>
             </div>
           </div>

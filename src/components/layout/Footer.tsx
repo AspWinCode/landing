@@ -18,8 +18,8 @@ const DEFAULT_COLUMNS: FooterColumn[] = [
     title: "Треки",
     links: [
       { label: "Игровая студия", href: "/game-studio" },
-      { label: "Кодэкс", href: "/kodeks" },
-      { label: "ТехноЛаб", href: "/technolab" },
+      { label: "Программист", href: "/programmist" },
+      { label: "Эксперт", href: "/ekspert" },
     ],
   },
   {

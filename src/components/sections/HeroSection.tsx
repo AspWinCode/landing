@@ -6,14 +6,14 @@ import { HeroRightSlot } from "@/components/edit/HeroRightSlot";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 
 const CODE_LINES = [
-  { indent: 0, content: "def solve_mystery(clues):", color: "text-[var(--color-track-kodeks)]" },
-  { indent: 1, content: "suspects = []", color: "text-[var(--color-violet-300)]" },
-  { indent: 1, content: "for clue in clues:", color: "text-[var(--color-track-kodeks)]" },
-  { indent: 2, content: "if clue.matches():", color: "text-[var(--color-track-kodeks)]" },
-  { indent: 3, content: "suspects.append(", color: "text-[var(--color-violet-300)]" },
-  { indent: 4, content: "clue.suspect", color: "text-[var(--color-track-studio)]" },
+  { indent: 0, content: "def next_level(student):", color: "text-[var(--color-track-kodeks)]" },
+  { indent: 1, content: "skills = []", color: "text-[var(--color-violet-300)]" },
+  { indent: 1, content: "for task in student.done:", color: "text-[var(--color-track-kodeks)]" },
+  { indent: 2, content: "if task.passed():", color: "text-[var(--color-track-kodeks)]" },
+  { indent: 3, content: "skills.append(", color: "text-[var(--color-violet-300)]" },
+  { indent: 4, content: "task.skill", color: "text-[var(--color-track-studio)]" },
   { indent: 3, content: ")", color: "text-[var(--color-violet-300)]" },
-  { indent: 1, content: "return suspects[0]", color: "text-[var(--color-track-kodeks)]" },
+  { indent: 1, content: "return skills", color: "text-[var(--color-track-kodeks)]" },
 ];
 
 interface HeroProps {
@@ -125,7 +125,7 @@ export function HeroSection({
                       <div className="w-3 h-3 rounded-full bg-[#28C840]" />
                     </div>
                     <div className="flex-1 text-center text-xs text-[var(--color-violet-400)] font-mono">
-                      mystery_solver.py
+                      growth_tracker.py
                     </div>
                   </div>
                   <div className="p-5 font-mono text-sm leading-7">
@@ -138,7 +138,7 @@ export function HeroSection({
                   <div className="mx-4 mb-4 rounded-xl bg-black/40 px-4 py-3 border border-[var(--color-violet-950)]">
                     <div className="text-[10px] text-[var(--color-violet-400)] mb-1 font-mono uppercase tracking-widest">Вывод</div>
                     <div className="text-[var(--color-track-studio)] font-mono text-sm">
-                      &gt; Дело раскрыто: профессор Немо
+                      &gt; Новый навык: рекурсия
                     </div>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export function HeroSection({
                     <div className="w-8 h-8 rounded-full bg-[var(--color-brand)] flex items-center justify-center text-white text-xs font-bold">А</div>
                     <div>
                       <div className="text-xs font-bold text-[var(--color-text-primary)]">Арина, 13 лет</div>
-                      <div className="text-[10px] text-[var(--color-track-studio)]">✓ Дело #47 раскрыто</div>
+                      <div className="text-[10px] text-[var(--color-track-studio)]">✓ Проект #47 завершён</div>
                     </div>
                   </div>
                 </div>

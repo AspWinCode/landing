@@ -4,6 +4,12 @@ const PORTAL_ORIGIN = "https://tirskix.space";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  async redirects() {
+    return [
+      { source: "/kodeks", destination: "/programmist", permanent: true },
+      { source: "/technolab", destination: "/ekspert", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

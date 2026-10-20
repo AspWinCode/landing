@@ -86,7 +86,7 @@ export function LmsSection({ heading, description, features, cta_text, cta_href 
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-[var(--color-text-primary)]">Кирилл, 15 лет</div>
-                    <div className="text-xs text-[var(--color-text-muted)]">Трек: ТехноЛаб · Месяц 18</div>
+                    <div className="text-xs text-[var(--color-text-muted)]">Ступень: Эксперт · Месяц 18</div>
                   </div>
                 </div>
 
