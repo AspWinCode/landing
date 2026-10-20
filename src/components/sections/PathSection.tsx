@@ -2,7 +2,7 @@ import { EditableSlot } from "@/components/edit/EditableSlot";
 import { LayerZone } from "@/components/edit/LayerZone";
 
 const DEFAULT_HEADING = "Путь ученика";
-const DEFAULT_SUBHEADING = "От первой строчки кода до поступления в лучшие IT-вузы страны — три последовательных мира.";
+const DEFAULT_SUBHEADING = "От первой строчки кода до поступления в лучшие IT-вузы страны — три последовательные ступени.";
 
 const STEP_STYLES = [
   { step: "01", color: "var(--color-track-studio)", colorLight: "var(--color-track-studio-light)" },

@@ -3,8 +3,8 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { EditableSlot } from "@/components/edit/EditableSlot";
 import { LayerZone } from "@/components/edit/LayerZone";
 
-const DEFAULT_HEADING = "Выбери свой мир";
-const DEFAULT_SUBHEADING = "Три трека — один путь. Ученики начинают в Игровой студии и растут до ТехноЛаба.";
+const DEFAULT_HEADING = "Три ступени — один путь роста";
+const DEFAULT_SUBHEADING = "Ученики начинают в Игровой студии и растут до ТехноЛаба: каждая ступень сложнее предыдущей и готовит к следующему шагу.";
 
 const TRACK_STYLES = [
   {
@@ -40,7 +40,7 @@ const DEFAULT_TRACKS = [
   {
     title: "Игровая студия",
     narrative: "Открой свою игровую студию",
-    description: "Первый мир — для тех, кто только начинает. Создаём настоящие игры в Snap и GDevelop. Ни строчки синтаксиса — только логика и творчество.",
+    description: "Первая ступень — для тех, кто только начинает. Создаём настоящие игры в Snap и GDevelop. Ни строчки синтаксиса — только логика и творчество.",
     age: "10–12 лет",
     tags: ["Snap", "GDevelop", "Визуальное программирование"],
   },

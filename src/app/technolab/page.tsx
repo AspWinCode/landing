@@ -37,7 +37,7 @@ const jsonLd = {
   courseMode: "online",
   inLanguage: "ru",
   audience: { "@type": "EducationalAudience", educationalRole: "student" },
-  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
+  offers: { "@type": "Offer", price: "4950", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
 
 const breadcrumbJsonLd = buildBreadcrumbJsonLd([

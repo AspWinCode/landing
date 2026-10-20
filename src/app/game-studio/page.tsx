@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "Игровая студия — создание игр для детей 10–12 лет | TirSkix Academy",
     description:
-      "Создание игр на Snap и GDevelop для детей 10–12 лет. Визуальное программирование без синтаксиса. Первый мир TirSkix Academy — старт без опыта. Пробный урок бесплатно.",
+      "Создание игр на Snap и GDevelop для детей 10–12 лет. Визуальное программирование без синтаксиса. Первая ступень траектории TirSkix Academy — старт без опыта. Пробный урок бесплатно.",
     keywords: [
       "создание игр для детей",
       "программирование для детей 10 лет",

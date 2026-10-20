@@ -47,6 +47,12 @@ export function TrackPage({ track }: Props) {
                   {tag}
                 </span>
               ))}
+              <span
+                className="text-xs font-semibold px-3 py-1.5 rounded-full border-2"
+                style={{ borderColor: track.color, color: track.color }}
+              >
+                от {track.priceFrom} · {track.priceNote}
+              </span>
             </div>
 
             <h1 className="text-4xl md:text-5xl xl:text-6xl font-extrabold text-[var(--color-text-primary)] leading-tight mb-5">
@@ -289,8 +295,11 @@ export function TrackPage({ track }: Props) {
           <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-4">
             Готов попробовать?
           </h2>
-          <p className="text-[var(--color-text-secondary)] mb-8">
+          <p className="text-[var(--color-text-secondary)] mb-2">
             Первый урок бесплатно. Без обязательств — просто посмотри, как это работает.
+          </p>
+          <p className="text-sm text-[var(--color-text-muted)] mb-8">
+            Стоимость обучения — от {track.priceFrom} ({track.priceNote})
           </p>
           <Link
             href="/besplatnyj-probnyj-urok"

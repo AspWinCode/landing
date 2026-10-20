@@ -32,7 +32,7 @@ const jsonLd = {
   courseMode: "online",
   inLanguage: "ru",
   audience: { "@type": "EducationalAudience", educationalRole: "student" },
-  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
+  offers: { "@type": "Offer", price: "4900", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
 
 const breadcrumbJsonLd = buildBreadcrumbJsonLd([
@@ -113,7 +113,7 @@ export default async function FrontendPage() {
             </nav>
 
             <div className="flex flex-wrap gap-2 mb-6">
-              {["от 8 класса", "Мини-группа / Индивидуально", "Можно с нуля"].map((tag) => (
+              {["от 8 класса", "Мини-группа / Индивидуально", "Можно с нуля", "от 4 900 ₽ · абонемент"].map((tag) => (
                 <span key={tag} className="text-xs font-semibold px-3 py-1.5 rounded-full"
                   style={{ background: "color-mix(in srgb, var(--color-track-kodeks) 12%, transparent)", color: "var(--color-track-kodeks)" }}>
                   {tag}

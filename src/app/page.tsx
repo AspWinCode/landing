@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { AdvantagesSection } from "@/components/sections/AdvantagesSection";
 import { TracksSection } from "@/components/sections/TracksSection";
 import { PathSection } from "@/components/sections/PathSection";
+import { GrowthMapSection } from "@/components/sections/GrowthMapSection";
 import { ResultsSection } from "@/components/sections/ResultsSection";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { PromosSection } from "@/components/sections/PromosSection";
@@ -21,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "TirSkix Academy — онлайн-школа программирования для детей",
     description:
-      "От хобби — к вершинам IT. Три нарративных трека для детей 10–18 лет: Игровая студия, Кодэкс, ТехноЛаб. Пробный урок бесплатно.",
+      "Программирование, которое растёт вместе с ребёнком. Три ступени для детей 10–18 лет: Игровая студия, Кодэкс, ТехноЛаб. Пробный урок бесплатно.",
     canonical: "https://tirskix-academy.com/",
   });
 }
@@ -53,7 +54,7 @@ const homeJsonLd = {
         height: 84,
       },
       description:
-        "Онлайн-школа программирования для детей 10–18 лет. Три нарративных трека: Игровая студия, Кодэкс, ТехноЛаб. Лицензия Министерства образования. Налоговый вычет, оплата маткапиталом.",
+        "Онлайн-школа программирования для детей 10–18 лет. Понятная траектория роста: Игровая студия, Кодэкс, ТехноЛаб. Лицензия Министерства образования. Налоговый вычет, оплата маткапиталом.",
       address: {
         "@type": "PostalAddress",
         addressCountry: "RU",
@@ -63,7 +64,7 @@ const homeJsonLd = {
         contactType: "customer service",
         availableLanguage: "Russian",
       },
-      sameAs: [],
+      sameAs: ["https://t.me/tirskix_academy"],
     },
     {
       "@type": "WebSite",
@@ -131,6 +132,7 @@ export default async function HomePage() {
           subheading={str(path.subheading)}
           steps={arr(path.steps)}
         />
+        <GrowthMapSection />
         <ResultsSection stats={stats} reviews={reviews} />
         <TrustSection />
         <PromosSection

@@ -116,7 +116,7 @@ export default async function AboutPage() {
 
   const h1 = hero?.h1 ?? "Мы учим детей";
   const h1Accent = hero?.h1_accent ?? "думать как разработчики";
-  const subtitle = hero?.subtitle ?? "TirSkix Academy — онлайн-школа программирования для детей и подростков 10–18 лет. С 2020 года помогаем ребятам найти свой путь в IT — через нарратив, реальные задачи и живых менторов.";
+  const subtitle = hero?.subtitle ?? "TirSkix Academy — онлайн-школа программирования для детей и подростков 10–18 лет. С 2020 года помогаем ребятам расти от первых проектов до своего направления — через реальные задачи и живых менторов.";
   const storyHeading = story?.heading ?? "Как мы начинали";
   const storyParagraphs = Array.isArray(story?.paragraphs) && story.paragraphs.length > 0
     ? story.paragraphs

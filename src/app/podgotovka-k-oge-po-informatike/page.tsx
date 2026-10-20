@@ -32,7 +32,7 @@ const jsonLd = {
   courseMode: "online",
   inLanguage: "ru",
   audience: { "@type": "EducationalAudience", educationalRole: "student" },
-  offers: { "@type": "Offer", price: "4200", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
+  offers: { "@type": "Offer", price: "4900", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
 
 const breadcrumbJsonLd = buildBreadcrumbJsonLd([
@@ -97,8 +97,13 @@ export default async function OgePage() {
               <span>/</span>
               <span className="text-[var(--color-brand)] font-medium">Подготовка к ОГЭ</span>
             </nav>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-surface-raised)] border border-[var(--color-border)] text-xs font-medium text-[var(--color-track-kodeks)] mb-6">
-              9 класс · Информатика
+            <div className="flex flex-wrap gap-2 mb-6">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-surface-raised)] border border-[var(--color-border)] text-xs font-medium text-[var(--color-track-kodeks)]">
+                9 класс · Информатика
+              </span>
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border-2 text-xs font-semibold" style={{ borderColor: "var(--color-track-kodeks)", color: "var(--color-track-kodeks)" }}>
+                от 4 900 ₽ · абонемент
+              </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold text-[var(--color-text-primary)] leading-tight mb-5">
               Подготовка к ОГЭ<br />

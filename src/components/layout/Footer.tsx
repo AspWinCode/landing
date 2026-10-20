@@ -46,7 +46,7 @@ const DEFAULT_COLUMNS: FooterColumn[] = [
   },
 ];
 
-const DEFAULT_TAGLINE = "Онлайн-школа программирования для детей 10–18 лет. Три мира — один путь в IT.";
+const DEFAULT_TAGLINE = "Онлайн-школа программирования для детей 10–18 лет. Понятная траектория роста — от первых проектов до своего направления.";
 const DEFAULT_COPYRIGHT = "TirSkix Academy. Все права защищены.";
 
 const LEGAL: FooterLink[] = [

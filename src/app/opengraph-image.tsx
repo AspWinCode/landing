@@ -30,7 +30,7 @@ export default function Image() {
             left: 0,
             right: 0,
             height: "6px",
-            background: "linear-gradient(90deg, #6c47ff, #a78bfa)",
+            background: "linear-gradient(90deg, #7F23CC, #A05AE2)",
           }}
         />
 
@@ -51,7 +51,7 @@ export default function Image() {
               width: "56px",
               height: "56px",
               borderRadius: "14px",
-              background: "linear-gradient(135deg, #6c47ff, #a78bfa)",
+              background: "linear-gradient(135deg, #7F23CC, #A05AE2)",
               fontSize: "28px",
               fontWeight: "700",
               color: "#fff",
@@ -86,7 +86,7 @@ export default function Image() {
           }}
         >
           <span style={{ display: "flex" }}>Онлайн-школа</span>
-          <span style={{ display: "flex", color: "#a78bfa" }}>программирования</span>
+          <span style={{ display: "flex", color: "#BA87EB" }}>программирования</span>
           <span style={{ display: "flex" }}>для детей</span>
         </div>
 
@@ -108,13 +108,13 @@ export default function Image() {
           style={{
             display: "flex",
             alignItems: "center",
-            background: "rgba(108,71,255,0.25)",
+            background: "rgba(127,35,204,0.25)",
             borderWidth: "2px",
             borderStyle: "solid",
-            borderColor: "rgba(108,71,255,0.5)",
+            borderColor: "rgba(127,35,204,0.5)",
             borderRadius: "50px",
             padding: "14px 32px",
-            color: "#c4b5fd",
+            color: "#D4B4F3",
             fontSize: "20px",
             fontWeight: "600",
           }}

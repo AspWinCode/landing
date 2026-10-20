@@ -13,6 +13,8 @@ export interface TrackData {
   age: string;
   format: string;
   start: string;
+  priceFrom: string;
+  priceNote: string;
   color: string;        // CSS var
   colorLight: string;   // CSS var
   colorHex: string;     // for og-image / schema
@@ -42,6 +44,8 @@ export const TRACKS: Record<TrackSlug, TrackData> = {
     age: "10–12 лет",
     format: "Онлайн",
     start: "В любой момент",
+    priceFrom: "4 200 ₽",
+    priceNote: "абонемент · 16 часов",
     color: "var(--color-track-studio)",
     colorLight: "var(--color-track-studio-light)",
     colorHex: "#22C55E",
@@ -126,7 +130,7 @@ export const TRACKS: Record<TrackSlug, TrackData> = {
     seo: {
       title: "Игровая студия — создание игр для детей 10–12 лет | TirSkix Academy",
       description:
-        "Создание игр на Snap и GDevelop для детей 10–12 лет. Визуальное программирование без синтаксиса. Первый мир TirSkix Academy — старт без опыта. Пробный урок бесплатно.",
+        "Создание игр на Snap и GDevelop для детей 10–12 лет. Визуальное программирование без синтаксиса. Первая ступень траектории TirSkix Academy — старт без опыта. Пробный урок бесплатно.",
       keywords: [
         "создание игр для детей",
         "программирование для детей 10 лет",
@@ -146,6 +150,8 @@ export const TRACKS: Record<TrackSlug, TrackData> = {
     age: "12–15 лет",
     format: "Онлайн",
     start: "В любой момент",
+    priceFrom: "4 950 ₽",
+    priceNote: "абонемент · 16 часов",
     color: "var(--color-track-kodeks)",
     colorLight: "var(--color-track-kodeks-light)",
     colorHex: "#F97316",
@@ -223,7 +229,7 @@ export const TRACKS: Record<TrackSlug, TrackData> = {
       },
       {
         q: "Сколько длится программа?",
-        a: "8–12 месяцев при занятиях 2 раза в неделю. После Кодэкса большинство учеников переходят в ТехноЛаб — следующий уровень нашего нарративного маршрута.",
+        a: "8–12 месяцев при занятиях 2 раза в неделю. После Кодэкса большинство учеников переходят в ТехноЛаб — следующую ступень траектории.",
       },
     ],
 
@@ -250,6 +256,8 @@ export const TRACKS: Record<TrackSlug, TrackData> = {
     age: "14–18 лет",
     format: "Онлайн",
     start: "В любой момент",
+    priceFrom: "4 950 ₽",
+    priceNote: "абонемент · 16 часов",
     color: "var(--color-track-technolab)",
     colorLight: "var(--color-track-technolab-light)",
     colorHex: "#6366F1",

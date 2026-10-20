@@ -80,6 +80,7 @@ const jsonLd = {
   courseMode: "online",
   inLanguage: "ru",
   audience: { "@type": "EducationalAudience", educationalRole: "student" },
+  offers: { "@type": "Offer", price: "1500", priceCurrency: "RUB", availability: "https://schema.org/InStock" },
 };
 
 const breadcrumbJsonLd = buildBreadcrumbJsonLd([
@@ -112,10 +113,15 @@ export default async function IndividualPage() {
               Индивидуальные<br />
               <span className="text-[var(--color-brand)]">занятия с ментором</span>
             </h1>
-            <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed mb-8">
+            <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed mb-6">
               Один ученик — один ментор. Занятие полностью адаптировано под ребёнка:
               его темп, его цели, его вопросы. Онлайн, для детей 10–18 лет.
             </p>
+            <div className="block mb-8">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border-2 text-xs font-semibold text-[var(--color-brand)]" style={{ borderColor: "var(--color-brand)" }}>
+                1 500 ₽ / час
+              </span>
+            </div>
             <Link href="/besplatnyj-probnyj-urok" className={buttonClass("primary", "lg", "group inline-flex")}>
               Записаться на пробный урок
               <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
