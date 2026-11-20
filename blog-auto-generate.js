@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-// Автоматическая генерация SEO-статей через Mistral (основной) / Groq (резерв) + Pollinations
+// Автоматическая генерация SEO-статей через Mistral (основной) / AI Tunnel (резерв) + Pollinations
 // Запуск: node blog-auto-generate.js
-// Env: PORTAL_URL, PORTAL_EMAIL, PORTAL_PASSWORD, MISTRAL_API_KEY, GROQ_API_KEY (опционально)
+// Env: PORTAL_URL, PORTAL_EMAIL, PORTAL_PASSWORD, MISTRAL_API_KEY, AITUNNEL_API_KEY (опционально)
 
 const PORTAL_URL = process.env.PORTAL_URL || 'https://tirskix.space';
 const PORTAL_EMAIL = process.env.PORTAL_EMAIL;
 const PORTAL_PASSWORD = process.env.PORTAL_PASSWORD;
 const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const AITUNNEL_API_KEY = process.env.AITUNNEL_API_KEY;
+const AITUNNEL_MODEL = process.env.AITUNNEL_MODEL || 'gpt-4o-mini';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tirskix-academy.com';
 const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET;
 
@@ -36,23 +37,23 @@ const TEXT_PROVIDERS = [
     },
   },
   {
-    name: 'Groq',
-    enabled: () => !!GROQ_API_KEY,
+    name: 'AITunnel',
+    enabled: () => !!AITUNNEL_API_KEY,
     call: async (prompt) => {
-      const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const r = await fetch('https://api.aitunnel.ru/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${GROQ_API_KEY}`,
+          Authorization: `Bearer ${AITUNNEL_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: AITUNNEL_MODEL,
           messages: [{ role: 'user', content: prompt }],
           temperature: 0.7,
           max_tokens: 4000,
         }),
       });
-      if (!r.ok) throw new Error(`Groq API error: ${r.status} ${await r.text()}`);
+      if (!r.ok) throw new Error(`AITunnel API error: ${r.status} ${await r.text()}`);
       const data = await r.json();
       return data.choices[0].message.content;
     },
@@ -411,8 +412,8 @@ async function createAndPublish(token, article, categoryId) {
 }
 
 async function main() {
-  if (!PORTAL_EMAIL || !PORTAL_PASSWORD || (!MISTRAL_API_KEY && !GROQ_API_KEY)) {
-    console.error('❌ Нужны переменные: PORTAL_EMAIL, PORTAL_PASSWORD, и хотя бы один из MISTRAL_API_KEY / GROQ_API_KEY');
+  if (!PORTAL_EMAIL || !PORTAL_PASSWORD || (!MISTRAL_API_KEY && !AITUNNEL_API_KEY)) {
+    console.error('❌ Нужны переменные: PORTAL_EMAIL, PORTAL_PASSWORD, и хотя бы один из MISTRAL_API_KEY / AITUNNEL_API_KEY');
     process.exit(1);
   }
 
