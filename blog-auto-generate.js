@@ -1,14 +1,63 @@
 #!/usr/bin/env node
-// Автоматическая генерация SEO-статей через Mistral + Pollinations
+// Автоматическая генерация SEO-статей через Mistral (основной) / Groq (резерв) + Pollinations
 // Запуск: node blog-auto-generate.js
-// Env: PORTAL_URL, PORTAL_EMAIL, PORTAL_PASSWORD, MISTRAL_API_KEY
+// Env: PORTAL_URL, PORTAL_EMAIL, PORTAL_PASSWORD, MISTRAL_API_KEY, GROQ_API_KEY (опционально)
 
 const PORTAL_URL = process.env.PORTAL_URL || 'https://tirskix.space';
 const PORTAL_EMAIL = process.env.PORTAL_EMAIL;
 const PORTAL_PASSWORD = process.env.PORTAL_PASSWORD;
 const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tirskix-academy.com';
 const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET;
+
+// Цепочка провайдеров генерации текста: пробуем по порядку, при ошибке/лимите — следующий.
+const TEXT_PROVIDERS = [
+  {
+    name: 'Mistral',
+    enabled: () => !!MISTRAL_API_KEY,
+    call: async (prompt) => {
+      const r = await fetch('https://api.mistral.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${MISTRAL_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'mistral-small-latest',
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7,
+          max_tokens: 4000,
+        }),
+      });
+      if (!r.ok) throw new Error(`Mistral API error: ${r.status} ${await r.text()}`);
+      const data = await r.json();
+      return data.choices[0].message.content;
+    },
+  },
+  {
+    name: 'Groq',
+    enabled: () => !!GROQ_API_KEY,
+    call: async (prompt) => {
+      const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7,
+          max_tokens: 4000,
+        }),
+      });
+      if (!r.ok) throw new Error(`Groq API error: ${r.status} ${await r.text()}`);
+      const data = await r.json();
+      return data.choices[0].message.content;
+    },
+  },
+];
 
 // 150 тем — ~5 месяцев ежедневных публикаций без повторов
 const TOPICS = [
@@ -256,32 +305,24 @@ async function generateArticle(topic) {
   "content": "<h2>...</h2><p>...</p>..."
 }`;
 
-  const mistralCall = async () => {
-    const r = await fetch('https://api.mistral.ai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${MISTRAL_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'mistral-small-latest',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.7,
-        max_tokens: 4000,
-      }),
-    });
-    if (!r.ok) {
-      const body = await r.text();
-      throw new Error(`Mistral API error: ${r.status} ${body}`);
+  const activeProviders = TEXT_PROVIDERS.filter((p) => p.enabled());
+  if (activeProviders.length === 0) {
+    throw new Error('Нет доступных провайдеров генерации текста (нужен MISTRAL_API_KEY и/или GROQ_API_KEY)');
+  }
+
+  let raw;
+  let lastErr;
+  for (const provider of activeProviders) {
+    try {
+      raw = await withRetry(() => provider.call(prompt), `${provider.name} API`, 2);
+      console.log(`📨 ${provider.name} raw (first 300 chars):`, raw.slice(0, 300));
+      break;
+    } catch (err) {
+      console.error(`⚠️  ${provider.name} недоступен, пробуем следующего провайдера: ${err.message}`);
+      lastErr = err;
     }
-    return r;
-  };
-
-  const res = await withRetry(mistralCall, 'Mistral API', 3);
-
-  const data = await res.json();
-  const raw = data.choices[0].message.content;
-  console.log('📨 Mistral raw (first 300 chars):', raw.slice(0, 300));
+  }
+  if (!raw) throw lastErr || new Error('Все провайдеры генерации текста недоступны');
 
   let article;
   try {
@@ -370,8 +411,8 @@ async function createAndPublish(token, article, categoryId) {
 }
 
 async function main() {
-  if (!PORTAL_EMAIL || !PORTAL_PASSWORD || !MISTRAL_API_KEY) {
-    console.error('❌ Нужны переменные: PORTAL_EMAIL, PORTAL_PASSWORD, MISTRAL_API_KEY');
+  if (!PORTAL_EMAIL || !PORTAL_PASSWORD || (!MISTRAL_API_KEY && !GROQ_API_KEY)) {
+    console.error('❌ Нужны переменные: PORTAL_EMAIL, PORTAL_PASSWORD, и хотя бы один из MISTRAL_API_KEY / GROQ_API_KEY');
     process.exit(1);
   }
 
