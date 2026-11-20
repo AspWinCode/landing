@@ -100,7 +100,7 @@ export default function Image() {
             marginBottom: "40px",
           }}
         >
-          Три трека · 10–18 лет · БВИ, ОГЭ 19/21, полуфинал ICPC
+          Три этапа · с 3 класса · БВИ, ОГЭ 19/21, полуфинал ICPC
         </div>
 
         {/* CTA pill */}

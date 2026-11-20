@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { buttonClass } from "@/components/ui/Button";
-import { ArrowRight, Envelope, MessengerLogo } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Envelope, MessengerLogo, Phone } from "@phosphor-icons/react/dist/ssr";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getCmsPage } from "@/lib/portal";
 import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
@@ -23,17 +23,25 @@ const CHANNELS = [
     icon: MessengerLogo,
     title: "Telegram",
     desc: "Самый быстрый способ. Отвечаем обычно за 15–30 минут.",
-    href: "https://t.me/tirskix_academy",
-    label: "@tirskix_academy",
+    href: "https://t.me/academy_wincode",
+    label: "@academy_wincode",
     color: "var(--color-track-technolab)",
   },
   {
     icon: Envelope,
     title: "E-mail",
     desc: "Для официальных вопросов и документов.",
-    href: "mailto:hello@tirskix-academy.com",
-    label: "hello@tirskix-academy.com",
+    href: "mailto:director@academy-wincode.com",
+    label: "director@academy-wincode.com",
     color: "var(--color-brand)",
+  },
+  {
+    icon: Phone,
+    title: "Телефон",
+    desc: "Звонок или сообщение в рабочее время.",
+    href: "tel:+79041158388",
+    label: "+7 904 115-83-88",
+    color: "var(--color-track-studio)",
   },
 ];
 
@@ -43,11 +51,12 @@ const jsonLd = {
   "@id": "https://tirskix-academy.com/#organization",
   name: "TirSkix Academy",
   url: "https://tirskix-academy.com/",
-  sameAs: ["https://t.me/tirskix_academy"],
+  sameAs: ["https://t.me/academy_wincode", "https://vk.ru/tirskix_academy"],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",
-    email: "hello@tirskix-academy.com",
+    telephone: "+7 904 115-83-88",
+    email: "director@academy-wincode.com",
     availableLanguage: "Russian",
     hoursAvailable: [
       {

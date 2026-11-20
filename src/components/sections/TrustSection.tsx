@@ -131,7 +131,7 @@ export function TrustSection() {
               <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
                 Остались вопросы по оплате маткапиталом?{" "}
                 <a
-                  href="https://t.me/tirskix_academy"
+                  href="https://t.me/academy_wincode"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-brand)] hover:underline font-medium"

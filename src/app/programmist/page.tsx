@@ -11,15 +11,15 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("programmist") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Программист — курс Python для детей 12–15 лет | TirSkix Academy",
+    title: "Программист — курс Python для детей с 6 класса | TirSkix Academy",
     description:
-      "Базовая программа Python для детей 12–15 лет. Данные, функции, Data Science: numpy, pandas. Онлайн-курс TirSkix Academy. Пробный урок бесплатно.",
+      "Базовая программа Python с 6 класса и её усложнённая версия «Программист: анализ данных» (NumPy, Pandas). Онлайн-курс TirSkix Academy. Пробный урок бесплатно.",
     keywords: [
       "Python для детей",
       "курс Python для подростков",
       "обучение Python онлайн школьникам",
-      "Data Science для детей",
-      "программирование Python 12 лет",
+      "анализ данных для детей",
+      "программирование Python 6 класс",
     ],
     canonical: "https://tirskix-academy.com/programmist",
   });
@@ -30,10 +30,10 @@ const jsonLd = {
   "@type": "Course",
   name: "Программист",
   url: "https://tirskix-academy.com/programmist/",
-  description: "Базовая программа Python для детей 12–15 лет. Данные, функции, Data Science: numpy, pandas.",
+  description: "Базовая программа Python с 6 класса и модуль анализа данных: NumPy, Pandas.",
   provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
-  educationalLevel: "12–15 лет",
-  teaches: "Python, Data Science, numpy, pandas, алгоритмы",
+  educationalLevel: "с 6 класса",
+  teaches: "Python, анализ данных, NumPy, Pandas",
   courseMode: "online",
   inLanguage: "ru",
   audience: { "@type": "EducationalAudience", educationalRole: "student" },

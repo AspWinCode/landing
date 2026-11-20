@@ -2,7 +2,7 @@ import { getCmsPage } from "@/lib/portal";
 import { HeaderClient, type NavLink } from "./HeaderClient";
 
 const DEFAULT_NAV_LINKS: NavLink[] = [
-  { label: "Игровая студия", href: "/game-studio" },
+  { label: "Новичок", href: "/game-studio" },
   { label: "Программист", href: "/programmist" },
   { label: "Эксперт", href: "/ekspert" },
   { label: "Направления", href: "/napravleniya-razrabotki" },

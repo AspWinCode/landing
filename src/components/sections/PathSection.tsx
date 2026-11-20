@@ -2,7 +2,7 @@ import { EditableSlot } from "@/components/edit/EditableSlot";
 import { LayerZone } from "@/components/edit/LayerZone";
 
 const DEFAULT_HEADING = "Путь ученика";
-const DEFAULT_SUBHEADING = "От первой строчки кода до поступления в лучшие IT-вузы страны — три последовательные ступени.";
+const DEFAULT_SUBHEADING = "С 3 класса подбираем направление по знаниям и способностям ребёнка — и постепенно усложняем программу на трёх ступенях.";
 
 const STEP_STYLES = [
   { step: "01", color: "var(--color-track-studio)", colorLight: "var(--color-track-studio-light)" },
@@ -11,9 +11,9 @@ const STEP_STYLES = [
 ];
 
 const DEFAULT_STEPS = [
-  { track: "Игровая студия", age: "10–12 лет", description: "Первые шаги: создаём игры без синтаксиса. Логика, творчество, первая гордость от «моя игра работает»." },
-  { track: "Программист", age: "12–15 лет", description: "Базовая программа на Python. Алгоритмическое мышление, первые реальные программы, Data Science." },
-  { track: "Эксперт", age: "14–18 лет", description: "Глубокое программирование: Git, алгоритмы, ООП, математика. Олимпиады, поступление в вузы, первые проекты в портфолио." },
+  { track: "Новичок", age: "с 3 класса", description: "Первые алгоритмы в Snap!, затем выбор направления: GDevelop, Roblox Studio (два направления) или Turtle — первые собственные проекты." },
+  { track: "Программист", age: "с 6 класса", description: "Базовая программа на Python: структуры данных, функции, собственные проекты. Можно усилить модулями анализа данных (NumPy, Pandas)." },
+  { track: "Эксперт", age: "7–8 класс", description: "Git, ООП, алгоритмы, Arcade и игровой AI. Переход после «Программиста» или по входному тесту — более крупные проекты в портфолио." },
 ];
 
 interface StepItem { track?: string; age?: string; description?: string; }

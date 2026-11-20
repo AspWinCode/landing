@@ -146,7 +146,7 @@ export default async function BlogPostPage({ params }: Props) {
                 <p className="text-[var(--color-text-secondary)] mb-6 max-w-md mx-auto">
                   {isExam
                     ? "Ступень «Программист» — подготовка к экзаменам по информатике с реальными задачами и разбором ошибок."
-                    : "Три ступени для детей 10–18 лет: Игровая студия, Программист и Эксперт. Первый урок бесплатно."}
+                    : "Три этапа с 3 класса: Новичок, Программист и Эксперт. Первый урок бесплатно."}
                 </p>
                 <div className="flex flex-wrap gap-3 justify-center">
                   <Link href={isExam ? "/programmist" : "/besplatnyj-probnyj-urok"} className={buttonClass("primary", "md", "group inline-flex")}>

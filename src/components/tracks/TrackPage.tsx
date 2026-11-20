@@ -87,8 +87,42 @@ export function TrackPage({ track }: Props) {
         </div>
       </section>
 
+      {/* ── Направления внутри этапа ── */}
+      {track.directions && track.directions.length > 0 && (
+        <section className="py-16 md:py-24 bg-[var(--color-bg-subtle)]">
+          <div className="container">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-3">
+                Направления этапа «{track.title}»
+              </h2>
+              <p className="text-[var(--color-text-muted)] max-w-xl mx-auto">
+                Методист подбирает направление по классу, текущим знаниям и интересу ребёнка — не один курс для всех.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {track.directions.map((d) => (
+                <div
+                  key={d.title}
+                  className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)] flex flex-col"
+                >
+                  <span
+                    className="self-start text-xs font-semibold px-3 py-1 rounded-full mb-3"
+                    style={{ background: track.colorLight, color: track.color }}
+                  >
+                    {d.age}
+                  </span>
+                  <h3 className="text-base font-bold text-[var(--color-text-primary)] mb-2">{d.title}</h3>
+                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">{d.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── Как устроено ── */}
-      <section className="py-16 md:py-24 bg-[var(--color-bg-subtle)]">
+      <section className={`py-16 md:py-24 ${track.directions && track.directions.length > 0 ? "" : "bg-[var(--color-bg-subtle)]"}`}>
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--color-text-primary)] mb-3">

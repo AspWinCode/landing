@@ -78,7 +78,7 @@ const STORIES = [
   {
     name: "Даша В.",
     age: "10 лет",
-    track: "Игровая студия",
+    track: "Новичок",
     trackColor: "var(--color-track-studio)",
     period: "8 месяцев",
     achievement: "Первая игра опубликована на itch.io",

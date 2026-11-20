@@ -4,7 +4,7 @@ import { EditableSlot } from "@/components/edit/EditableSlot";
 import { LayerZone } from "@/components/edit/LayerZone";
 
 const DEFAULT_HEADING = "Три ступени — один путь роста";
-const DEFAULT_SUBHEADING = "Ученики начинают в Игровой студии и растут до Эксперта: каждая ступень сложнее предыдущей и готовит к следующему шагу.";
+const DEFAULT_SUBHEADING = "Ученики начинают в «Новичке» с 3 класса и растут до «Эксперта»: каждая ступень сложнее предыдущей, а внутри — направления на выбор по интересу ребёнка.";
 
 const TRACK_STYLES = [
   {
@@ -38,25 +38,25 @@ const TRACK_STYLES = [
 
 const DEFAULT_TRACKS = [
   {
-    title: "Игровая студия",
-    narrative: "Открой свою игровую студию",
-    description: "Первая ступень — для тех, кто только начинает. Создаём настоящие игры в Snap и GDevelop. Ни строчки синтаксиса — только логика и творчество.",
-    age: "10–12 лет",
-    tags: ["Snap", "GDevelop", "Визуальное программирование"],
+    title: "Новичок",
+    narrative: "Первый шаг — с 3 класса",
+    description: "Snap! 3–4 класс, затем выбор: GDevelop, Roblox Studio (два направления) или Turtle. Подбираем направление по классу и интересу ребёнка.",
+    age: "с 3 класса",
+    tags: ["Snap", "GDevelop", "Roblox Studio", "Turtle"],
   },
   {
     title: "Программист",
     narrative: "Уверенный Python для реальных задач",
-    description: "Базовая текстовая программа на Python. Данные, функции, собственные проекты. Включает модуль Data Science: numpy, pandas.",
-    age: "12–15 лет",
-    tags: ["Python", "Data Science", "numpy/pandas"],
+    description: "Базовая текстовая программа на Python с 6 класса. Данные, функции, собственные проекты. Можно усилить модулями анализа данных: NumPy, Pandas.",
+    age: "с 6 класса",
+    tags: ["Python", "Анализ данных", "NumPy/Pandas"],
   },
   {
     title: "Эксперт",
     narrative: "От учебного Python к инженерной культуре",
-    description: "Git, алгоритмы, ООП, математика, Arcade. Уровень олимпиад и поступления в лучшие вузы. Для тех, кто уже уверенно пишет на Python.",
-    age: "14–18 лет",
-    tags: ["Python", "Алгоритмы", "ООП", "Arcade"],
+    description: "Git, ООП, алгоритмы, Arcade и игровой AI. Переход после «Программиста» (85–90% программы) или по входному тесту.",
+    age: "7–8 класс",
+    tags: ["Python", "Git", "Алгоритмы", "ООП", "Arcade"],
   },
 ];
 

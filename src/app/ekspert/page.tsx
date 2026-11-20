@@ -11,9 +11,9 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("ekspert") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Эксперт — Python и алгоритмы для подростков 14–18 лет | TirSkix Academy",
+    title: "Эксперт — Git, ООП и алгоритмы для подростков | TirSkix Academy",
     description:
-      "Git, алгоритмы, ООП, математика для подростков 14–18 лет. Подготовка к олимпиадам и поступлению в МФТИ, ИТМО, ВШЭ. TirSkix Academy. Пробный урок бесплатно.",
+      "Git, ООП, Arcade, алгоритмы и игровой AI для учеников 7–8 класса и старше. Вход после «Программиста» или по входному тесту. TirSkix Academy. Пробный урок бесплатно.",
     keywords: [
       "Python алгоритмы для подростков",
       "подготовка к олимпиаде по информатике",
@@ -30,9 +30,9 @@ const jsonLd = {
   "@type": "Course",
   name: "Эксперт",
   url: "https://tirskix-academy.com/ekspert/",
-  description: "Git, алгоритмы, ООП, математика для подростков 14–18 лет. Подготовка к олимпиадам и поступлению.",
+  description: "Git, ООП, Arcade, алгоритмы и игровой AI для учеников 7–8 класса и старше.",
   provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
-  educationalLevel: "14–18 лет",
+  educationalLevel: "7–8 класс и старше",
   teaches: "Python, Git, алгоритмы, ООП, дискретная математика, олимпиадное программирование",
   courseMode: "online",
   inLanguage: "ru",

@@ -15,9 +15,9 @@ interface FooterColumn { title: string; links: FooterLink[] }
 
 const DEFAULT_COLUMNS: FooterColumn[] = [
   {
-    title: "Треки",
+    title: "Этапы",
     links: [
-      { label: "Игровая студия", href: "/game-studio" },
+      { label: "Новичок", href: "/game-studio" },
       { label: "Программист", href: "/programmist" },
       { label: "Эксперт", href: "/ekspert" },
     ],
@@ -78,8 +78,8 @@ export async function Footer() {
       ? (cms.columns as FooterColumn[])
       : DEFAULT_COLUMNS;
 
-  const tgUrl = settings.tg_url || "https://t.me/tirskix_academy";
-  const vkUrl = settings.vk_url || "https://vk.com/tirskix_academy";
+  const tgUrl = settings.tg_url || "https://t.me/academy_wincode";
+  const vkUrl = settings.vk_url || "https://vk.ru/tirskix_academy";
   const instUrl = settings.inst_url;
 
   return (
@@ -95,16 +95,12 @@ export async function Footer() {
             <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-2">
               {tagline}
             </p>
-            {settings.contact_phone && (
-              <a href={`tel:${settings.contact_phone.replace(/\s/g, "")}`} className="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors mb-1">
-                {settings.contact_phone}
-              </a>
-            )}
-            {settings.contact_email && (
-              <a href={`mailto:${settings.contact_email}`} className="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors mb-4">
-                {settings.contact_email}
-              </a>
-            )}
+            <a href={`tel:${(settings.contact_phone || "+7 904 115-83-88").replace(/\s/g, "")}`} className="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors mb-1">
+              {settings.contact_phone || "+7 904 115-83-88"}
+            </a>
+            <a href={`mailto:${settings.contact_email || "director@academy-wincode.com"}`} className="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors mb-4">
+              {settings.contact_email || "director@academy-wincode.com"}
+            </a>
             <div className="flex items-center gap-3">
               <a href={tgUrl} target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:bg-[var(--color-bg-muted)] transition-colors"

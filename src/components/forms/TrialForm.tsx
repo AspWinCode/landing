@@ -9,9 +9,9 @@ import { getStoredUtm } from "@/lib/utm";
 
 const TRACKS = [
   { value: "", label: "Не знаю — помогите выбрать" },
-  { value: "game-studio", label: "🎮 Игровая студия (10–12 лет)" },
-  { value: "programmist", label: "🐍 Программист — Python (12–15 лет)" },
-  { value: "ekspert", label: "⚙️ Эксперт — алгоритмы (14–18 лет)" },
+  { value: "game-studio", label: "🌱 Новичок (с 3 класса)" },
+  { value: "programmist", label: "🐍 Программист — Python (с 6 класса)" },
+  { value: "ekspert", label: "⚙️ Эксперт — Git, ООП, алгоритмы (7–8 класс)" },
   { value: "oge", label: "📗 Подготовка к ОГЭ" },
   { value: "ege", label: "📒 Подготовка к ЕГЭ" },
   { value: "individual", label: "👤 Индивидуальные занятия" },

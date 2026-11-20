@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "TirSkix Academy — онлайн-школа программирования для детей",
     description:
-      "Программирование, которое растёт вместе с ребёнком. Три ступени для детей 10–18 лет: Игровая студия, Программист, Эксперт. Пробный урок бесплатно.",
+      "Программирование, которое растёт вместе с ребёнком. С 3 класса — три этапа: Новичок, Программист, Эксперт, у каждого свои направления. Пробный урок бесплатно.",
     canonical: "https://tirskix-academy.com/",
   });
 }
@@ -54,7 +54,7 @@ const homeJsonLd = {
         height: 84,
       },
       description:
-        "Онлайн-школа программирования для детей 10–18 лет. Понятная траектория роста: Игровая студия, Программист, Эксперт. Лицензия Министерства образования. Налоговый вычет, оплата маткапиталом.",
+        "Онлайн-школа программирования для детей с 3 класса. Понятная траектория роста: Новичок, Программист, Эксперт — с направлениями внутри каждого этапа. Лицензия Министерства образования. Налоговый вычет, оплата маткапиталом.",
       address: {
         "@type": "PostalAddress",
         addressCountry: "RU",
@@ -62,9 +62,11 @@ const homeJsonLd = {
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer service",
+        telephone: "+7 904 115-83-88",
+        email: "director@academy-wincode.com",
         availableLanguage: "Russian",
       },
-      sameAs: ["https://t.me/tirskix_academy"],
+      sameAs: ["https://t.me/academy_wincode", "https://vk.ru/tirskix_academy"],
     },
     {
       "@type": "WebSite",

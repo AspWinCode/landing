@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "Frontend-разработка для подростков — TirSkix Academy",
     description:
-      "Курс frontend-разработки для подростков от 8 класса. HTML, CSS, JavaScript, React. Без опыта — с нуля до реального сайта.",
+      "Курс frontend-разработки для подростков с ~7 класса. HTML, CSS, JavaScript, React. Без опыта — с нуля до реального сайта.",
     keywords: ["frontend для детей", "frontend разработка подростки", "HTML CSS JavaScript курс", "React для школьников"],
     canonical: "https://tirskix-academy.com/frontend-razrabotka",
   });
@@ -25,9 +25,9 @@ const jsonLd = {
   "@type": "Course",
   name: "Frontend-разработка",
   url: "https://tirskix-academy.com/frontend-razrabotka/",
-  description: "Онлайн-курс frontend-разработки для подростков от 8 класса",
+  description: "Онлайн-курс frontend-разработки для подростков с ~7 класса",
   provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
-  educationalLevel: "от 8 класса",
+  educationalLevel: "с ~7 класса",
   teaches: "HTML, CSS, JavaScript, React, Git",
   courseMode: "online",
   inLanguage: "ru",
@@ -113,7 +113,7 @@ export default async function FrontendPage() {
             </nav>
 
             <div className="flex flex-wrap gap-2 mb-6">
-              {["от 8 класса", "Мини-группа / Индивидуально", "Можно с нуля", "от 4 900 ₽ · абонемент"].map((tag) => (
+              {["с ~7 класса", "Мини-группа / Индивидуально", "Можно с нуля", "4 900 ₽, без скидки"].map((tag) => (
                 <span key={tag} className="text-xs font-semibold px-3 py-1.5 rounded-full"
                   style={{ background: "color-mix(in srgb, var(--color-track-kodeks) 12%, transparent)", color: "var(--color-track-kodeks)" }}>
                   {tag}
@@ -201,7 +201,7 @@ export default async function FrontendPage() {
               <div className="rounded-3xl p-8 md:p-10" style={{ background: "color-mix(in srgb, var(--color-track-kodeks) 8%, transparent)" }}>
                 <div className="text-5xl mb-4">🌐</div>
                 <div className="text-2xl font-extrabold mb-2" style={{ color: "var(--color-track-kodeks)" }}>Frontend</div>
-                <div className="text-sm font-medium text-[var(--color-text-secondary)] mb-6">от 8 класса · {skills.length} навыков</div>
+                <div className="text-sm font-medium text-[var(--color-text-secondary)] mb-6">с ~7 класса · {skills.length} навыков</div>
                 <div className="flex flex-wrap gap-2">
                   {["HTML", "CSS", "JavaScript", "React", "Git"].map((t) => (
                     <span key={t} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm"

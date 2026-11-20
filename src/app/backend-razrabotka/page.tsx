@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "Backend-разработка для подростков — TirSkix Academy",
     description:
-      "Курс backend-разработки для подростков от 8 класса. Python, FastAPI, базы данных, REST API. Без опыта — с нуля до реального проекта.",
+      "Курс backend-разработки для подростков с ~7 класса. Python, FastAPI, базы данных, REST API. Без опыта — с нуля до реального проекта.",
     keywords: ["backend для детей", "backend разработка подростки", "Python FastAPI курс", "серверная разработка школьники"],
     canonical: "https://tirskix-academy.com/backend-razrabotka",
   });
@@ -25,9 +25,9 @@ const jsonLd = {
   "@type": "Course",
   name: "Backend-разработка",
   url: "https://tirskix-academy.com/backend-razrabotka/",
-  description: "Онлайн-курс backend-разработки для подростков от 8 класса",
+  description: "Онлайн-курс backend-разработки для подростков с ~7 класса",
   provider: { "@type": "EducationalOrganization", name: "TirSkix Academy", url: "https://tirskix-academy.com/" },
-  educationalLevel: "от 8 класса",
+  educationalLevel: "с ~7 класса",
   teaches: "Python, FastAPI, PostgreSQL, REST API, Git",
   courseMode: "online",
   inLanguage: "ru",
@@ -113,7 +113,7 @@ export default async function BackendPage() {
             </nav>
 
             <div className="flex flex-wrap gap-2 mb-6">
-              {["от 8 класса", "Мини-группа / Индивидуально", "Можно с нуля", "от 4 900 ₽ · абонемент"].map((tag) => (
+              {["с ~7 класса", "Мини-группа / Индивидуально", "Можно с нуля", "4 900 ₽, без скидки"].map((tag) => (
                 <span key={tag} className="text-xs font-semibold px-3 py-1.5 rounded-full"
                   style={{ background: "color-mix(in srgb, var(--color-track-technolab) 12%, transparent)", color: "var(--color-track-technolab)" }}>
                   {tag}
@@ -201,7 +201,7 @@ export default async function BackendPage() {
               <div className="rounded-3xl p-8 md:p-10" style={{ background: "color-mix(in srgb, var(--color-track-technolab) 8%, transparent)" }}>
                 <div className="text-5xl mb-4">⚙️</div>
                 <div className="text-2xl font-extrabold mb-2" style={{ color: "var(--color-track-technolab)" }}>Backend</div>
-                <div className="text-sm font-medium text-[var(--color-text-secondary)] mb-6">от 8 класса · {skills.length} навыков</div>
+                <div className="text-sm font-medium text-[var(--color-text-secondary)] mb-6">с ~7 класса · {skills.length} навыков</div>
                 <div className="flex flex-wrap gap-2">
                   {["Python", "FastAPI", "PostgreSQL", "REST API", "Git"].map((t) => (
                     <span key={t} className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm"
