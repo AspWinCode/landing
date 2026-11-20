@@ -440,7 +440,7 @@ async function main() {
   if (!category) throw new Error(`Категория '${topic.category}' не найдена`);
   console.log(`📁 Категория: ${category.name} (id=${category.id})`);
 
-  console.log('✍️  Генерируем статью через Mistral...');
+  console.log('✍️  Генерируем статью...');
   const article = await generateArticle(topic);
 
   // На втором цикле добавляем год к slug чтобы избежать конфликтов
