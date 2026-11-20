@@ -48,3 +48,23 @@ jobs:
             docker compose up -d --no-build web
             docker image prune -f
             docker logout ghcr.io
+
+      - name: Copy blog automation script to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "blog-auto-generate.js,blog-cron.sh"
+          target: "/root/landing"
+          overwrite: true
+
+      - name: Install daily blog cron job
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            chmod +x /root/landing/blog-cron.sh
+            (crontab -l 2>/dev/null | grep -v 'landing/blog-cron.sh'; echo '0 8 * * * /root/landing/blog-cron.sh >> /var/log/blog-auto-generate.log 2>&1') | crontab -

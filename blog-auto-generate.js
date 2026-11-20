@@ -1,19 +1,41 @@
 #!/usr/bin/env node
-// Автоматическая генерация SEO-статей через Mistral (основной) / AI Tunnel (резерв) + Pollinations
-// Запуск: node blog-auto-generate.js
-// Env: PORTAL_URL, PORTAL_EMAIL, PORTAL_PASSWORD, MISTRAL_API_KEY, AITUNNEL_API_KEY (опционально)
+// Автоматическая генерация SEO-статей через AI Tunnel (основной) / Mistral (резерв) + Pollinations
+// Запуск: node blog-auto-generate.js (на VPS — через blog-cron.sh по cron, см. deploy.yml)
+// Env: PORTAL_URL, PORTAL_EMAIL, PORTAL_PASSWORD, AI_TUNNEL_API_KEY, MISTRAL_API_KEY (опционально)
 
 const PORTAL_URL = process.env.PORTAL_URL || 'https://tirskix.space';
 const PORTAL_EMAIL = process.env.PORTAL_EMAIL;
 const PORTAL_PASSWORD = process.env.PORTAL_PASSWORD;
 const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
-const AITUNNEL_API_KEY = process.env.AITUNNEL_API_KEY;
-const AITUNNEL_MODEL = process.env.AITUNNEL_MODEL || 'gpt-4o-mini';
+const AI_TUNNEL_API_KEY = process.env.AI_TUNNEL_API_KEY;
+const AI_TUNNEL_MODEL = process.env.AI_TUNNEL_MODEL || 'gpt-4o-mini';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://tirskix-academy.com';
 const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET;
 
 // Цепочка провайдеров генерации текста: пробуем по порядку, при ошибке/лимите — следующий.
 const TEXT_PROVIDERS = [
+  {
+    name: 'AITunnel',
+    enabled: () => !!AI_TUNNEL_API_KEY,
+    call: async (prompt) => {
+      const r = await fetch('https://api.aitunnel.ru/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${AI_TUNNEL_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: AI_TUNNEL_MODEL,
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7,
+          max_tokens: 4000,
+        }),
+      });
+      if (!r.ok) throw new Error(`AITunnel API error: ${r.status} ${await r.text()}`);
+      const data = await r.json();
+      return data.choices[0].message.content;
+    },
+  },
   {
     name: 'Mistral',
     enabled: () => !!MISTRAL_API_KEY,
@@ -32,28 +54,6 @@ const TEXT_PROVIDERS = [
         }),
       });
       if (!r.ok) throw new Error(`Mistral API error: ${r.status} ${await r.text()}`);
-      const data = await r.json();
-      return data.choices[0].message.content;
-    },
-  },
-  {
-    name: 'AITunnel',
-    enabled: () => !!AITUNNEL_API_KEY,
-    call: async (prompt) => {
-      const r = await fetch('https://api.aitunnel.ru/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${AITUNNEL_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: AITUNNEL_MODEL,
-          messages: [{ role: 'user', content: prompt }],
-          temperature: 0.7,
-          max_tokens: 4000,
-        }),
-      });
-      if (!r.ok) throw new Error(`AITunnel API error: ${r.status} ${await r.text()}`);
       const data = await r.json();
       return data.choices[0].message.content;
     },
@@ -412,8 +412,8 @@ async function createAndPublish(token, article, categoryId) {
 }
 
 async function main() {
-  if (!PORTAL_EMAIL || !PORTAL_PASSWORD || (!MISTRAL_API_KEY && !AITUNNEL_API_KEY)) {
-    console.error('❌ Нужны переменные: PORTAL_EMAIL, PORTAL_PASSWORD, и хотя бы один из MISTRAL_API_KEY / AITUNNEL_API_KEY');
+  if (!PORTAL_EMAIL || !PORTAL_PASSWORD || (!MISTRAL_API_KEY && !AI_TUNNEL_API_KEY)) {
+    console.error('❌ Нужны переменные: PORTAL_EMAIL, PORTAL_PASSWORD, и хотя бы один из AI_TUNNEL_API_KEY / MISTRAL_API_KEY');
     process.exit(1);
   }
 
