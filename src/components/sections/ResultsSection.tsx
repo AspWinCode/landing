@@ -42,6 +42,7 @@ const DEFAULT_REVIEWS: ReviewItem[] = [
 ];
 
 const REVIEWS_SOURCE_URL = "https://2gis.ru/irkutsk/firm/70000001081829055/tab/reviews";
+const VK_REVIEWS_SOURCE_URL = "https://vk.ru/reviews-223501247";
 
 export function ResultsSection({ stats = DEFAULT_STATS, reviews = DEFAULT_REVIEWS }: ResultsProps = {}) {
   return (
@@ -89,7 +90,7 @@ export function ResultsSection({ stats = DEFAULT_STATS, reviews = DEFAULT_REVIEW
         </div>
 
         {/* Reviews */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
           <a
             href={REVIEWS_SOURCE_URL}
             target="_blank"
@@ -98,6 +99,15 @@ export function ResultsSection({ stats = DEFAULT_STATS, reviews = DEFAULT_REVIEW
           >
             <span className="text-yellow-400">★</span>
             <span>5,0 · 39 оценок на 2ГИС</span>
+          </a>
+          <a
+            href={VK_REVIEWS_SOURCE_URL}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors"
+          >
+            <span className="text-yellow-400">★</span>
+            <span>5,0 · 2 отзыва во ВКонтакте</span>
           </a>
         </div>
         <div className="grid md:grid-cols-3 gap-6 items-stretch">

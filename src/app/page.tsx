@@ -71,8 +71,8 @@ const homeJsonLd = {
         "@type": "AggregateRating",
         ratingValue: "5.0",
         bestRating: "5",
-        reviewCount: "35",
-        ratingCount: "39",
+        reviewCount: "37",
+        ratingCount: "41",
       },
       review: [
         {
