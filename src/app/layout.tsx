@@ -63,6 +63,9 @@ export const metadata: Metadata = {
     site: "@tirskix_academy",
   },
   robots: { index: true, follow: true },
+  verification: {
+    google: "FgRCKPHiL1-OjTCdx0Qm-vXNTH_jlhr1fRvCJ3Gs9VU",
+  },
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
