@@ -22,24 +22,26 @@ const DEFAULT_STATS: StatItem[] = [
 
 const DEFAULT_REVIEWS: ReviewItem[] = [
   {
-    name: "Мария К.",
-    role: "Мама Димы, 14 лет",
-    text: "Сын в восторге от занятий. Раньше надо было уговаривать делать уроки, теперь сам напоминает, что скоро урок программирования. За 8 месяцев написал три игры!",
-    initials: "МК",
+    name: "Ольга Ш.",
+    role: "Мама ученика",
+    text: "Хочу поблагодарить Академию WinCode Кирилла и его команду тренеров. Ответственный подход и квалифицированные специалисты. Сын занимался несколько месяцев и сдал ЕГЭ на 93 балла — благодаря умному подходу к каждому ребёнку. Буду рекомендовать всем!",
+    initials: "ОШ",
   },
   {
-    name: "Алексей П.",
-    role: "Папа Кирилла, 16 лет",
-    text: "Кирилл занимается третий год. Начал с нуля — сейчас готовится к олимпиадам. ЕГЭ по информатике написал на 93 балла. Очень доволен результатом.",
-    initials: "АП",
+    name: "Олег К.",
+    role: "Папа ученицы",
+    text: "Дочь занимается здесь уже несколько лет, и результат превзошёл все ожидания: в этом году она получила сразу 2 БВИ в вузы — стала призёром одной Всероссийской олимпиады и победителем другой. Отдельно отмечу гибкий подход: когда ребёнок вырастает из группового формата, предлагают перейти на индивидуальные занятия.",
+    initials: "ОК",
   },
   {
-    name: "Светлана В.",
-    role: "Мама Ани, 17 лет",
-    text: "Аня стала призёром Всероссийской олимпиады и получила БВИ в два вуза. Это не случайность — три года упорной работы с менторами TirSkix Academy.",
-    initials: "СВ",
+    name: "Людмила К.",
+    role: "Мама ученика",
+    text: "Хочу выразить огромную благодарность лично руководителю школы за качественную подготовку сына по информатике. За короткий срок, доступно, профессионально, с постоянной обратной связью. Результат — уверенная пятёрка по ОГЭ и первое место за проект среди десятых классов лицея.",
+    initials: "ЛК",
   },
 ];
+
+const REVIEWS_SOURCE_URL = "https://2gis.ru/irkutsk/firm/70000001081829055/tab/reviews";
 
 export function ResultsSection({ stats = DEFAULT_STATS, reviews = DEFAULT_REVIEWS }: ResultsProps = {}) {
   return (
@@ -87,6 +89,17 @@ export function ResultsSection({ stats = DEFAULT_STATS, reviews = DEFAULT_REVIEW
         </div>
 
         {/* Reviews */}
+        <div className="text-center mb-6">
+          <a
+            href={REVIEWS_SOURCE_URL}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors"
+          >
+            <span className="text-yellow-400">★</span>
+            <span>5,0 · 39 оценок на 2ГИС</span>
+          </a>
+        </div>
         <div className="grid md:grid-cols-3 gap-6 items-stretch">
           {reviews.map((review, i) => {
             const color = REVIEW_COLORS[i % REVIEW_COLORS.length];

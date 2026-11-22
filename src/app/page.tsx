@@ -67,6 +67,39 @@ const homeJsonLd = {
         availableLanguage: "Russian",
       },
       sameAs: ["https://t.me/academy_wincode", "https://vk.ru/tirskix_academy"],
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        bestRating: "5",
+        reviewCount: "35",
+        ratingCount: "39",
+      },
+      review: [
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Ольга Ш." },
+          datePublished: "2026-07-02",
+          reviewBody:
+            "Сын занимался несколько месяцев и сдал ЕГЭ на 93 балла — благодаря умному подходу к каждому ребёнку. Буду рекомендовать всем!",
+          reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+        },
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Олег К." },
+          datePublished: "2026-05-05",
+          reviewBody:
+            "Дочь занимается здесь уже несколько лет: в этом году получила сразу 2 БВИ в вузы — стала призёром одной Всероссийской олимпиады и победителем другой.",
+          reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+        },
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Людмила К." },
+          datePublished: "2025-11-24",
+          reviewBody:
+            "Качественная подготовка сына по информатике: доступно, профессионально, с постоянной обратной связью. Результат — уверенная пятёрка по ОГЭ и первое место за проект среди десятых классов лицея.",
+          reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+        },
+      ],
     },
     {
       "@type": "WebSite",
