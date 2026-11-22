@@ -6,7 +6,7 @@ const REVIEW_COLORS = [
 ];
 
 interface StatItem { value: string; label: string; highlight?: boolean }
-interface ReviewItem { name: string; role: string; text: string; initials: string }
+interface ReviewItem { name: string; role: string; text: string; initials: string; source?: string }
 
 interface ResultsProps {
   stats?: StatItem[];
@@ -39,10 +39,75 @@ const DEFAULT_REVIEWS: ReviewItem[] = [
     text: "Хочу выразить огромную благодарность лично руководителю школы за качественную подготовку сына по информатике. За короткий срок, доступно, профессионально, с постоянной обратной связью. Результат — уверенная пятёрка по ОГЭ и первое место за проект среди десятых классов лицея.",
     initials: "ЛК",
   },
+  {
+    name: "Т. Р.",
+    role: "Мама ученика",
+    text: "Занимаемся с ноября 2024 года, до этого обучались в других школах. И эта — лучшая! Жаль, раньше о ней не узнала. Предоставляют план обучения и отчёт о достижениях.",
+    initials: "ТР",
+  },
+  {
+    name: "Миля Ф.",
+    role: "Выпускница · Backend → Frontend",
+    text: "Занималась полтора года: сначала в группе по Backend, потом перешла на Frontend. Все преподаватели очень отзывчивые — если что-то не понимала, объясняли и понятно разбирали материал.",
+    initials: "МФ",
+  },
+  {
+    name: "Татьяна Е.",
+    role: "Мама ученика",
+    text: "Ребёнок в восторге от занятий, ждёт каждое с нетерпением. Виден реальный прогресс в программировании и логике. Педагоги внимательные, материал — понятный.",
+    initials: "ТЕ",
+  },
+  {
+    name: "Алёна В.",
+    role: "Мама ученика",
+    text: "У сына загорелись глаза с первого дня, и каждое занятие он ждёт с удовольствием. Огромная благодарность за профессионализм, индивидуальный подход и удобное расписание.",
+    initials: "АВ",
+    source: "ВКонтакте",
+  },
+  {
+    name: "Наталия П.",
+    role: "Мама ученика",
+    text: "Учителя внимательные, хорошо и доходчиво объясняют. Каждый ребёнок работает в своём удобном ритме. После 6 месяцев занятий ребёнок начал успешно участвовать в олимпиадах по информатике.",
+    initials: "НП",
+    source: "ВКонтакте",
+  },
 ];
 
 const REVIEWS_SOURCE_URL = "https://2gis.ru/irkutsk/firm/70000001081829055/tab/reviews";
 const VK_REVIEWS_SOURCE_URL = "https://vk.ru/reviews-223501247";
+
+function ReviewCard({ review, color }: { review: ReviewItem; color: string }) {
+  return (
+    <figure className="w-[320px] shrink-0 bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)] flex flex-col">
+      <div className="flex items-center gap-1 mb-4">
+        {Array.from({ length: 5 }).map((_, idx) => (
+          <span key={idx} className="text-yellow-400 text-base">★</span>
+        ))}
+      </div>
+      <blockquote className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-6 flex-1">
+        &ldquo;{review.text}&rdquo;
+      </blockquote>
+      <figcaption className="flex items-center gap-3">
+        <div
+          className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+          style={{ background: color }}
+          aria-hidden="true"
+        >
+          {review.initials}
+        </div>
+        <div>
+          <div className="text-sm font-semibold text-[var(--color-text-primary)]">
+            {review.name}
+          </div>
+          <div className="text-xs text-[var(--color-text-muted)]">
+            {review.role}
+            {review.source ? ` · ${review.source}` : ""}
+          </div>
+        </div>
+      </figcaption>
+    </figure>
+  );
+}
 
 export function ResultsSection({ stats = DEFAULT_STATS, reviews = DEFAULT_REVIEWS }: ResultsProps = {}) {
   return (
@@ -110,42 +175,19 @@ export function ResultsSection({ stats = DEFAULT_STATS, reviews = DEFAULT_REVIEW
             <span>5,0 · 2 отзыва во ВКонтакте</span>
           </a>
         </div>
-        <div className="grid md:grid-cols-3 gap-6 items-stretch">
-          {reviews.map((review, i) => {
-            const color = REVIEW_COLORS[i % REVIEW_COLORS.length];
-            return (
-              <figure
-                key={i}
-                className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)] shadow-[var(--shadow-card)] flex flex-col"
-              >
-                <div className="flex items-center gap-1 mb-4">
-                  {Array.from({ length: 5 }).map((_, idx) => (
-                    <span key={idx} className="text-yellow-400 text-base">★</span>
-                  ))}
-                </div>
-                <blockquote className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-6 flex-1">
-                  &ldquo;{review.text}&rdquo;
-                </blockquote>
-                <figcaption className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
-                    style={{ background: color }}
-                    aria-hidden="true"
-                  >
-                    {review.initials}
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold text-[var(--color-text-primary)]">
-                      {review.name}
-                    </div>
-                    <div className="text-xs text-[var(--color-text-muted)]">
-                      {review.role}
-                    </div>
-                  </div>
-                </figcaption>
-              </figure>
-            );
-          })}
+        <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] motion-reduce:overflow-x-auto motion-reduce:[mask-image:none]">
+          <div className="flex w-max gap-6 animate-[reviews-marquee_70s_linear_infinite] hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] motion-reduce:animate-none">
+            <div className="flex gap-6 shrink-0">
+              {reviews.map((review, i) => (
+                <ReviewCard key={`a-${i}`} review={review} color={REVIEW_COLORS[i % REVIEW_COLORS.length]} />
+              ))}
+            </div>
+            <div className="flex gap-6 shrink-0 motion-reduce:hidden" aria-hidden="true">
+              {reviews.map((review, i) => (
+                <ReviewCard key={`b-${i}`} review={review} color={REVIEW_COLORS[i % REVIEW_COLORS.length]} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

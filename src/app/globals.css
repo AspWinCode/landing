@@ -133,6 +133,12 @@ code, pre, kbd {
   padding-inline: clamp(16px, 4vw, 48px);
 }
 
+/* ─── Animation: reviews marquee ─── */
+@keyframes reviews-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* ─── Utility: focus ring ─── */
 :focus-visible {
   outline: 2px solid var(--color-brand);
