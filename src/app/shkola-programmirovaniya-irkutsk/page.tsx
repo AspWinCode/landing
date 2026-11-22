@@ -10,8 +10,8 @@ import { buildPageMetadata, buildBreadcrumbJsonLd } from "@/lib/seo";
 export const revalidate = 3600;
 
 const ADDRESS = "ул. Степана Разина, 6, оф. 505, Иркутск";
-const PHONE_DISPLAY = "+7 924 616-40-00";
-const PHONE_HREF = "+79246164000";
+const PHONE_DISPLAY = "+7 904 115-83-88";
+const PHONE_HREF = "+79041158388";
 const EMAIL = "director@academy-wincode.com";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -77,11 +77,13 @@ const jsonLd = {
     "@type": "PostalAddress",
     streetAddress: "ул. Степана Разина, 6, оф. 505",
     addressLocality: "Иркутск",
+    addressRegion: "Иркутская область",
+    postalCode: "664025",
     addressCountry: "RU",
   },
-  telephone: "+7 924 616-40-00",
+  telephone: "+7 904 115-83-88",
   email: "director@academy-wincode.com",
-  sameAs: ["https://t.me/tirskix_academy"],
+  sameAs: ["https://t.me/academy_wincode", "https://vk.ru/tirskix_academy"],
 };
 
 const faqJsonLd = {
