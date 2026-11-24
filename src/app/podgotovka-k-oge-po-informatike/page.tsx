@@ -12,10 +12,15 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("podgotovka-k-oge-po-informatike") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Подготовка к ОГЭ по информатике — TirSkix Academy",
+    title: "Курсы подготовки к ОГЭ по информатике — TirSkix Academy",
     description:
-      "Онлайн-подготовка к ОГЭ по информатике для 9 класса. Разбор всех заданий, Python и алгоритмы, пробные варианты. Результат от 15/21.",
-    keywords: ["подготовка к ОГЭ по информатике", "ОГЭ информатика онлайн", "ОГЭ Python", "репетитор ОГЭ информатика"],
+      "Курсы подготовки к ОГЭ по информатике онлайн для 9 класса. Разбор всех заданий, Python и алгоритмы, пробные варианты. Результат от 15/21.",
+    keywords: [
+      "курсы подготовки к ОГЭ по информатике",
+      "курс по ОГЭ информатика",
+      "подготовка к ОГЭ по информатике",
+      "репетитор ОГЭ информатика",
+    ],
     canonical: "https://tirskix-academy.com/podgotovka-k-oge-po-informatike",
   });
 }

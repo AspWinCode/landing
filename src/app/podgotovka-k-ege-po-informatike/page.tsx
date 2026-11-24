@@ -12,10 +12,15 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("podgotovka-k-ege-po-informatike") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Подготовка к ЕГЭ по информатике — TirSkix Academy",
+    title: "Курсы подготовки к ЕГЭ по информатике онлайн — TirSkix Academy",
     description:
-      "Онлайн-подготовка к ЕГЭ по информатике для 10–11 класса. Python, алгоритмы, теория вероятностей в ИТ. Цель — от 80 до 98 баллов.",
-    keywords: ["подготовка к ЕГЭ по информатике", "ЕГЭ информатика онлайн", "ЕГЭ Python 2025", "репетитор ЕГЭ информатика"],
+      "Курсы подготовки к ЕГЭ по информатике онлайн для 10–11 класса. Python, алгоритмы, теория вероятностей в ИТ. Цель — от 80 до 98 баллов.",
+    keywords: [
+      "курсы подготовки к ЕГЭ по информатике",
+      "подготовка к ЕГЭ по информатике курсы онлайн",
+      "подготовка к ЕГЭ по информатике",
+      "репетитор ЕГЭ информатика",
+    ],
     canonical: "https://tirskix-academy.com/podgotovka-k-ege-po-informatike",
   });
 }
