@@ -11,12 +11,13 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("programmist") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Программист — курс Python для детей с 6 класса | TirSkix Academy",
+    title: "Программист — курс Python для детей и подростков с 6 класса | TirSkix Academy",
     description:
-      "Базовая программа Python с 6 класса и её усложнённая версия «Программист: анализ данных» (NumPy, Pandas). Онлайн-курс TirSkix Academy. Пробный урок бесплатно.",
+      "Базовая программа Python для детей и подростков с 6 класса и её усложнённая версия «Программист: анализ данных» (NumPy, Pandas). Онлайн-курс TirSkix Academy. Пробный урок бесплатно.",
     keywords: [
       "Python для детей",
       "курс Python для подростков",
+      "программирование для подростков",
       "обучение Python онлайн школьникам",
       "анализ данных для детей",
       "программирование Python 6 класс",

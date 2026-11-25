@@ -12,11 +12,13 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("programmirovanie-dlya-detej") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Курсы программирования для детей онлайн — TirSkix Academy",
+    title: "Курсы программирования для детей и подростков онлайн — TirSkix Academy",
     description:
-      "Онлайн-курсы программирования для детей с 3 класса. Три этапа: Новичок (Snap!/GDevelop/Roblox/Turtle), Программист (Python), Эксперт (Git/ООП/алгоритмы). Реальные результаты: БВИ, ОГЭ 19/21. Пробный урок бесплатно.",
+      "Онлайн-курсы программирования для детей и подростков с 3 класса. Три этапа: Новичок (Snap!/GDevelop/Roblox/Turtle), Программист (Python), Эксперт (Git/ООП/алгоритмы). Реальные результаты: БВИ, ОГЭ 19/21. Пробный урок бесплатно.",
     keywords: [
       "курсы программирования для детей",
+      "программирование для подростков",
+      "курсы программирования для подростков",
       "онлайн школа программирования для детей",
       "программирование для детей онлайн",
       "обучение программированию для школьников",
