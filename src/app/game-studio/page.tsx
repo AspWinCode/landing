@@ -13,10 +13,12 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(cms, {
     title: "Новичок — программирование для детей с 3 класса | TirSkix Academy",
     description:
-      "Первая ступень TirSkix Academy с 3 класса: Snap!, GDevelop, Roblox Studio (два направления), Turtle. Подбираем направление по классу и способностям ребёнка. Пробный урок бесплатно.",
+      "Первая ступень TirSkix Academy с 3 класса: Snap! (визуальная среда в духе Scratch), GDevelop, Roblox Studio (два направления), Turtle. Подбираем направление по классу и способностям ребёнка. Пробный урок бесплатно.",
     keywords: [
       "программирование для детей 3 класс",
       "программирование для детей с нуля",
+      "scratch для детей",
+      "scratch программирование для детей",
       "визуальное программирование для школьников",
       "GDevelop для детей",
       "Roblox Studio для детей",
