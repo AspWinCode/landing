@@ -12,10 +12,17 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("backend-razrabotka") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Backend-разработка для подростков — TirSkix Academy",
+    title: "Backend-разработка (бэкенд) с нуля для подростков — TirSkix Academy",
     description:
-      "Курс backend-разработки для подростков с ~7 класса. Python, FastAPI, базы данных, REST API. Без опыта — с нуля до реального проекта.",
-    keywords: ["backend для детей", "backend разработка подростки", "Python FastAPI курс", "серверная разработка школьники"],
+      "Курс backend-разработки (бэкенд) для подростков с ~7 класса. Python, FastAPI, базы данных, REST API. Без опыта — с нуля до реального проекта.",
+    keywords: [
+      "backend с нуля",
+      "бэкенд с нуля",
+      "backend для детей",
+      "backend разработка подростки",
+      "Python FastAPI курс",
+      "серверная разработка школьники",
+    ],
     canonical: "https://tirskix-academy.com/backend-razrabotka",
   });
 }

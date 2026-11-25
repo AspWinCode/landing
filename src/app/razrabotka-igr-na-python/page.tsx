@@ -12,10 +12,17 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("razrabotka-igr-na-python") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Разработка игр на Python для детей — TirSkix Academy",
+    title: "Курсы разработки игр на Python для детей — TirSkix Academy",
     description:
-      "Курс разработки игр на Python для детей 10–18 лет онлайн. Учим Arcade, Pygame, создаём игры с нуля. Первый урок бесплатно.",
-    keywords: ["разработка игр Python", "Pygame дети", "Arcade Python", "создать игру Python ребёнок"],
+      "Курсы разработки игр на Python для детей 10–18 лет онлайн. Учим Arcade, Pygame, создаём игры с нуля. Первый урок бесплатно.",
+    keywords: [
+      "разработка игр на python",
+      "курсы по разработке игр на python",
+      "разработка игр Python",
+      "Pygame дети",
+      "Arcade Python",
+      "создать игру Python ребёнок",
+    ],
     canonical: "https://tirskix-academy.com/razrabotka-igr-na-python",
   });
 }

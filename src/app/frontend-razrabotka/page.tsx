@@ -12,10 +12,17 @@ export const revalidate = 3600;
 export async function generateMetadata(): Promise<Metadata> {
   const cms = await getCmsPage("frontend-razrabotka") as unknown as Record<string, unknown>;
   return buildPageMetadata(cms, {
-    title: "Frontend-разработка для подростков — TirSkix Academy",
+    title: "Frontend-разработка (фронтенд) с нуля для подростков — TirSkix Academy",
     description:
-      "Курс frontend-разработки для подростков с ~7 класса. HTML, CSS, JavaScript, React. Без опыта — с нуля до реального сайта.",
-    keywords: ["frontend для детей", "frontend разработка подростки", "HTML CSS JavaScript курс", "React для школьников"],
+      "Курс frontend-разработки (фронтенд) для подростков с ~7 класса. HTML, CSS, JavaScript, React. Без опыта — с нуля до реального сайта.",
+    keywords: [
+      "фронтенд с нуля",
+      "курсы фронтенд с нуля",
+      "frontend для детей",
+      "frontend разработка подростки",
+      "HTML CSS JavaScript курс",
+      "React для школьников",
+    ],
     canonical: "https://tirskix-academy.com/frontend-razrabotka",
   });
 }
